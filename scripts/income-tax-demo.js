@@ -1010,7 +1010,7 @@
       if (signinVerifyBtn) signinVerifyBtn.disabled = true;
       if (tutorialPlayer) tutorialPlayer.hidden = true;
       if (tutorialList) tutorialList.hidden = false;
-      showScreen("home");
+      showScreen("signin");
     });
   });
 
@@ -1176,5 +1176,5 @@
   });
   window.addEventListener("pagehide", trackDropoff);
 
-  showScreen("home");
+  showScreen("signin");
 })();
