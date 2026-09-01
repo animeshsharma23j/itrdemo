@@ -373,92 +373,122 @@
           </div>
         </section>
 
-        <section class="demo-screen" id="analyzing">
-          <div class="demo-analyzing">
-            <span class="demo-eyebrow">Getting started</span>
-            <p class="demo-analyzing-label">Analysing your AIS…</p>
-            <p class="demo-analyzing-percent" id="demo-analyzing-percent">0%</p>
-            <div class="demo-analyzing-track"><span class="demo-analyzing-fill" id="demo-analyzing-fill"></span></div>
-            <p class="demo-fine" id="demo-analyzing-substep">Matching your PAN with AIS records…</p>
+        <section class="demo-screen" id="personal-details">
+          <span class="demo-eyebrow">Step 1 of 3 — Getting started</span>
+          <h1 class="demo-heading">Let's confirm it's really you</h1>
+          <p class="demo-body">Pulled straight from your PAN and Aadhaar records — nothing to type.</p>
+
+          <p class="detail-group-title">Your details</p>
+          <dl class="detail-list">
+            <div><dt>Name</dt><dd>Rohan Mehta <span class="detail-verified">Verified</span></dd></div>
+            <div><dt>PAN</dt><dd>ABCDE1234F <span class="detail-verified">Verified</span></dd></div>
+            <div><dt>Aadhaar</dt><dd>XXXX XXXX 8575 <span class="detail-verified">Verified</span></dd></div>
+            <div><dt>Mobile</dt><dd>+91 XXXXX 43210 <span class="detail-verified">Verified</span></dd></div>
+            <div><dt>Email</dt><dd>rohan.m••••@gmail.com <span class="detail-verified">Verified</span></dd></div>
+          </dl>
+
+          <p class="detail-group-title">Bank account for refund</p>
+          <dl class="detail-list">
+            <div><dt>Bank</dt><dd>HDFC Bank <span class="detail-verified">Verified</span></dd></div>
+            <div><dt>Account no.</dt><dd>XXXX XXXX 5678 <span class="detail-verified">Verified</span></dd></div>
+            <div><dt>IFSC</dt><dd>HDFC0000123 <span class="detail-verified">Verified</span></dd></div>
+          </dl>
+
+          <p class="demo-fine">These come straight from your PAN/Aadhaar records. Something wrong? That's a KYC correction, not something to fix here.</p>
+
+          <div class="demo-actions">
+            <button type="button" class="demo-btn is-primary" id="demo-personal-continue">Looks right — continue</button>
           </div>
         </section>
 
-        <section class="demo-screen" id="importing">
-          <span class="demo-eyebrow" id="importing-eyebrow">One moment</span>
-          <h2 class="demo-heading" id="importing-heading">Securely fetching your data…</h2>
-          <p class="demo-body" id="importing-body">Connecting to AIS, Form 26AS, and your linked broker — nothing leaves this demo.</p>
+        <section class="demo-screen" id="fetching">
+          <div class="demo-analyzing">
+            <span class="demo-eyebrow">Step 2 of 3 — Fetching</span>
+            <p class="demo-analyzing-label">Fetching your data…</p>
+            <p class="demo-analyzing-percent" id="demo-analyzing-percent">0%</p>
+            <div class="demo-analyzing-track"><span class="demo-analyzing-fill" id="demo-analyzing-fill"></span></div>
+          </div>
+        </section>
+
+        <section class="demo-screen" id="data-review">
+          <span class="demo-eyebrow">Step 3 of 3 — All set</span>
+          <h1 class="demo-heading">Here's what we found — check it over</h1>
+          <p class="demo-body">Auto-filled from your tax records, grouped and in plain language. Edit anything that's off.</p>
+
+          <p class="detail-group-title">Income</p>
           <ul class="import-checklist">
-            <li class="import-item" id="import-item-salary">
-              <button type="button" class="import-item-row" aria-expanded="false" aria-controls="import-detail-salary"><span class="import-item-label">Salary &amp; employer details</span><span class="import-dot"></span><span class="import-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"></path></svg></span></button>
+            <li class="import-item is-done" id="import-item-salary">
+              <div class="import-item-row" role="button" tabindex="0" aria-expanded="false" aria-controls="import-detail-salary">
+                <div class="import-item-main"><span class="import-item-label">Salary</span><span class="import-item-source">TCS India Pvt. Ltd.</span></div>
+                <span class="import-item-value" data-value-for="salary">₹9,40,000</span>
+                <button type="button" class="import-item-edit-btn" data-edit-field="salary" aria-label="Edit salary amount">✎</button>
+                <span class="import-dot"></span>
+                <span class="import-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"></path></svg></span>
+              </div>
               <div class="import-item-detail" id="import-detail-salary" hidden>
                 <dl>
-                  <div><dt>Employer</dt><dd>TCS India Pvt. Ltd.</dd></div>
                   <div><dt>Basic</dt><dd>₹6,20,000</dd></div>
                   <div><dt>HRA</dt><dd>₹1,80,000</dd></div>
                   <div><dt>Special allowance</dt><dd>₹1,40,000</dd></div>
-                  <div class="is-total"><dt>Gross salary</dt><dd>₹9,40,000</dd></div>
                 </dl>
               </div>
             </li>
-            <li class="import-item" id="import-item-tds">
-              <button type="button" class="import-item-row" aria-expanded="false" aria-controls="import-detail-tds"><span class="import-item-label">TDS already deducted</span><span class="import-dot"></span><span class="import-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"></path></svg></span></button>
+            <li class="import-item is-done" id="import-item-interest">
+              <div class="import-item-row" role="button" tabindex="0" aria-expanded="false" aria-controls="import-detail-interest">
+                <div class="import-item-main"><span class="import-item-label">Bank interest</span><span class="import-item-source">HDFC Bank + SBI savings</span></div>
+                <span class="import-item-value" data-value-for="interest">₹8,400</span>
+                <button type="button" class="import-item-edit-btn" data-edit-field="interest" aria-label="Edit bank interest amount">✎</button>
+                <span class="import-dot"></span>
+                <span class="import-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"></path></svg></span>
+              </div>
+              <div class="import-item-detail" id="import-detail-interest" hidden>
+                <dl>
+                  <div><dt>HDFC Bank — savings</dt><dd>₹5,400</dd></div>
+                  <div><dt>SBI — savings</dt><dd>₹3,000</dd></div>
+                </dl>
+              </div>
+            </li>
+            <li class="import-item is-done" id="import-item-tds">
+              <div class="import-item-row" role="button" tabindex="0" aria-expanded="false" aria-controls="import-detail-tds">
+                <div class="import-item-main"><span class="import-item-label">Tax already deducted (TDS)</span><span class="import-item-source">From your employer &amp; bank</span></div>
+                <span class="import-item-value" data-value-for="tds">₹68,000</span>
+                <button type="button" class="import-item-edit-btn" data-edit-field="tds" aria-label="Edit TDS amount">✎</button>
+                <span class="import-dot"></span>
+                <span class="import-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"></path></svg></span>
+              </div>
               <div class="import-item-detail" id="import-detail-tds" hidden>
                 <dl>
                   <div><dt>Q1 (Apr–Jun)</dt><dd>₹17,000</dd></div>
                   <div><dt>Q2 (Jul–Sep)</dt><dd>₹17,000</dd></div>
                   <div><dt>Q3 (Oct–Dec)</dt><dd>₹17,000</dd></div>
                   <div><dt>Q4 (Jan–Mar)</dt><dd>₹17,000</dd></div>
-                  <div class="is-total"><dt>Total TDS</dt><dd>₹68,000</dd></div>
                 </dl>
               </div>
             </li>
-            <li class="import-item" id="import-item-interest">
-              <button type="button" class="import-item-row" aria-expanded="false" aria-controls="import-detail-interest"><span class="import-item-label">Bank interest (Form 26AS)</span><span class="import-dot"></span><span class="import-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"></path></svg></span></button>
-              <div class="import-item-detail" id="import-detail-interest" hidden>
-                <dl>
-                  <div><dt>HDFC Bank — savings</dt><dd>₹5,400</dd></div>
-                  <div><dt>SBI — savings</dt><dd>₹3,000</dd></div>
-                  <div class="is-total"><dt>Total interest</dt><dd>₹8,400</dd></div>
-                </dl>
+            <li class="import-item is-done" id="import-item-capgains">
+              <div class="import-item-row" role="button" tabindex="0" aria-expanded="false" aria-controls="import-detail-capgains">
+                <div class="import-item-main"><span class="import-item-label">Capital gains</span><span class="import-item-source">Zerodha Broking — equity, short-term</span></div>
+                <span class="import-item-value" data-value-for="capgains">₹1,20,000</span>
+                <button type="button" class="import-item-edit-btn" data-edit-field="capgains" aria-label="Edit capital gains amount">✎</button>
+                <span class="import-dot"></span>
+                <span class="import-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"></path></svg></span>
               </div>
-            </li>
-            <li class="import-item" id="import-item-broker">
-              <button type="button" class="import-item-row" aria-expanded="false" aria-controls="import-detail-broker"><span class="import-item-label">Broker statements</span><span class="import-dot"></span><span class="import-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"></path></svg></span></button>
-              <div class="import-item-detail" id="import-detail-broker" hidden>
+              <div class="import-item-detail" id="import-detail-capgains" hidden>
                 <dl>
                   <div><dt>Broker</dt><dd>Zerodha Broking</dd></div>
                   <div><dt>Type</dt><dd>Equity — short-term</dd></div>
-                  <div class="is-total"><dt>Capital gains</dt><dd>₹1,20,000</dd></div>
                 </dl>
+                <div class="import-item-confirm" id="verify-capgains-actions">
+                  <button type="button" class="demo-btn-sm" data-capgains="yes">Looks right</button>
+                  <button type="button" class="demo-btn-sm is-quiet" data-capgains="no">Not mine</button>
+                </div>
+                <p class="verify-capgains-status" id="verify-capgains-status" hidden></p>
               </div>
             </li>
           </ul>
-          <div class="demo-actions">
-            <button type="button" class="demo-btn is-primary" hidden id="demo-import-continue" data-goto-snapshot>Looks good — continue</button>
-          </div>
-        </section>
-
-        <section class="demo-screen" id="verify">
-          <span class="demo-eyebrow">Verify your details</span>
-          <h2 class="demo-heading">Does everything look right, or is there anything else to add?</h2>
-
-          <div class="verify-capgains" id="verify-capgains">
-            <div class="verify-capgains-info">
-              <span class="demo-check-dot" id="verify-capgains-dot"></span>
-              <div>
-                <strong>Capital gains — ₹1,20,000</strong>
-                <span>Detected from your linked broker statements this year.</span>
-              </div>
-            </div>
-            <div class="verify-capgains-actions" id="verify-capgains-actions">
-              <button type="button" class="demo-btn-sm" data-capgains="yes">That's right</button>
-              <button type="button" class="demo-btn-sm is-quiet" data-capgains="no">Not mine</button>
-            </div>
-            <p class="verify-capgains-status" id="verify-capgains-status" hidden></p>
-          </div>
 
           <details class="verify-more">
-            <summary>Anything else we can't see? <span>Business income, foreign assets</span></summary>
+            <summary>Have income we couldn't see? <span>Business income, foreign assets</span></summary>
             <div class="demo-toggle-list">
               <button type="button" class="demo-toggle" id="demo-toggle-business" aria-pressed="false">
                 <span class="demo-toggle-switch"></span>
@@ -472,8 +502,11 @@
             <p class="demo-fine">These change which ITR form applies, not your total income — neither carries a rupee amount we can add here.</p>
           </details>
 
+          <p class="data-review-upload"><a href="#" id="demo-upload-instead">Don't trust this data? Upload your own documents instead</a></p>
+          <p class="data-review-note" id="demo-upload-note" hidden>In the real product this would open a file upload for Form 16 / AIS — this demo sticks with the auto-filled numbers above.</p>
+
           <div class="demo-actions">
-            <button type="button" class="demo-btn is-primary" id="demo-verify-continue">See my suggested form</button>
+            <button type="button" class="demo-btn is-primary" id="demo-verify-continue">Looks good — see my suggested form</button>
           </div>
         </section>
 

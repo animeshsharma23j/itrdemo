@@ -13,13 +13,13 @@
   var DED_80C = 150000;
   var DED_80D = 25000;
 
-  var progressOrder = ["verify", "resolve", "compare", "review", "everify"];
+  var progressOrder = ["data-review", "resolve", "compare", "review", "everify"];
   var WIDE_SCREENS = ["home", "guide", "calculator", "case-studies", "tax-qna", "video-tutorials"];
   var SPLIT_SCREENS = ["signin", "signin-otp"];
   var demoShell = document.querySelector(".demo-shell");
   var demoCard = document.querySelector(".demo-card");
 
-  var answers = { capgains: null, business: false, foreign: false, ded80c: false, ded80d: false };
+  var answers = { capgains: "yes", business: false, foreign: false, ded80c: false, ded80d: false };
   var computed = { newTax: 0, oldTax: 0, recommended: "new", finalTax: 0, totalIncome: 0 };
   var manualForm = null;
 
@@ -215,23 +215,23 @@
   var signinVerifyBtn = document.getElementById("demo-signin-verify");
   if (signinVerifyBtn) {
     signinVerifyBtn.addEventListener("click", function () {
-      showScreen("analyzing");
-      runAnalyzingAnimation();
+      showScreen("personal-details");
     });
   }
 
-  // ---- Sign-in -> analysing AIS -> importing animation ----
-  var ANALYZING_SUBSTEPS = [
-    "Matching your PAN with AIS records…",
-    "Reading Form 26AS…",
-    "Checking linked broker statements…"
-  ];
+  // ---- Personal details -> fetching data ----
+  var personalContinueBtn = document.getElementById("demo-personal-continue");
+  if (personalContinueBtn) {
+    personalContinueBtn.addEventListener("click", function () {
+      showScreen("fetching");
+      runFetchingAnimation();
+    });
+  }
 
-  function runAnalyzingAnimation() {
+  function runFetchingAnimation() {
     var percentEl = document.getElementById("demo-analyzing-percent");
     var fillEl = document.getElementById("demo-analyzing-fill");
-    var substepEl = document.getElementById("demo-analyzing-substep");
-    var duration = 1600;
+    var duration = 3400;
     var start = null;
 
     function step(timestamp) {
@@ -240,55 +240,68 @@
       var pct = Math.min(100, Math.round((elapsed / duration) * 100));
       percentEl.textContent = pct + "%";
       fillEl.style.width = pct + "%";
-      var substepIdx = Math.min(ANALYZING_SUBSTEPS.length - 1, Math.floor((pct / 100) * ANALYZING_SUBSTEPS.length));
-      substepEl.textContent = ANALYZING_SUBSTEPS[substepIdx];
       if (pct < 100) {
         requestAnimationFrame(step);
       } else {
         setTimeout(function () {
-          showScreen("importing");
-          runImportAnimation();
+          showScreen("data-review");
         }, 300);
       }
     }
     requestAnimationFrame(step);
   }
 
-  function runImportAnimation() {
-    var items = Array.prototype.slice.call(document.querySelectorAll(".import-item"));
-    var importEyebrow = document.getElementById("importing-eyebrow");
-    var importHeading = document.getElementById("importing-heading");
-    var importBody = document.getElementById("importing-body");
-    items.forEach(function (item) {
-      item.classList.remove("is-done");
-      var row = item.querySelector(".import-item-row");
-      var detail = item.querySelector(".import-item-detail");
-      if (row) row.setAttribute("aria-expanded", "false");
-      if (detail) detail.hidden = true;
-    });
-    if (importEyebrow) importEyebrow.textContent = "One moment";
-    if (importHeading) importHeading.textContent = "Securely fetching your data…";
-    if (importBody) importBody.textContent = "Connecting to AIS, Form 26AS, and your linked broker — nothing leaves this demo.";
-    var continueBtn = document.getElementById("demo-import-continue");
-    continueBtn.hidden = true;
-    items.forEach(function (item, i) {
-      setTimeout(function () {
-        item.classList.add("is-done");
-        if (i === items.length - 1) {
-          setTimeout(function () {
-            if (importEyebrow) importEyebrow.textContent = "All set";
-            if (importHeading) importHeading.textContent = "Your data is in — check it over";
-            if (importBody) importBody.textContent = "Pulled from AIS, Form 26AS, and your linked broker. Tap a row to check the details.";
-            continueBtn.hidden = false;
-          }, 350);
+  // ---- Data review: edit an auto-filled amount inline ----
+  var EDIT_FIELD_MAP = { salary: "salary", interest: "bankInterest", tds: "tds", capgains: "capgainsAmount" };
+  document.querySelectorAll(".import-item-edit-btn").forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var field = btn.getAttribute("data-edit-field");
+      var key = EDIT_FIELD_MAP[field];
+      var valueEl = document.querySelector('.import-item-value[data-value-for="' + field + '"]');
+      if (!key || !valueEl) return;
+      var input = document.createElement("input");
+      input.type = "number";
+      input.className = "import-item-value-input";
+      input.value = IMPORTED[key];
+      valueEl.replaceWith(input);
+      input.focus();
+      input.select();
+      function commit() {
+        var next = parseInt(input.value, 10);
+        if (!isNaN(next) && next >= 0) {
+          IMPORTED[key] = next;
         }
-      }, 450 * (i + 1));
+        var restored = document.createElement("span");
+        restored.className = "import-item-value";
+        restored.setAttribute("data-value-for", field);
+        restored.textContent = fmt(IMPORTED[key]);
+        input.replaceWith(restored);
+        updateRunningTotal(true);
+      }
+      input.addEventListener("blur", commit);
+      input.addEventListener("keydown", function (ev) {
+        if (ev.key === "Enter") {
+          ev.preventDefault();
+          input.blur();
+        }
+      });
+    });
+  });
+
+  // ---- Data review: "upload your own documents instead" ----
+  var uploadInsteadLink = document.getElementById("demo-upload-instead");
+  var uploadNote = document.getElementById("demo-upload-note");
+  if (uploadInsteadLink && uploadNote) {
+    uploadInsteadLink.addEventListener("click", function (e) {
+      e.preventDefault();
+      uploadNote.hidden = !uploadNote.hidden;
     });
   }
 
-  // ---- Import checklist: expand a fetched row to see its detail ----
+  // ---- Data review: expand a row to see its detail ----
   document.querySelectorAll(".import-item-row").forEach(function (row) {
-    row.addEventListener("click", function () {
+    function toggleRow() {
       var item = row.closest(".import-item");
       if (!item || !item.classList.contains("is-done")) return;
       var detail = document.getElementById(row.getAttribute("aria-controls"));
@@ -296,17 +309,18 @@
       row.setAttribute("aria-expanded", String(!expanded));
       if (detail) detail.hidden = expanded;
       adjustChatWidgetOffset();
+    }
+    row.addEventListener("click", toggleRow);
+    row.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        toggleRow();
+      }
     });
   });
 
-  document.querySelectorAll("[data-goto-snapshot]").forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      showScreen("verify");
-    });
-  });
-
-  // ---- Verify: detected capital gains — confirm / not mine / undo ----
-  var verifyCapgainsBox = document.getElementById("verify-capgains");
+  // ---- Data review: detected capital gains — confirm / not mine / undo ----
+  var verifyCapgainsBox = document.getElementById("import-item-capgains");
   var verifyCapgainsActions = document.getElementById("verify-capgains-actions");
   var verifyCapgainsStatus = document.getElementById("verify-capgains-status");
 
@@ -985,7 +999,7 @@
   document.querySelectorAll("[data-restart]").forEach(function (link) {
     link.addEventListener("click", function (e) {
       e.preventDefault();
-      answers = { capgains: null, business: false, foreign: false, ded80c: false, ded80d: false };
+      answers = { capgains: "yes", business: false, foreign: false, ded80c: false, ded80d: false };
       manualForm = null;
       setCapgainsState(null);
       otpInputs.forEach(function (input) {

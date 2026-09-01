@@ -976,6 +976,171 @@ a:focus-visible {
   font-weight: 700;
 }
 
+.import-item.is-excluded {
+  color: var(--muted);
+  border-color: var(--border-strong);
+  background: var(--surface-2);
+}
+
+.import-item.is-excluded .import-dot {
+  border-color: var(--border-strong);
+  background: transparent;
+}
+
+.import-item.is-excluded .import-dot::after {
+  display: none;
+}
+
+.import-item-main {
+  display: grid;
+  gap: 1px;
+  flex: 1;
+  min-width: 0;
+}
+
+.import-item-source {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 400;
+}
+
+.import-item-value {
+  flex-shrink: 0;
+  font-weight: 700;
+}
+
+.import-item-value-input {
+  width: 110px;
+  flex-shrink: 0;
+  padding: 4px 8px;
+  border: 1.5px solid var(--primary);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-weight: 700;
+  text-align: right;
+}
+
+.import-item-edit-btn {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.import-item-edit-btn:hover,
+.import-item-edit-btn:focus-visible {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.import-item-confirm {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border);
+}
+
+.import-item-confirm[hidden] {
+  display: none;
+}
+
+.data-review-upload {
+  margin: 4px 0 0;
+  font-size: 0.84rem;
+}
+
+.data-review-upload a {
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.data-review-upload a:hover {
+  color: var(--text);
+}
+
+.data-review-note {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.detail-group-title {
+  margin: 22px 0 8px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.detail-group:first-of-type .detail-group-title {
+  margin-top: 4px;
+}
+
+.detail-list {
+  display: grid;
+  gap: 0;
+  margin: 0 0 4px;
+  padding: 2px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-2);
+}
+
+.detail-list > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 0;
+}
+
+.detail-list > div + div {
+  border-top: 1px solid var(--border);
+}
+
+.detail-list dt {
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 500;
+}
+
+.detail-list dd {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.detail-verified {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--success-bg);
+  color: var(--success);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
 /* Analysing AIS loader */
 .demo-analyzing {
   padding: 30px 4px 6px;
