@@ -68,8 +68,8 @@
       progressSegments.forEach(function (seg, i) {
         seg.classList.toggle("is-done", i <= idx);
       });
-      stepCountEl.textContent = "Step " + (idx + 1) + " of " + progressOrder.length;
-    } else {
+      if (stepCountEl) stepCountEl.textContent = "Step " + (idx + 1) + " of " + progressOrder.length;
+    } else if (stepCountEl) {
       stepCountEl.textContent = "";
     }
     if (runningTotalEl) {
