@@ -899,7 +899,7 @@ a:focus-visible {
 
 .import-item.is-done .import-dot {
   border-color: var(--success);
-  background: var(--success);
+  background: var(--success-bg);
 }
 
 .import-item.is-done .import-dot::after {
@@ -909,7 +909,7 @@ a:focus-visible {
   left: 5px;
   width: 5px;
   height: 9px;
-  border: solid #fff;
+  border: solid var(--success);
   border-width: 0 2px 2px 0;
   transform: rotate(40deg);
 }
