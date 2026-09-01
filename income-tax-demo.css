@@ -959,11 +959,31 @@ a:focus-visible {
 }
 
 .import-item-detail dd {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
   margin: 0;
   color: var(--text);
   font-size: 0.86rem;
   font-weight: 600;
   text-align: right;
+}
+
+.import-subvalue {
+  flex-shrink: 0;
+}
+
+.import-item-detail .import-item-edit-btn {
+  width: 22px;
+  height: 22px;
+  font-size: 0.75rem;
+}
+
+.import-item-detail .import-item-value-input {
+  width: 90px;
+  padding: 3px 6px;
+  font-size: 0.84rem;
 }
 
 .import-item-detail dl > div.is-total {
@@ -1020,6 +1040,11 @@ a:focus-visible {
   font: inherit;
   font-weight: 700;
   text-align: right;
+}
+
+.detail-list .import-item-value-input {
+  width: 180px;
+  text-align: left;
 }
 
 .import-item-edit-btn {
@@ -1143,6 +1168,10 @@ a:focus-visible {
 
 /* Analysing AIS loader */
 .demo-analyzing {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 460px;
   padding: 30px 4px 6px;
   text-align: center;
 }
@@ -1199,7 +1228,7 @@ a:focus-visible {
   width: 100%;
   padding: 14px 16px;
   border: 1.5px solid var(--border-strong);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-lg);
   background: var(--surface);
   color: var(--text);
   font: inherit;

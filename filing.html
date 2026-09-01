@@ -380,21 +380,21 @@
 
           <p class="detail-group-title">Your details</p>
           <dl class="detail-list">
-            <div><dt>Name</dt><dd>Rohan Mehta <span class="detail-verified">Verified</span></dd></div>
-            <div><dt>PAN</dt><dd>ABCDE1234F <span class="detail-verified">Verified</span></dd></div>
-            <div><dt>Aadhaar</dt><dd>XXXX XXXX 8575 <span class="detail-verified">Verified</span></dd></div>
-            <div><dt>Mobile</dt><dd>+91 XXXXX 43210 <span class="detail-verified">Verified</span></dd></div>
-            <div><dt>Email</dt><dd>rohan.m••••@gmail.com <span class="detail-verified">Verified</span></dd></div>
+            <div><dt>Name</dt><dd>Rohan Mehta <span class="detail-verified">Locked</span></dd></div>
+            <div><dt>PAN</dt><dd>ABCDE1234F <span class="detail-verified">Locked</span></dd></div>
+            <div><dt>Aadhaar</dt><dd>XXXX XXXX 8575 <span class="detail-verified">Locked</span></dd></div>
+            <div><dt>Mobile</dt><dd><span class="detail-value" data-personal="mobile">+91 XXXXX 43210</span><button type="button" class="import-item-edit-btn" data-personal-edit="mobile" aria-label="Edit mobile number">✎</button></dd></div>
+            <div><dt>Email</dt><dd><span class="detail-value" data-personal="email">rohan.m••••@gmail.com</span><button type="button" class="import-item-edit-btn" data-personal-edit="email" aria-label="Edit email address">✎</button></dd></div>
           </dl>
 
           <p class="detail-group-title">Bank account for refund</p>
           <dl class="detail-list">
-            <div><dt>Bank</dt><dd>HDFC Bank <span class="detail-verified">Verified</span></dd></div>
-            <div><dt>Account no.</dt><dd>XXXX XXXX 5678 <span class="detail-verified">Verified</span></dd></div>
-            <div><dt>IFSC</dt><dd>HDFC0000123 <span class="detail-verified">Verified</span></dd></div>
+            <div><dt>Bank</dt><dd><span class="detail-value" data-personal="bank">HDFC Bank</span><button type="button" class="import-item-edit-btn" data-personal-edit="bank" aria-label="Edit bank name">✎</button></dd></div>
+            <div><dt>Account no.</dt><dd><span class="detail-value" data-personal="account">XXXX XXXX 5678</span><button type="button" class="import-item-edit-btn" data-personal-edit="account" aria-label="Edit account number">✎</button></dd></div>
+            <div><dt>IFSC</dt><dd><span class="detail-value" data-personal="ifsc">HDFC0000123</span><button type="button" class="import-item-edit-btn" data-personal-edit="ifsc" aria-label="Edit IFSC code">✎</button></dd></div>
           </dl>
 
-          <p class="demo-fine">These come straight from your PAN/Aadhaar records. Something wrong? That's a KYC correction, not something to fix here.</p>
+          <p class="demo-fine">Name, PAN, and Aadhaar are locked to your KYC record — a mismatch there means correcting your KYC, not something to fix here. Your contact details and refund account are yours to update.</p>
 
           <div class="demo-actions">
             <button type="button" class="demo-btn is-primary" id="demo-personal-continue">Looks right — continue</button>
@@ -419,49 +419,46 @@
           <ul class="import-checklist">
             <li class="import-item is-done" id="import-item-salary">
               <div class="import-item-row" role="button" tabindex="0" aria-expanded="false" aria-controls="import-detail-salary">
-                <div class="import-item-main"><span class="import-item-label">Salary</span><span class="import-item-source">TCS India Pvt. Ltd.</span></div>
+                <div class="import-item-main"><span class="import-item-label">Salary</span><span class="import-item-source">TCS India Pvt. Ltd. — tap to edit each part</span></div>
                 <span class="import-item-value" data-value-for="salary">₹9,40,000</span>
-                <button type="button" class="import-item-edit-btn" data-edit-field="salary" aria-label="Edit salary amount">✎</button>
                 <span class="import-dot"></span>
                 <span class="import-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"></path></svg></span>
               </div>
               <div class="import-item-detail" id="import-detail-salary" hidden>
                 <dl>
-                  <div><dt>Basic</dt><dd>₹6,20,000</dd></div>
-                  <div><dt>HRA</dt><dd>₹1,80,000</dd></div>
-                  <div><dt>Special allowance</dt><dd>₹1,40,000</dd></div>
+                  <div><dt>Basic</dt><dd><span class="import-subvalue" data-sub="salary:basic">₹6,20,000</span><button type="button" class="import-item-edit-btn" data-subedit="salary:basic" aria-label="Edit basic salary">✎</button></dd></div>
+                  <div><dt>HRA</dt><dd><span class="import-subvalue" data-sub="salary:hra">₹1,80,000</span><button type="button" class="import-item-edit-btn" data-subedit="salary:hra" aria-label="Edit HRA">✎</button></dd></div>
+                  <div><dt>Special allowance</dt><dd><span class="import-subvalue" data-sub="salary:special">₹1,40,000</span><button type="button" class="import-item-edit-btn" data-subedit="salary:special" aria-label="Edit special allowance">✎</button></dd></div>
                 </dl>
               </div>
             </li>
             <li class="import-item is-done" id="import-item-interest">
               <div class="import-item-row" role="button" tabindex="0" aria-expanded="false" aria-controls="import-detail-interest">
-                <div class="import-item-main"><span class="import-item-label">Bank interest</span><span class="import-item-source">HDFC Bank + SBI savings</span></div>
+                <div class="import-item-main"><span class="import-item-label">Bank interest</span><span class="import-item-source">HDFC Bank + SBI savings — tap to edit each part</span></div>
                 <span class="import-item-value" data-value-for="interest">₹8,400</span>
-                <button type="button" class="import-item-edit-btn" data-edit-field="interest" aria-label="Edit bank interest amount">✎</button>
                 <span class="import-dot"></span>
                 <span class="import-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"></path></svg></span>
               </div>
               <div class="import-item-detail" id="import-detail-interest" hidden>
                 <dl>
-                  <div><dt>HDFC Bank — savings</dt><dd>₹5,400</dd></div>
-                  <div><dt>SBI — savings</dt><dd>₹3,000</dd></div>
+                  <div><dt>HDFC Bank — savings</dt><dd><span class="import-subvalue" data-sub="interest:hdfc">₹5,400</span><button type="button" class="import-item-edit-btn" data-subedit="interest:hdfc" aria-label="Edit HDFC Bank interest">✎</button></dd></div>
+                  <div><dt>SBI — savings</dt><dd><span class="import-subvalue" data-sub="interest:sbi">₹3,000</span><button type="button" class="import-item-edit-btn" data-subedit="interest:sbi" aria-label="Edit SBI interest">✎</button></dd></div>
                 </dl>
               </div>
             </li>
             <li class="import-item is-done" id="import-item-tds">
               <div class="import-item-row" role="button" tabindex="0" aria-expanded="false" aria-controls="import-detail-tds">
-                <div class="import-item-main"><span class="import-item-label">Tax already deducted (TDS)</span><span class="import-item-source">From your employer &amp; bank</span></div>
+                <div class="import-item-main"><span class="import-item-label">Tax already deducted (TDS)</span><span class="import-item-source">From your employer &amp; bank — tap to edit each part</span></div>
                 <span class="import-item-value" data-value-for="tds">₹68,000</span>
-                <button type="button" class="import-item-edit-btn" data-edit-field="tds" aria-label="Edit TDS amount">✎</button>
                 <span class="import-dot"></span>
                 <span class="import-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"></path></svg></span>
               </div>
               <div class="import-item-detail" id="import-detail-tds" hidden>
                 <dl>
-                  <div><dt>Q1 (Apr–Jun)</dt><dd>₹17,000</dd></div>
-                  <div><dt>Q2 (Jul–Sep)</dt><dd>₹17,000</dd></div>
-                  <div><dt>Q3 (Oct–Dec)</dt><dd>₹17,000</dd></div>
-                  <div><dt>Q4 (Jan–Mar)</dt><dd>₹17,000</dd></div>
+                  <div><dt>Q1 (Apr–Jun)</dt><dd><span class="import-subvalue" data-sub="tds:q1">₹17,000</span><button type="button" class="import-item-edit-btn" data-subedit="tds:q1" aria-label="Edit Q1 TDS">✎</button></dd></div>
+                  <div><dt>Q2 (Jul–Sep)</dt><dd><span class="import-subvalue" data-sub="tds:q2">₹17,000</span><button type="button" class="import-item-edit-btn" data-subedit="tds:q2" aria-label="Edit Q2 TDS">✎</button></dd></div>
+                  <div><dt>Q3 (Oct–Dec)</dt><dd><span class="import-subvalue" data-sub="tds:q3">₹17,000</span><button type="button" class="import-item-edit-btn" data-subedit="tds:q3" aria-label="Edit Q3 TDS">✎</button></dd></div>
+                  <div><dt>Q4 (Jan–Mar)</dt><dd><span class="import-subvalue" data-sub="tds:q4">₹17,000</span><button type="button" class="import-item-edit-btn" data-subedit="tds:q4" aria-label="Edit Q4 TDS">✎</button></dd></div>
                 </dl>
               </div>
             </li>

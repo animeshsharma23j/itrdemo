@@ -3,10 +3,22 @@
   var progressSegments = Array.prototype.slice.call(document.querySelectorAll(".demo-progress span"));
   var stepCountEl = document.getElementById("demo-step-count");
 
+  var IMPORTED_PARTS = {
+    salary: { basic: 620000, hra: 180000, special: 140000 },
+    interest: { hdfc: 5400, sbi: 3000 },
+    tds: { q1: 17000, q2: 17000, q3: 17000, q4: 17000 }
+  };
+
+  function sumParts(obj) {
+    return Object.keys(obj).reduce(function (total, key) {
+      return total + obj[key];
+    }, 0);
+  }
+
   var IMPORTED = {
-    salary: 940000,
-    tds: 68000,
-    bankInterest: 8400,
+    salary: sumParts(IMPORTED_PARTS.salary),
+    tds: sumParts(IMPORTED_PARTS.tds),
+    bankInterest: sumParts(IMPORTED_PARTS.interest),
     capgainsAmount: 120000
   };
 
@@ -251,9 +263,9 @@
     requestAnimationFrame(step);
   }
 
-  // ---- Data review: edit an auto-filled amount inline ----
-  var EDIT_FIELD_MAP = { salary: "salary", interest: "bankInterest", tds: "tds", capgains: "capgainsAmount" };
-  document.querySelectorAll(".import-item-edit-btn").forEach(function (btn) {
+  // ---- Data review: edit an auto-filled amount inline (capital gains — no sub-breakdown) ----
+  var EDIT_FIELD_MAP = { capgains: "capgainsAmount" };
+  document.querySelectorAll(".import-item-edit-btn[data-edit-field]").forEach(function (btn) {
     btn.addEventListener("click", function (e) {
       e.stopPropagation();
       var field = btn.getAttribute("data-edit-field");
@@ -278,6 +290,81 @@
         restored.textContent = fmt(IMPORTED[key]);
         input.replaceWith(restored);
         updateRunningTotal(true);
+      }
+      input.addEventListener("blur", commit);
+      input.addEventListener("keydown", function (ev) {
+        if (ev.key === "Enter") {
+          ev.preventDefault();
+          input.blur();
+        }
+      });
+    });
+  });
+
+  // ---- Data review: edit each individual line under salary / interest / TDS ----
+  var GROUP_TOTAL_KEY = { salary: "salary", interest: "bankInterest", tds: "tds" };
+  document.querySelectorAll(".import-item-edit-btn[data-subedit]").forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var ref = btn.getAttribute("data-subedit").split(":");
+      var group = ref[0];
+      var part = ref[1];
+      var totalKey = GROUP_TOTAL_KEY[group];
+      var subEl = document.querySelector('.import-subvalue[data-sub="' + group + ':' + part + '"]');
+      var totalEl = document.querySelector('.import-item-value[data-value-for="' + group + '"]');
+      if (!totalKey || !subEl || !totalEl) return;
+      var input = document.createElement("input");
+      input.type = "number";
+      input.className = "import-item-value-input";
+      input.value = IMPORTED_PARTS[group][part];
+      subEl.replaceWith(input);
+      input.focus();
+      input.select();
+      function commit() {
+        var next = parseInt(input.value, 10);
+        if (!isNaN(next) && next >= 0) {
+          IMPORTED_PARTS[group][part] = next;
+        }
+        var restored = document.createElement("span");
+        restored.className = "import-subvalue";
+        restored.setAttribute("data-sub", group + ":" + part);
+        restored.textContent = fmt(IMPORTED_PARTS[group][part]);
+        input.replaceWith(restored);
+        IMPORTED[totalKey] = sumParts(IMPORTED_PARTS[group]);
+        totalEl.textContent = fmt(IMPORTED[totalKey]);
+        updateRunningTotal(true);
+      }
+      input.addEventListener("blur", commit);
+      input.addEventListener("keydown", function (ev) {
+        if (ev.key === "Enter") {
+          ev.preventDefault();
+          input.blur();
+        }
+      });
+    });
+  });
+
+  // ---- Personal details: edit contact info / refund bank account ----
+  document.querySelectorAll("[data-personal-edit]").forEach(function (btn) {
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var field = btn.getAttribute("data-personal-edit");
+      var valueEl = document.querySelector('.detail-value[data-personal="' + field + '"]');
+      if (!valueEl) return;
+      var current = valueEl.textContent;
+      var input = document.createElement("input");
+      input.type = "text";
+      input.className = "import-item-value-input";
+      input.placeholder = current;
+      valueEl.replaceWith(input);
+      input.focus();
+      function commit() {
+        var next = input.value.trim();
+        var restored = document.createElement("span");
+        restored.className = "detail-value";
+        restored.setAttribute("data-personal", field);
+        restored.textContent = next || current;
+        input.replaceWith(restored);
       }
       input.addEventListener("blur", commit);
       input.addEventListener("keydown", function (ev) {
