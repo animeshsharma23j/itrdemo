@@ -13,11 +13,12 @@
     <meta charset="UTF-8" />
     <link rel="icon" href="/icon.png" type="image/png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Income Tax concept prototype — an automated, assisted filing demo, not an official tax service." />
-    <title>File your ITR — concept demo</title>
+    <meta name="description" content="ITR Assist — an Income Tax filing concept. Read the case study, or try the interactive filing demo." />
+    <title>ITR Assist — Income Tax concept</title>
     <link rel="canonical" href="https://itrdemo.com/" />
-    <meta property="og:title" content="File your ITR — concept demo" />
-    <meta property="og:description" content="Income Tax concept prototype — an automated, assisted filing demo, not an official tax service." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ITR Assist — Income Tax concept" />
+    <meta property="og:description" content="An Income Tax filing concept. Read the case study, or try the interactive filing demo." />
     <meta property="og:url" content="https://itrdemo.com/" />
     <meta property="og:image" content="https://itrdemo.com/icon.png" />
     <meta property="og:image:width" content="637" />
@@ -31,816 +32,213 @@
         if (theme === "dark") document.documentElement.setAttribute("data-theme", "dark");
       })();
     </script>
+    <style>
+      .landing-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--border);
+        background: var(--surface);
+      }
+      .landing-brand {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 700;
+        font-size: 18px;
+        color: var(--text);
+      }
+      .landing-brand-mark {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: var(--radius-md);
+        background: var(--primary);
+        color: var(--on-primary);
+        font-size: 15px;
+      }
+      .landing-shell {
+        max-width: 1040px;
+        margin: 0 auto;
+        padding: 64px 24px 96px;
+      }
+      .landing-intro {
+        max-width: 620px;
+        margin: 0 0 40px;
+      }
+      .landing-eyebrow {
+        display: inline-block;
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 12px;
+      }
+      .landing-heading {
+        font-size: clamp(32px, 4vw, 44px);
+        line-height: 1.15;
+        font-weight: 700;
+        margin: 0 0 12px;
+        color: var(--text);
+      }
+      .landing-body {
+        font-size: 17px;
+        line-height: 1.6;
+        color: var(--muted);
+        margin: 0;
+      }
+      .landing-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+      .landing-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 320px;
+        padding: 36px;
+        border-radius: var(--radius-lg);
+        border: 1.5px solid var(--border-strong);
+        background: var(--surface);
+        text-decoration: none;
+        color: inherit;
+        transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+      }
+      .landing-card:hover,
+      .landing-card:focus-visible {
+        transform: translateY(-2px);
+        border-color: var(--primary);
+        box-shadow: var(--shadow-1);
+      }
+      .landing-card-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        border-radius: var(--radius-md);
+        background: var(--surface-2);
+        color: var(--text);
+        margin-bottom: 24px;
+      }
+      .landing-card-eyebrow {
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 0 0 8px;
+      }
+      .landing-card-title {
+        font-size: 26px;
+        font-weight: 700;
+        margin: 0 0 12px;
+        color: var(--text);
+      }
+      .landing-card-desc {
+        font-size: 15.5px;
+        line-height: 1.55;
+        color: var(--muted);
+        margin: 0 0 24px;
+      }
+      .landing-card-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        font-size: 15px;
+        color: var(--text);
+      }
+      .landing-footer {
+        text-align: center;
+        padding: 32px 24px 48px;
+        color: var(--muted);
+        font-size: 13.5px;
+      }
+      @media (max-width: 720px) {
+        .landing-grid {
+          grid-template-columns: 1fr;
+        }
+        .landing-shell {
+          padding: 40px 20px 64px;
+        }
+      }
+    </style>
   </head>
   <body>
-    <div class="site-meta-bar">
-      <div class="site-meta-bar-inner">
-        <a class="demo-back" href="https://www.iamanimesh.com/income-tax.html">← Design concept by Animesh Sharma</a>
-        <span class="demo-step-count" id="demo-step-count"></span>
-      </div>
-    </div>
-
-    <header class="site-header">
-      <div class="site-header-inner">
-        <span class="site-brand"><span class="site-brand-mark">₹</span>ITR Assist</span>
-        <nav class="site-nav" aria-label="Primary">
-          <span class="site-nav-link is-active">Home</span>
-          <span class="site-nav-link">Help</span>
-        </nav>
-        <span class="demo-ay-badge">Filing for AY 2026-27</span>
-        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to dark mode" aria-pressed="false">🌙</button>
-      </div>
+    <header class="landing-header">
+      <span class="landing-brand"><span class="landing-brand-mark">₹</span>ITR Assist</span>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to dark mode" aria-pressed="false">🌙</button>
     </header>
 
-    <main class="demo-shell">
-      <div class="demo-card">
-        <div class="demo-progress" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
-        <div class="demo-running-total" id="demo-running-total" hidden><span>Total income so far</span><strong id="demo-running-total-amount">₹0</strong></div>
+    <main class="landing-shell">
+      <div class="landing-intro">
+        <span class="landing-eyebrow">Income Tax concept</span>
+        <h1 class="landing-heading">Making ITR filing easier to trust</h1>
+        <p class="landing-body">A confidence-first filing experience for first-time taxpayers and senior citizens — read how it was designed, or try it yourself.</p>
+      </div>
 
-        <section class="demo-screen" id="signin">
-          <div class="auth-grid">
-            <div class="auth-side">
-              <span class="auth-side-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg></span>
-              <ul class="auth-trust-list">
-                <li><strong>No password to remember</strong><span>PAN + OTP is the entire sign-in — one less thing to forget or reuse.</span></li>
-                <li><strong>Verified in seconds</strong><span>Your OTP confirms it's you — nothing else is asked at sign-in.</span></li>
-                <li><strong>Nothing leaves this demo</strong><span>Every step here is simulated. Read the <a href="https://www.iamanimesh.com/income-tax.html">full case study</a>.</span></li>
-              </ul>
-            </div>
-            <div class="auth-form-panel">
-              <span class="demo-eyebrow">Sign in</span>
-              <h1 class="demo-heading">Enter your PAN to continue</h1>
-              <p class="demo-body">We'll send an OTP to verify it's you — no separate account or password to remember.</p>
-              <div class="demo-input-row"><label for="signin-pan">PAN</label><input id="signin-pan" type="text" placeholder="e.g. ABCDE1234F" maxlength="10" autocomplete="off" aria-describedby="signin-pan-error" /></div>
-              <p class="demo-field-error" id="signin-pan-error" hidden></p>
-              <div class="demo-actions">
-                <button type="button" class="demo-btn is-primary" id="demo-signin-send-otp" disabled>Send OTP</button>
-              </div>
-              <p class="demo-fine">Verified in seconds · Used only to confirm it's you · Demo PAN: ABCDE1234F</p>
-            </div>
+      <div class="landing-grid">
+        <a class="landing-card" href="case-study.html">
+          <div>
+            <span class="landing-card-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path><path d="M9.5 13.5l2 2 3.5-4"></path></svg>
+            </span>
+            <p class="landing-card-eyebrow">Read the process</p>
+            <h2 class="landing-card-title">The Case Study</h2>
+            <p class="landing-card-desc">Research, design decisions, and testing behind this concept — from a Reddit outreach post to a tested prototype.</p>
           </div>
-        </section>
+          <span class="landing-card-cta">Read the case study <span aria-hidden="true">→</span></span>
+        </a>
 
-        <section class="demo-screen" id="signin-otp">
-          <div class="auth-grid">
-            <div class="auth-side">
-              <span class="auth-side-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg></span>
-              <ul class="auth-trust-list">
-                <li><strong>No password to remember</strong><span>PAN + OTP is the entire sign-in — one less thing to forget or reuse.</span></li>
-                <li><strong>Verified in seconds</strong><span>Your OTP confirms it's you — nothing else is asked at sign-in.</span></li>
-                <li><strong>Nothing leaves this demo</strong><span>Every step here is simulated. Read the <a href="https://www.iamanimesh.com/income-tax.html">full case study</a>.</span></li>
-              </ul>
-            </div>
-            <div class="auth-form-panel">
-              <span class="demo-eyebrow">Verify it's you</span>
-              <h2 class="demo-heading">Enter the OTP sent to your Aadhaar-linked mobile</h2>
-              <p class="demo-body">Demo only — type any 6 digits, nothing is actually sent or verified.</p>
-              <div class="otp-row" id="signin-otp-row">
-                <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="OTP digit 1" />
-                <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="OTP digit 2" />
-                <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="OTP digit 3" />
-                <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="OTP digit 4" />
-                <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="OTP digit 5" />
-                <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="OTP digit 6" />
-              </div>
-              <div class="demo-actions">
-                <button type="button" class="demo-btn is-primary" id="demo-signin-verify" disabled>Verify &amp; continue</button>
-              </div>
-            </div>
+        <a class="landing-card" href="filing.html">
+          <div>
+            <span class="landing-card-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 7h8M8 11h2m3 0h2m-7 4h2m3 0h2"></path></svg>
+            </span>
+            <p class="landing-card-eyebrow">Try it yourself</p>
+            <h2 class="landing-card-title">File Your ITR</h2>
+            <p class="landing-card-desc">Sign in, auto-fill from AIS, compare old vs. new regime, and file — the interactive concept, end to end.</p>
           </div>
-        </section>
-
-        <section class="demo-screen is-active" id="home">
-          <div class="demo-hero">
-            <span class="demo-hero-badge">AY 2026-27 · Ready when you are</span>
-            <h1 class="demo-hero-heading">Let's make this the easiest return you've filed</h1>
-            <p class="demo-hero-body">Whether this is your first ITR or you just want fewer surprises, everything here answers "what happens next" before it becomes a problem.</p>
-            <div class="demo-hero-actions">
-              <button type="button" class="demo-btn is-primary demo-hero-cta" data-goto="signin">Start Filing</button>
-              <a href="#" data-goto="guide" class="demo-hero-secondary">See how filing works <span aria-hidden="true">→</span></a>
-            </div>
-            <ul class="demo-hero-trust">
-              <li>No password — just PAN + OTP</li>
-              <li>Auto-filled from AIS &amp; Form 26AS</li>
-              <li>Takes about 5 minutes</li>
-            </ul>
-          </div>
-
-          <div class="value-prop-grid">
-            <div class="value-prop-card">
-              <span class="value-prop-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path><path d="M9.5 13.5l2 2 3.5-4"></path></svg></span>
-              <strong>How filing works</strong>
-              <p>See exactly what happens before you start — no surprise steps halfway through.</p>
-              <a href="#" data-goto="guide" class="value-prop-link">View guide <span aria-hidden="true">→</span></a>
-            </div>
-            <div class="value-prop-card">
-              <span class="value-prop-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></span>
-              <strong>Chat support</strong>
-              <p>Stuck on a term or a step? Ask in plain language and get an instant answer.</p>
-              <button type="button" class="value-prop-link" data-open-chat>Chat now <span aria-hidden="true">→</span></button>
-            </div>
-            <div class="value-prop-card">
-              <span class="value-prop-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"></rect><path d="M8 7h8M8 11h2m3 0h2m-7 4h2m3 0h2"></path></svg></span>
-              <strong>Compare your savings</strong>
-              <p>See old vs. new regime with your real numbers before you commit to either one.</p>
-              <a href="#" data-goto="calculator" class="value-prop-link">Open calculator <span aria-hidden="true">→</span></a>
-            </div>
-          </div>
-
-          <h2 class="home-section-title">Quick links</h2>
-          <div class="quick-links-grid">
-            <button type="button" class="quick-link-card" data-goto="guide">
-              <span class="quick-link-title">Step-by-Step Guide</span>
-              <span class="quick-link-desc">See exactly what happens when you file, before you start.</span>
-              <span class="quick-link-status is-open">Open</span>
-            </button>
-            <button type="button" class="quick-link-card" data-goto="calculator">
-              <span class="quick-link-title">Interactive Tax Calculator</span>
-              <span class="quick-link-desc">Compare old vs. new regime before you file.</span>
-              <span class="quick-link-status is-open">Open</span>
-            </button>
-            <button type="button" class="quick-link-card" data-goto="case-studies">
-              <span class="quick-link-title">Real Life Case Studies</span>
-              <span class="quick-link-desc">Worked examples — find the one closest to your situation.</span>
-              <span class="quick-link-status is-open">Open</span>
-            </button>
-            <button type="button" class="quick-link-card" data-goto="tax-qna">
-              <span class="quick-link-title">Tax QnA</span>
-              <span class="quick-link-desc">Plain-language answers, no section numbers.</span>
-              <span class="quick-link-status is-open">Open</span>
-            </button>
-            <button type="button" class="quick-link-card" data-goto="video-tutorials">
-              <span class="quick-link-title">Video Tutorials</span>
-              <span class="quick-link-desc">Short walkthroughs of the trickier steps.</span>
-              <span class="quick-link-status is-open">Open</span>
-            </button>
-            <button type="button" class="quick-link-card" id="quick-link-chat">
-              <span class="quick-link-title">Online Chat Support</span>
-              <span class="quick-link-desc">For anything the guide and QnA don't cover.</span>
-              <span class="quick-link-status is-open">Open</span>
-            </button>
-          </div>
-
-          <div class="home-info-module">
-            <div class="home-info-tabs" role="tablist" aria-label="Filing information">
-              <button type="button" class="home-info-tab is-active" data-info-tab="tips" role="tab" aria-selected="true">Filing tips</button>
-              <button type="button" class="home-info-tab" data-info-tab="mistakes" role="tab" aria-selected="false">Common mistakes</button>
-              <button type="button" class="home-info-tab" data-info-tab="dates" role="tab" aria-selected="false">Key dates</button>
-            </div>
-            <div class="home-info-panels">
-              <div>
-                <div class="home-info-panel is-active" data-info-panel="tips" role="tabpanel">
-                  <ul class="home-info-list">
-                    <li>
-                      <span class="home-info-list-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"></path><path d="M14 3v5h5"></path></svg></span>
-                      <span><strong>Keep Form 16 handy</strong><span>Your salary and TDS numbers come straight from it, so having it open saves back-and-forth.</span></span>
-                    </li>
-                    <li>
-                      <span class="home-info-list-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l6 6L21 6"></path></svg></span>
-                      <span><strong>Check both regimes</strong><span>The new regime isn't always better — we show your numbers under both before you pick.</span></span>
-                    </li>
-                    <li>
-                      <span class="home-info-list-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 3"></path></svg></span>
-                      <span><strong>File before the deadline</strong><span>Filing early means more time to fix mistakes before the cutoff, not just avoiding a rush.</span></span>
-                    </li>
-                  </ul>
-                </div>
-                <div class="home-info-panel" data-info-panel="mistakes" role="tabpanel" hidden>
-                  <ul class="home-info-list">
-                    <li>
-                      <span class="home-info-list-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"></path><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path></svg></span>
-                      <span><strong>Forgetting a second Form 16</strong><span>Switched jobs mid-year? Add both employers' salary together, not one or the other.</span></span>
-                    </li>
-                    <li>
-                      <span class="home-info-list-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"></path><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path></svg></span>
-                      <span><strong>Skipping small capital gains</strong><span>Even a few hundred rupees from selling stock still counts, and still needs reporting.</span></span>
-                    </li>
-                    <li>
-                      <span class="home-info-list-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"></path><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"></path></svg></span>
-                      <span><strong>Missing bank interest</strong><span>Savings account interest is taxable income too, not just interest from fixed deposits.</span></span>
-                    </li>
-                  </ul>
-                </div>
-                <div class="home-info-panel" data-info-panel="dates" role="tabpanel" hidden>
-                  <ul class="home-info-list">
-                    <li>
-                      <span class="home-info-list-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></span>
-                      <span><strong>31 July</strong><span>Usual deadline for individuals who don't need an audit.</span></span>
-                    </li>
-                    <li>
-                      <span class="home-info-list-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></span>
-                      <span><strong>31 December</strong><span>Belated return deadline if you miss the usual date — a late fee applies.</span></span>
-                    </li>
-                    <li>
-                      <span class="home-info-list-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></svg></span>
-                      <span><strong>31 March</strong><span>Final cutoff to file a revised return for the same assessment year.</span></span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="home-info-illustration" aria-hidden="true">
-                <svg viewBox="0 0 200 200" fill="none">
-                  <circle cx="100" cy="100" r="92" stroke="var(--border)" stroke-width="1.5"></circle>
-                  <rect x="62" y="54" width="76" height="98" rx="6" fill="var(--surface)" stroke="var(--border-strong)" stroke-width="2"></rect>
-                  <path d="M76 78h48M76 94h48M76 110h30" stroke="var(--soft)" stroke-width="3" stroke-linecap="round"></path>
-                  <circle cx="140" cy="140" r="24" fill="var(--primary)"></circle>
-                  <path d="M130 140l7 7 14-14" stroke="var(--on-primary)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          <div class="home-faq">
-            <h2 class="home-section-title">Frequently asked questions</h2>
-            <div class="home-faq-list">
-              <div class="home-faq-item">
-                <button type="button" class="home-faq-question" aria-expanded="false"><span>Do I even need to file this year?</span><span class="qna-chevron" aria-hidden="true">⌄</span></button>
-                <div class="home-faq-answer" hidden><p>Generally, yes if your income is above the basic exemption limit, or if you had any capital gains, foreign assets, or business/freelance income — even a small amount. If none of that applies, you may not need to file at all.</p></div>
-              </div>
-              <div class="home-faq-item">
-                <button type="button" class="home-faq-question" aria-expanded="false"><span>Which ITR form applies to me?</span><span class="qna-chevron" aria-hidden="true">⌄</span></button>
-                <div class="home-faq-answer" hidden><p>Salary and bank interest only → ITR-1. Add capital gains or foreign assets → ITR-2. Any business or freelance income → ITR-3. Or just start filing — we work it out from a few plain questions, not the other way around.</p></div>
-              </div>
-              <div class="home-faq-item">
-                <button type="button" class="home-faq-question" aria-expanded="false"><span>Old regime vs. new regime — which is better?</span><span class="qna-chevron" aria-hidden="true">⌄</span></button>
-                <div class="home-faq-answer" hidden><p>It depends entirely on how many deductions you can claim. Try the <a href="#" data-goto="calculator">Interactive Tax Calculator</a> with your real numbers rather than guessing.</p></div>
-              </div>
-              <div class="home-faq-item">
-                <button type="button" class="home-faq-question" aria-expanded="false"><span>What happens if I make a mistake?</span><span class="qna-chevron" aria-hidden="true">⌄</span></button>
-                <div class="home-faq-answer" hidden><p>You're told specifically what doesn't match and what to do about it — not shown a generic red warning with no explanation. A mismatch is a fixable state, not a verdict.</p></div>
-              </div>
-            </div>
-            <a href="#" data-goto="tax-qna" class="home-faq-viewall">View all questions <span aria-hidden="true">→</span></a>
-          </div>
-        </section>
-
-        <section class="demo-screen" id="guide">
-          <span class="demo-eyebrow">Step-by-step guide</span>
-          <h1 class="demo-heading">Here's exactly what happens when you file</h1>
-          <p class="guide-callout"><span><strong>Not sure you even need to file this year?</strong> You generally do if your income is above the basic exemption limit, or if you had any capital gains, foreign assets, or business/freelance income — even a small amount.</span></p>
-
-          <ol class="guide-steps">
-            <li><span class="guide-step-num">1</span><div><strong>Sign in with your PAN</strong><p>An OTP confirms it's you — no password to remember.</p></div></li>
-            <li><span class="guide-step-num">2</span><div><strong>We auto-fill what's already on record</strong><p>Salary, TDS, bank interest, and broker data — pulled from AIS and Form 26AS.</p></div></li>
-            <li><span class="guide-step-num">3</span><div><strong>You confirm what we genuinely can't see</strong><p>Capital gains, freelance income, foreign assets — a few plain questions, not a form.</p></div></li>
-            <li><span class="guide-step-num">4</span><div><strong>We compare both tax regimes</strong><p>Old vs. new, side by side, with the one that saves you more pointed out.</p></div></li>
-            <li><span class="guide-step-num">5</span><div><strong>You review everything in one place</strong><p>Including a check for tax you've already paid by challan, before anything is submitted.</p></div></li>
-            <li><span class="guide-step-num">6</span><div><strong>You verify and you're done</strong><p>One more OTP, and that's the whole process.</p></div></li>
-          </ol>
-
-          <div class="demo-actions demo-actions-row">
-            <button type="button" class="demo-btn is-primary" data-goto="signin">Start Filing</button>
-            <button type="button" class="demo-btn is-quiet" data-goto="home">← Back to Home</button>
-          </div>
-        </section>
-
-        <section class="demo-screen" id="case-studies">
-          <span class="demo-eyebrow">Real life case studies</span>
-          <h1 class="demo-heading">Five people, five situations</h1>
-          <p class="demo-body">The single most common question research heard was "which form even applies to me?" — with no confident way to answer it. Here's that question answered for five real situations, not a legal list.</p>
-
-          <div class="case-study-grid">
-            <article class="case-study-card">
-              <header><span class="case-study-persona">First-time filer, 23</span></header>
-              <p class="case-study-quote">"I didn't even know if I had to file this year. I just knew people were talking about a deadline."</p>
-              <p class="case-study-situation">Salary from one employer. No investments, no other income.</p>
-              <div class="case-study-outcome"><span class="case-study-form">ITR-1</span><p>Salary and bank interest only — no capital gains, business income, or foreign assets. The simplest case there is.</p></div>
-              <p class="case-study-regime"><strong>Regime:</strong> New regime wins outright — nothing to claim under the old regime worth switching for.</p>
-            </article>
-
-            <article class="case-study-card">
-              <header><span class="case-study-persona">First-time filer, 26</span></header>
-              <p class="case-study-quote">"I had two Form 16s from two jobs. Nobody told me if I add them together or pick one."</p>
-              <p class="case-study-situation">Salary from two employers in the same year, after a job change.</p>
-              <div class="case-study-outcome"><span class="case-study-form">ITR-1</span><p>Both employers' salary combine into one figure. The form depends on the type of income, not how many payslips it came from.</p></div>
-              <p class="case-study-regime"><strong>Regime:</strong> Worth comparing both — new regime usually wins unless there are real 80C/80D deductions from before the switch.</p>
-            </article>
-
-            <article class="case-study-card">
-              <header><span class="case-study-persona">Senior citizen, 68</span></header>
-              <p class="case-study-quote">"My son used to do this. Now every second word on the page is one I've never seen before."</p>
-              <p class="case-study-situation">Pension income plus fixed deposit interest. No capital gains.</p>
-              <div class="case-study-outcome"><span class="case-study-form">ITR-1</span><p>Pension counts as salary income for filing purposes — the simplest case, with a higher tax-free threshold for her age.</p></div>
-              <p class="case-study-regime"><strong>Regime:</strong> Old regime often wins here, thanks to the senior-citizen interest deduction (80TTB) — worth comparing, not assuming.</p>
-            </article>
-
-            <article class="case-study-card">
-              <header><span class="case-study-persona">Senior citizen, 71</span></header>
-              <p class="case-study-quote">"I saw a red warning and just stopped. For two days I thought I'd broken something."</p>
-              <p class="case-study-situation">Pension only, one bank account.</p>
-              <div class="case-study-outcome"><span class="case-study-form">ITR-1</span><p>The simplest case on paper. What made it hard wasn't the form — it was an unexplained warning. Here, anything that needs a second look is named specifically.</p></div>
-              <p class="case-study-regime"><strong>Regime:</strong> New regime, in his case — no deductions to claim that would change the outcome.</p>
-            </article>
-
-            <article class="case-study-card">
-              <header><span class="case-study-persona">First-time filer, 29 — freelance + salaried</span></header>
-              <p class="case-study-quote">"I had two tabs open — one for filing, one for Googling what a term meant."</p>
-              <p class="case-study-situation">Salaried income plus freelance or consulting income.</p>
-              <div class="case-study-outcome"><span class="case-study-form">ITR-3</span><p>Any business or professional income — including freelancing — needs ITR-3 instead of ITR-1 or ITR-2.</p></div>
-              <p class="case-study-regime"><strong>Regime:</strong> New regime is simpler with few business expenses to claim; old regime can still win with real expenses on the books.</p>
-            </article>
-          </div>
-
-          <div class="demo-actions demo-actions-row">
-            <button type="button" class="demo-btn is-primary" data-goto="signin">Start Filing</button>
-            <button type="button" class="demo-btn is-quiet" data-goto="home">← Back to Home</button>
-          </div>
-        </section>
-
-        <section class="demo-screen" id="calculator">
-          <span class="demo-eyebrow">Interactive tax calculator</span>
-          <h1 class="demo-heading">See what you'd owe, before you file</h1>
-          <p class="demo-body">Recalculated after every entry — you shouldn't have to guess, or wait, to see where you stand.</p>
-
-          <div class="calculator-grid">
-            <div class="calculator-inputs">
-              <div class="calc-field">
-                <span class="calc-label">Age</span>
-                <div class="calc-segmented" id="calc-age-group">
-                  <button type="button" class="calc-segment is-selected" data-age="below60">Below 60</button>
-                  <button type="button" class="calc-segment" data-age="60to79">60–79 (Senior citizen)</button>
-                  <button type="button" class="calc-segment" data-age="80plus">80 and above</button>
-                </div>
-                <p class="calc-hint" id="calc-age-hint">Affects the tax-free threshold under the old regime only — the new regime treats every age the same.</p>
-              </div>
-
-              <div class="calc-field">
-                <label class="calc-label" for="calc-income">Annual income (₹)</label>
-                <input type="number" inputmode="numeric" id="calc-income" class="calc-input" value="900000" min="0" step="1000" />
-              </div>
-
-              <div class="calc-field-row">
-                <div class="calc-field">
-                  <label class="calc-label" for="calc-80c">Section 80C (₹)</label>
-                  <input type="number" inputmode="numeric" id="calc-80c" class="calc-input" value="0" min="0" step="1000" />
-                  <p class="calc-hint">ELSS, PPF, life insurance — up to ₹1,50,000</p>
-                </div>
-                <div class="calc-field">
-                  <label class="calc-label" for="calc-80d">Section 80D (₹)</label>
-                  <input type="number" inputmode="numeric" id="calc-80d" class="calc-input" value="0" min="0" step="1000" />
-                  <p class="calc-hint">Health insurance premium — up to ₹25,000</p>
-                </div>
-              </div>
-
-              <div class="calc-field">
-                <label class="calc-label" for="calc-other">Other deductions (₹)</label>
-                <input type="number" inputmode="numeric" id="calc-other" class="calc-input" value="0" min="0" step="1000" />
-                <p class="calc-hint">Home loan interest, donations, education loan interest, etc.</p>
-              </div>
-
-              <button type="button" class="demo-btn is-quiet calc-reset" id="calc-reset">Reset</button>
-            </div>
-
-            <div class="calculator-summary">
-              <h2 class="calc-summary-heading">Tax summary</h2>
-              <table class="calc-summary-table">
-                <thead><tr><th scope="col">Particulars</th><th scope="col">Old regime</th><th scope="col">New regime</th></tr></thead>
-                <tbody>
-                  <tr><th scope="row">Gross income</th><td id="calc-gross-old">₹0</td><td id="calc-gross-new">₹0</td></tr>
-                  <tr><th scope="row">Deductions</th><td id="calc-ded-old">₹0</td><td id="calc-ded-new">₹0</td></tr>
-                  <tr><th scope="row">Taxable income</th><td id="calc-taxable-old">₹0</td><td id="calc-taxable-new">₹0</td></tr>
-                  <tr class="is-total"><th scope="row">Tax payable</th><td id="calc-payable-old">₹0</td><td id="calc-payable-new">₹0</td></tr>
-                </tbody>
-              </table>
-              <p class="calc-savings" id="calc-savings"></p>
-              <p class="demo-fine">Simplified for this demo — assumes salary income only, standard slab rates plus 4% cess, and isn't tax advice.</p>
-              <div class="demo-actions">
-                <button type="button" class="demo-btn is-primary" data-goto="signin">Start Filing with these numbers</button>
-                <button type="button" class="demo-btn is-quiet" data-goto="home">← Back to Home</button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="demo-screen" id="tax-qna">
-          <span class="demo-eyebrow">Tax QnA</span>
-          <h1 class="demo-heading">Plain-language answers, no section numbers</h1>
-          <p class="demo-body">Every question here came from something people actually asked, not a made-up FAQ. Search, or browse by theme.</p>
-
-          <div class="qna-controls">
-            <input type="search" id="qna-search" class="qna-search-input" placeholder="Search a question or term…" aria-label="Search Tax QnA" />
-            <div class="qna-filter-chips" id="qna-filter-chips">
-              <button type="button" class="qna-chip is-active" data-filter="all">All</button>
-              <button type="button" class="qna-chip" data-filter="form">Form</button>
-              <button type="button" class="qna-chip" data-filter="reuse">Reuse</button>
-              <button type="button" class="qna-chip" data-filter="term">Terminology</button>
-              <button type="button" class="qna-chip" data-filter="recover">Recovery</button>
-            </div>
-          </div>
-
-          <div class="qna-list" id="qna-list">
-            <div class="qna-item" data-tag="form">
-              <button type="button" class="qna-question" aria-expanded="false"><span>Do I even need to file this year?</span><span class="qna-chevron" aria-hidden="true">⌄</span></button>
-              <div class="qna-answer" hidden><p>Generally, yes if your income is above the basic exemption limit, or if you had any capital gains, foreign assets, or business/freelance income — even a small amount. If none of that applies, you may not need to file at all.</p></div>
-            </div>
-            <div class="qna-item" data-tag="form">
-              <button type="button" class="qna-question" aria-expanded="false"><span>Which ITR form applies to me?</span><span class="qna-chevron" aria-hidden="true">⌄</span></button>
-              <div class="qna-answer" hidden><p>Salary and bank interest only → ITR-1. Add capital gains or foreign assets → ITR-2. Any business or freelance income → ITR-3. See <a href="#" data-goto="case-studies">Real Life Case Studies</a> for five worked examples, or just start filing — we work it out from a few plain questions, not the other way around.</p></div>
-            </div>
-            <div class="qna-item" data-tag="form">
-              <button type="button" class="qna-question" aria-expanded="false"><span>I have two Form 16s from two jobs — do I add them together or pick one?</span><span class="qna-chevron" aria-hidden="true">⌄</span></button>
-              <div class="qna-answer" hidden><p>Add them together. Both employers' salary combines into one figure on your return — it's still just salary income, so it's still ITR-1.</p></div>
-            </div>
-            <div class="qna-item" data-tag="term">
-              <button type="button" class="qna-question" aria-expanded="false"><span>What's the difference between AY and FY?</span><span class="qna-chevron" aria-hidden="true">⌄</span></button>
-              <div class="qna-answer" hidden><p>FY (Financial Year) is when you earned the income — April to March. AY (Assessment Year) is the year after that, when it gets assessed and filed. Income earned in FY 2025-26 is filed in AY 2026-27.</p></div>
-            </div>
-            <div class="qna-item" data-tag="term">
-              <button type="button" class="qna-question" aria-expanded="false"><span>What is Section 80C?</span><span class="qna-chevron" aria-hidden="true">⌄</span></button>
-              <div class="qna-answer" hidden><p>A deduction for money you've put into things like ELSS funds, PPF, or life insurance premiums — up to ₹1,50,000. It only reduces tax under the old regime.</p></div>
-            </div>
-            <div class="qna-item" data-tag="term">
-              <button type="button" class="qna-question" aria-expanded="false"><span>What is Section 80D?</span><span class="qna-chevron" aria-hidden="true">⌄</span></button>
-              <div class="qna-answer" hidden><p>A deduction for health insurance premiums you've paid — up to ₹25,000 (higher for senior citizens). Like 80C, it only applies under the old regime.</p></div>
-            </div>
-            <div class="qna-item" data-tag="term">
-              <button type="button" class="qna-question" aria-expanded="false"><span>What is TDS?</span><span class="qna-chevron" aria-hidden="true">⌄</span></button>
-              <div class="qna-answer" hidden><p>Tax Deducted at Source — tax your employer or bank already took out before paying you, and sent to the government on your behalf. It shows up in Form 26AS, and reduces what you still owe when you file.</p></div>
-            </div>
-            <div class="qna-item" data-tag="term">
-              <button type="button" class="qna-question" aria-expanded="false"><span>What are AIS and Form 26AS?</span><span class="qna-chevron" aria-hidden="true">⌄</span></button>
-              <div class="qna-answer" hidden><p>Government records of the income and tax already on file for you — salary, TDS, bank interest, broker statements. This is exactly what we auto-fill from, so you're not retyping what's already known.</p></div>
-            </div>
-            <div class="qna-item" data-tag="term">
-              <button type="button" class="qna-question" aria-expanded="false"><span>Old regime vs. new regime — which is better?</span><span class="qna-chevron" aria-hidden="true">⌄</span></button>
-              <div class="qna-answer" hidden><p>It depends entirely on how many deductions you can claim — the old regime allows more of them, the new regime has lower rates but fewer deductions. Try the <a href="#" data-goto="calculator">Interactive Tax Calculator</a> with your real numbers rather than guessing.</p></div>
-            </div>
-            <div class="qna-item" data-tag="reuse">
-              <button type="button" class="qna-question" aria-expanded="false"><span>Why do I have to re-enter information the government already has?</span><span class="qna-chevron" aria-hidden="true">⌄</span></button>
-              <div class="qna-answer" hidden><p>You shouldn't, for most of it — that's the point of pulling from AIS and Form 26AS automatically. We only ask again when something doesn't match, or when it's genuinely something we can't see, like freelance income.</p></div>
-            </div>
-            <div class="qna-item" data-tag="recover">
-              <button type="button" class="qna-question" aria-expanded="false"><span>What happens if I make a mistake?</span><span class="qna-chevron" aria-hidden="true">⌄</span></button>
-              <div class="qna-answer" hidden><p>You're told specifically what doesn't match and what to do about it — not shown a generic red warning with no explanation. A mismatch is a fixable state, not a verdict.</p></div>
-            </div>
-            <div class="qna-item" data-tag="recover">
-              <button type="button" class="qna-question" aria-expanded="false"><span>I paid tax through a challan — do I still need to enter it?</span><span class="qna-chevron" aria-hidden="true">⌄</span></button>
-              <div class="qna-answer" hidden><p>Yes. The payment is real, but if its details never make it into the return, the return shows the tax as unpaid — and that gap is exactly what turns into a "tax defaulter" notice months later, for tax you already paid. We check for this before you file.</p></div>
-            </div>
-          </div>
-
-          <p class="qna-empty" id="qna-empty" hidden>No matches for that search — try a different word.</p>
-
-          <div class="demo-actions demo-actions-row">
-            <button type="button" class="demo-btn is-primary" data-goto="signin">Start Filing</button>
-            <button type="button" class="demo-btn is-quiet" data-goto="home">← Back to Home</button>
-          </div>
-        </section>
-
-        <section class="demo-screen" id="video-tutorials">
-          <span class="demo-eyebrow">Video tutorials</span>
-          <h1 class="demo-heading">Short walkthroughs, without opening a new tab</h1>
-          <p class="demo-body">Several replies to the original research post asked for a chatbot outright — read next to the terminology complaints, that was really a request for help that doesn't require leaving the page. These are that, in walkthrough form.</p>
-
-          <div class="tutorial-grid" id="tutorial-list">
-            <button type="button" class="tutorial-card" data-tutorial="0">
-              <span class="tutorial-thumb"><span class="tutorial-play">▶</span><span class="tutorial-duration">0:35</span></span>
-              <span class="tutorial-title">Signing in without a password</span>
-              <span class="tutorial-desc">Why PAN + OTP replaces the account you'd normally have to create.</span>
-            </button>
-            <button type="button" class="tutorial-card" data-tutorial="1">
-              <span class="tutorial-thumb"><span class="tutorial-play">▶</span><span class="tutorial-duration">0:50</span></span>
-              <span class="tutorial-title">Why your salary auto-fills</span>
-              <span class="tutorial-desc">Where the numbers on the Snapshot screen actually come from.</span>
-            </button>
-            <button type="button" class="tutorial-card" data-tutorial="2">
-              <span class="tutorial-thumb"><span class="tutorial-play">▶</span><span class="tutorial-duration">0:40</span></span>
-              <span class="tutorial-title">Understanding capital gains</span>
-              <span class="tutorial-desc">What that question on the Ask screen is actually asking.</span>
-            </button>
-            <button type="button" class="tutorial-card" data-tutorial="3">
-              <span class="tutorial-thumb"><span class="tutorial-play">▶</span><span class="tutorial-duration">0:55</span></span>
-              <span class="tutorial-title">Old vs. new regime, in one screen</span>
-              <span class="tutorial-desc">How we decide which one actually saves you money.</span>
-            </button>
-            <button type="button" class="tutorial-card" data-tutorial="4">
-              <span class="tutorial-thumb"><span class="tutorial-play">▶</span><span class="tutorial-duration">0:45</span></span>
-              <span class="tutorial-title">Fixing a mismatch before you file</span>
-              <span class="tutorial-desc">What happens when something doesn't line up — and why it isn't a red warning.</span>
-            </button>
-            <button type="button" class="tutorial-card" data-tutorial="5">
-              <span class="tutorial-thumb"><span class="tutorial-play">▶</span><span class="tutorial-duration">0:50</span></span>
-              <span class="tutorial-title">The challan check, explained</span>
-              <span class="tutorial-desc">The single most common way people accidentally become a "defaulter."</span>
-            </button>
-          </div>
-
-          <div class="tutorial-player" id="tutorial-player" hidden>
-            <button type="button" class="tutorial-back" id="tutorial-back">← All tutorials</button>
-            <div class="tutorial-player-head">
-              <h2 id="tutorial-player-title">Tutorial title</h2>
-              <span class="tutorial-player-duration" id="tutorial-player-duration">0:00</span>
-            </div>
-            <div class="tutorial-progress" id="tutorial-progress"><span></span><span></span><span></span></div>
-            <div class="tutorial-frame">
-              <p id="tutorial-frame-caption">Caption</p>
-            </div>
-            <div class="tutorial-controls">
-              <button type="button" class="demo-btn is-quiet" id="tutorial-prev">← Back</button>
-              <button type="button" class="demo-btn is-primary" id="tutorial-play-btn">▶ Play</button>
-              <button type="button" class="demo-btn is-quiet" id="tutorial-next">Next →</button>
-            </div>
-            <p class="tutorial-frame-count" id="tutorial-frame-count">Step 1 of 3</p>
-          </div>
-
-          <div class="demo-actions demo-actions-row">
-            <button type="button" class="demo-btn is-primary" data-goto="signin">Start Filing</button>
-            <button type="button" class="demo-btn is-quiet" data-goto="home">← Back to Home</button>
-          </div>
-        </section>
-
-        <section class="demo-screen" id="analyzing">
-          <div class="demo-analyzing">
-            <span class="demo-eyebrow">Getting started</span>
-            <p class="demo-analyzing-label">Analysing your AIS…</p>
-            <p class="demo-analyzing-percent" id="demo-analyzing-percent">0%</p>
-            <div class="demo-analyzing-track"><span class="demo-analyzing-fill" id="demo-analyzing-fill"></span></div>
-            <p class="demo-fine" id="demo-analyzing-substep">Matching your PAN with AIS records…</p>
-          </div>
-        </section>
-
-        <section class="demo-screen" id="importing">
-          <span class="demo-eyebrow" id="importing-eyebrow">One moment</span>
-          <h2 class="demo-heading" id="importing-heading">Securely fetching your data…</h2>
-          <p class="demo-body" id="importing-body">Connecting to AIS, Form 26AS, and your linked broker — nothing leaves this demo.</p>
-          <ul class="import-checklist">
-            <li class="import-item" id="import-item-salary">
-              <button type="button" class="import-item-row" aria-expanded="false" aria-controls="import-detail-salary"><span class="import-item-label">Salary &amp; employer details</span><span class="import-dot"></span><span class="import-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"></path></svg></span></button>
-              <div class="import-item-detail" id="import-detail-salary" hidden>
-                <dl>
-                  <div><dt>Employer</dt><dd>TCS India Pvt. Ltd.</dd></div>
-                  <div><dt>Basic</dt><dd>₹6,20,000</dd></div>
-                  <div><dt>HRA</dt><dd>₹1,80,000</dd></div>
-                  <div><dt>Special allowance</dt><dd>₹1,40,000</dd></div>
-                  <div class="is-total"><dt>Gross salary</dt><dd>₹9,40,000</dd></div>
-                </dl>
-              </div>
-            </li>
-            <li class="import-item" id="import-item-tds">
-              <button type="button" class="import-item-row" aria-expanded="false" aria-controls="import-detail-tds"><span class="import-item-label">TDS already deducted</span><span class="import-dot"></span><span class="import-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"></path></svg></span></button>
-              <div class="import-item-detail" id="import-detail-tds" hidden>
-                <dl>
-                  <div><dt>Q1 (Apr–Jun)</dt><dd>₹17,000</dd></div>
-                  <div><dt>Q2 (Jul–Sep)</dt><dd>₹17,000</dd></div>
-                  <div><dt>Q3 (Oct–Dec)</dt><dd>₹17,000</dd></div>
-                  <div><dt>Q4 (Jan–Mar)</dt><dd>₹17,000</dd></div>
-                  <div class="is-total"><dt>Total TDS</dt><dd>₹68,000</dd></div>
-                </dl>
-              </div>
-            </li>
-            <li class="import-item" id="import-item-interest">
-              <button type="button" class="import-item-row" aria-expanded="false" aria-controls="import-detail-interest"><span class="import-item-label">Bank interest (Form 26AS)</span><span class="import-dot"></span><span class="import-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"></path></svg></span></button>
-              <div class="import-item-detail" id="import-detail-interest" hidden>
-                <dl>
-                  <div><dt>HDFC Bank — savings</dt><dd>₹5,400</dd></div>
-                  <div><dt>SBI — savings</dt><dd>₹3,000</dd></div>
-                  <div class="is-total"><dt>Total interest</dt><dd>₹8,400</dd></div>
-                </dl>
-              </div>
-            </li>
-            <li class="import-item" id="import-item-broker">
-              <button type="button" class="import-item-row" aria-expanded="false" aria-controls="import-detail-broker"><span class="import-item-label">Broker statements</span><span class="import-dot"></span><span class="import-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"></path></svg></span></button>
-              <div class="import-item-detail" id="import-detail-broker" hidden>
-                <dl>
-                  <div><dt>Broker</dt><dd>Zerodha Broking</dd></div>
-                  <div><dt>Type</dt><dd>Equity — short-term</dd></div>
-                  <div class="is-total"><dt>Capital gains</dt><dd>₹1,20,000</dd></div>
-                </dl>
-              </div>
-            </li>
-          </ul>
-          <div class="demo-actions">
-            <button type="button" class="demo-btn is-primary" hidden id="demo-import-continue" data-goto-snapshot>Looks good — continue</button>
-          </div>
-        </section>
-
-        <section class="demo-screen" id="verify">
-          <span class="demo-eyebrow">Verify your details</span>
-          <h2 class="demo-heading">Does everything look right, or is there anything else to add?</h2>
-
-          <div class="verify-capgains" id="verify-capgains">
-            <div class="verify-capgains-info">
-              <span class="demo-check-dot" id="verify-capgains-dot"></span>
-              <div>
-                <strong>Capital gains — ₹1,20,000</strong>
-                <span>Detected from your linked broker statements this year.</span>
-              </div>
-            </div>
-            <div class="verify-capgains-actions" id="verify-capgains-actions">
-              <button type="button" class="demo-btn-sm" data-capgains="yes">That's right</button>
-              <button type="button" class="demo-btn-sm is-quiet" data-capgains="no">Not mine</button>
-            </div>
-            <p class="verify-capgains-status" id="verify-capgains-status" hidden></p>
-          </div>
-
-          <details class="verify-more">
-            <summary>Anything else we can't see? <span>Business income, foreign assets</span></summary>
-            <div class="demo-toggle-list">
-              <button type="button" class="demo-toggle" id="demo-toggle-business" aria-pressed="false">
-                <span class="demo-toggle-switch"></span>
-                <span><strong>Business or freelance income</strong><span>Consulting, freelancing, or running a business</span></span>
-              </button>
-              <button type="button" class="demo-toggle" id="demo-toggle-foreign" aria-pressed="false">
-                <span class="demo-toggle-switch"></span>
-                <span><strong>Foreign assets or income</strong><span>Foreign bank accounts, shares, or property</span></span>
-              </button>
-            </div>
-            <p class="demo-fine">These change which ITR form applies, not your total income — neither carries a rupee amount we can add here.</p>
-          </details>
-
-          <div class="demo-actions">
-            <button type="button" class="demo-btn is-primary" id="demo-verify-continue">See my suggested form</button>
-          </div>
-        </section>
-
-        <section class="demo-screen" id="resolve">
-          <span class="demo-eyebrow">Result</span>
-          <h2 class="demo-heading">Based on what you told us:</h2>
-          <div class="demo-result-box">
-            <p class="demo-result-form" id="demo-result-form">ITR-1</p>
-            <p class="demo-result-why" id="demo-result-why">Reasoning appears here.</p>
-          </div>
-          <div class="demo-actions">
-            <button type="button" class="demo-btn is-primary" id="demo-continue-review">Compare old vs. new regime</button>
-            <button type="button" class="demo-btn is-quiet" id="demo-not-right">That doesn't sound right</button>
-          </div>
-        </section>
-
-        <section class="demo-screen" id="override">
-          <span class="demo-eyebrow">Pick it yourself</span>
-          <h2 class="demo-heading">Which form do you think applies?</h2>
-          <p class="demo-body">No pressure — you can always change this later before filing.</p>
-          <div class="demo-override-list">
-            <button type="button" class="demo-override-option" data-manual-form="ITR-1"><strong>ITR-1 (Sahaj)</strong><span>Salary income only, total income up to ₹50 lakh</span></button>
-            <button type="button" class="demo-override-option" data-manual-form="ITR-2"><strong>ITR-2</strong><span>Salary plus capital gains, foreign assets, or more than one property</span></button>
-            <button type="button" class="demo-override-option" data-manual-form="ITR-3"><strong>ITR-3</strong><span>Business or professional income, including freelancing</span></button>
-            <button type="button" class="demo-override-option" data-manual-form="ITR-4 (Sugam)"><strong>ITR-4 (Sugam)</strong><span>Presumptive business or professional income</span></button>
-          </div>
-        </section>
-
-        <section class="demo-screen" id="compare">
-          <span class="demo-eyebrow">Compare regimes</span>
-          <h2 class="demo-heading">Here's what you'd owe under each</h2>
-          <div class="regime-grid">
-            <button type="button" class="regime-card" id="demo-regime-new" data-pick-regime="new">
-              <span class="regime-name">New regime</span>
-              <span class="regime-amount" id="demo-new-tax">₹0</span>
-              <span class="regime-note">Standard deduction only</span>
-              <span class="regime-badge">Recommended</span>
-            </button>
-            <button type="button" class="regime-card" id="demo-regime-old" data-pick-regime="old">
-              <span class="regime-name">Old regime</span>
-              <span class="regime-amount" id="demo-old-tax">₹0</span>
-              <span class="regime-note">With your deductions applied</span>
-              <span class="regime-badge">Recommended</span>
-            </button>
-          </div>
-          <p class="demo-body" style="margin-top: 16px;">That's a difference of <strong id="demo-savings">₹0</strong>. Tap either card to choose it — we've pre-selected the one that costs less.</p>
-
-          <details class="verify-more">
-            <summary>Add deductions <span>Section 80C, 80D — only help under the old regime</span></summary>
-            <div class="demo-toggle-list">
-              <button type="button" class="demo-toggle" id="demo-ded-80c" aria-pressed="false">
-                <span class="demo-toggle-switch"></span>
-                <span><strong>Section 80C</strong><span>ELSS, PPF, life insurance premiums — up to ₹1,50,000</span></span>
-              </button>
-              <button type="button" class="demo-toggle" id="demo-ded-80d" aria-pressed="false">
-                <span class="demo-toggle-switch"></span>
-                <span><strong>Section 80D</strong><span>Health insurance premiums — up to ₹25,000</span></span>
-              </button>
-            </div>
-          </details>
-
-          <p class="demo-help" id="demo-old-deductions-note" style="display: none;"><span>Your 80C/80D choices only reduce tax under the <strong>old</strong> regime — the new regime doesn't allow most deductions, which is part of why this comparison matters.</span></p>
-          <p class="demo-fine">Simplified for this demo — capital gains are taxed at slab rate here rather than the real flat STCG/LTCG rates, and this isn't tax advice.</p>
-          <div class="demo-actions">
-            <button type="button" class="demo-btn is-primary" id="demo-compare-continue">Continue to review</button>
-          </div>
-        </section>
-
-        <section class="demo-screen" id="review">
-          <span class="demo-eyebrow">Review</span>
-          <h2 class="demo-heading">Everything in one place before you file</h2>
-          <ul class="demo-checklist">
-            <li class="is-done"><span class="demo-check-dot"></span>Salary &amp; TDS — matched</li>
-            <li class="is-done"><span class="demo-check-dot"></span>Bank interest — matched</li>
-            <li class="is-done" id="demo-review-capgains"><span class="demo-check-dot"></span>Capital gains — reconciled with broker data</li>
-          </ul>
-          <div class="summary-box">
-            <div class="summary-row"><span>Filing as</span><strong id="demo-review-form">ITR-2</strong></div>
-            <div class="summary-row"><span>Regime</span><strong id="demo-review-regime">New regime</strong></div>
-            <div class="summary-row"><span>Total income</span><strong id="demo-review-income">₹0</strong></div>
-            <div class="summary-row"><span>Tax computed</span><strong id="demo-review-tax">₹0</strong></div>
-            <div class="summary-row"><span>Already paid (TDS)</span><strong id="demo-review-tds">₹0</strong></div>
-            <div class="summary-row is-outcome"><span>Outcome</span><strong id="demo-review-outcome">—</strong></div>
-          </div>
-          <div class="demo-actions">
-            <button type="button" class="demo-btn is-primary" id="demo-review-done">Continue</button>
-          </div>
-        </section>
-
-        <section class="demo-screen" id="challan-check">
-          <span class="demo-eyebrow">Before you file</span>
-          <h2 class="demo-heading">Have you already paid this tax through a challan?</h2>
-          <p class="demo-body">This is one of the most common ways people end up flagged as a defaulter later — the tax genuinely gets paid, but its challan details never make it into the return, so there's no record it happened here.</p>
-          <div class="demo-choice-grid" id="challan-initial-choices">
-            <button type="button" class="demo-choice" data-challan="yes">Yes, I've paid it</button>
-            <button type="button" class="demo-choice" data-challan="no">No, not yet</button>
-          </div>
-          <div id="challan-yes-panel" hidden>
-            <p class="demo-warn-box"><span>Good catch — without these details, this return would have gone in looking unpaid even though it wasn't.</span></p>
-            <div class="demo-input-row"><label for="challan-number">Challan number</label><input id="challan-number" type="text" placeholder="e.g. 24010500012345" /></div>
-            <div class="demo-input-row"><label for="challan-bsr">BSR code</label><input id="challan-bsr" type="text" placeholder="e.g. 0510004" /></div>
-            <div class="demo-actions">
-              <button type="button" class="demo-btn is-primary" data-challan-continue>Confirm &amp; continue</button>
-            </div>
-          </div>
-          <div id="challan-no-panel" hidden>
-            <p class="demo-help"><span>No problem — you can e-verify now and pay before the deadline. We'll remind you, and nothing here treats paying on time as a problem.</span></p>
-            <div class="demo-actions">
-              <button type="button" class="demo-btn is-primary" data-challan-continue>Continue</button>
-            </div>
-          </div>
-        </section>
-
-        <section class="demo-screen" id="everify">
-          <span class="demo-eyebrow">Verify &amp; file</span>
-          <h2 class="demo-heading">Enter the OTP sent to your Aadhaar-linked mobile</h2>
-          <p class="demo-body">Demo only — type any 6 digits, nothing is actually sent or verified.</p>
-          <div class="otp-row" id="everify-otp-row">
-            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="OTP digit 1" />
-            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="OTP digit 2" />
-            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="OTP digit 3" />
-            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="OTP digit 4" />
-            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="OTP digit 5" />
-            <input class="otp-box" type="text" inputmode="numeric" maxlength="1" aria-label="OTP digit 6" />
-          </div>
-          <div class="demo-actions">
-            <button type="button" class="demo-btn is-primary" id="demo-file-now" disabled>File now</button>
-          </div>
-        </section>
-
-        <section class="demo-screen" id="done">
-          <span class="demo-eyebrow">Filed — demo only</span>
-          <h2 class="demo-heading">That's the concept, end to end</h2>
-          <p class="demo-body">Acknowledgement number <strong id="demo-ack-number">ITR-DEMO-000000</strong>. Nothing was actually submitted — this is where the real product would begin. If anything felt off, confusing, or genuinely better than what exists today, I'd like to know.</p>
-          <div class="demo-feedback">
-            <p class="demo-feedback-label">How would you rate this concept?</p>
-            <div class="feedback-stars" id="feedback-stars" role="radiogroup" aria-label="Rate this concept out of 5">
-              <button type="button" class="feedback-star" data-star="1" role="radio" aria-checked="false" aria-label="1 star"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.2 5.9-.8L12 3.5z"></path></svg></button>
-              <button type="button" class="feedback-star" data-star="2" role="radio" aria-checked="false" aria-label="2 stars"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.2 5.9-.8L12 3.5z"></path></svg></button>
-              <button type="button" class="feedback-star" data-star="3" role="radio" aria-checked="false" aria-label="3 stars"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.2 5.9-.8L12 3.5z"></path></svg></button>
-              <button type="button" class="feedback-star" data-star="4" role="radio" aria-checked="false" aria-label="4 stars"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.2 5.9-.8L12 3.5z"></path></svg></button>
-              <button type="button" class="feedback-star" data-star="5" role="radio" aria-checked="false" aria-label="5 stars"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.2 5.9-.8L12 3.5z"></path></svg></button>
-              <span class="feedback-stars-label" id="feedback-stars-label"></span>
-            </div>
-
-            <p class="demo-feedback-label">What stood out? <span>(optional, pick any)</span></p>
-            <div class="feedback-tags" id="feedback-tags">
-              <button type="button" class="feedback-tag" data-tag="confusing">Confusing somewhere</button>
-              <button type="button" class="feedback-tag" data-tag="slow">Felt slow</button>
-              <button type="button" class="feedback-tag" data-tag="trustworthy">Felt trustworthy</button>
-              <button type="button" class="feedback-tag" data-tag="clear">Clearer than the real thing</button>
-              <button type="button" class="feedback-tag" data-tag="broken">Something broke</button>
-            </div>
-
-            <textarea id="demo-feedback-text" placeholder="What was confusing? What worked? Would you actually trust a result like this?"></textarea>
-            <div class="feedback-actions">
-              <button type="button" class="demo-btn is-primary" id="demo-send-feedback">Email this feedback</button>
-              <button type="button" class="demo-btn" id="demo-copy-feedback">Copy instead</button>
-            </div>
-            <p class="demo-thanks" id="demo-thanks"></p>
-          </div>
-          <p class="demo-body" style="margin-top: 18px; margin-bottom: 0;"><a href="#" data-restart>↺ Try it again with different answers</a></p>
-        </section>
+          <span class="landing-card-cta">Start filing <span aria-hidden="true">→</span></span>
+        </a>
       </div>
     </main>
 
-    <footer class="site-footer">
-      <p class="demo-disclaimer"><strong>This is a design research prototype</strong>, not affiliated with the Income Tax Department or any filing service. The auto-import, OTP, and filing steps are all simulated with fixed demo data — nothing you do here is submitted, filed, or stored anywhere, and no real account is contacted. Read the <a href="https://www.iamanimesh.com/income-tax.html">full case study</a>.</p>
+    <footer class="landing-footer">
+      <span>A concept demo by Animesh Sharma</span>
     </footer>
 
-    <div class="chat-widget" id="chat-widget">
-      <div class="chat-panel" id="chat-panel" hidden>
-        <div class="chat-panel-head">
-          <div>
-            <strong>Ask ITR Assist</strong>
-            <span>Simulated assistant — answers pulled from Tax QnA</span>
-          </div>
-          <button type="button" class="chat-close" id="chat-close" aria-label="Close chat">✕</button>
-        </div>
-        <div class="chat-messages" id="chat-messages">
-          <div class="chat-msg is-bot"><p>Hi — ask me something about filing, or tap a suggestion below.</p></div>
-        </div>
-        <div class="chat-quick-replies" id="chat-quick-replies"></div>
-        <form class="chat-input-row" id="chat-input-row">
-          <input type="text" id="chat-input" placeholder="Type a question…" autocomplete="off" aria-label="Type a question" />
-          <button type="submit" class="chat-send" aria-label="Send">→</button>
-        </form>
-      </div>
-      <button type="button" class="chat-bubble" id="chat-bubble" aria-label="Open chat support">💬</button>
-    </div>
-
-    <script src="scripts/income-tax-demo.js?v=20" defer></script>
+    <script>
+      (function () {
+        var btn = document.getElementById("theme-toggle");
+        if (!btn) return;
+        function apply(theme) {
+          if (theme === "dark") {
+            document.documentElement.setAttribute("data-theme", "dark");
+            btn.textContent = "☀️";
+            btn.setAttribute("aria-pressed", "true");
+            btn.setAttribute("aria-label", "Switch to light mode");
+          } else {
+            document.documentElement.removeAttribute("data-theme");
+            btn.textContent = "🌙";
+            btn.setAttribute("aria-pressed", "false");
+            btn.setAttribute("aria-label", "Switch to dark mode");
+          }
+        }
+        apply(document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light");
+        btn.addEventListener("click", function () {
+          var isDark = document.documentElement.getAttribute("data-theme") === "dark";
+          var next = isDark ? "light" : "dark";
+          localStorage.setItem("itr-demo-theme", next);
+          apply(next);
+        });
+      })();
+    </script>
   </body>
 </html>
