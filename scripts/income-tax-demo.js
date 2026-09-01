@@ -257,10 +257,27 @@
       } else {
         setTimeout(function () {
           showScreen("data-review");
+          revealDataReviewItems();
         }, 300);
       }
     }
     requestAnimationFrame(step);
+  }
+
+  // ---- Data review: reveal each fetched item one at a time, like a live pull ----
+  function revealDataReviewItems() {
+    var items = Array.prototype.slice.call(document.querySelectorAll("#data-review .import-item"));
+    items.forEach(function (item) {
+      item.classList.remove("is-done");
+    });
+    items.forEach(function (item, i) {
+      setTimeout(function () {
+        item.classList.add("is-done");
+        if (item.id === "import-item-capgains") {
+          setCapgainsState(answers.capgains);
+        }
+      }, 260 * (i + 1));
+    });
   }
 
   // ---- Data review: edit an auto-filled amount inline (capital gains — no sub-breakdown) ----
@@ -603,16 +620,33 @@
     document.getElementById("demo-review-income").textContent = fmt(computed.totalIncome);
     document.getElementById("demo-review-tax").textContent = fmt(computed.finalTax);
     document.getElementById("demo-review-tds").textContent = fmt(IMPORTED.tds);
+
+    var barMax = Math.max(computed.totalIncome, computed.finalTax, IMPORTED.tds, 1);
+    var barIncome = document.getElementById("bar-income");
+    var barTax = document.getElementById("bar-tax");
+    var barTds = document.getElementById("bar-tds");
+    requestAnimationFrame(function () {
+      if (barIncome) barIncome.style.width = Math.round((computed.totalIncome / barMax) * 100) + "%";
+      if (barTax) barTax.style.width = Math.round((computed.finalTax / barMax) * 100) + "%";
+      if (barTds) barTds.style.width = Math.round((IMPORTED.tds / barMax) * 100) + "%";
+    });
+
     var diff = computed.finalTax - IMPORTED.tds;
+    var outcomeHero = document.getElementById("outcome-hero");
+    var outcomeLabel = document.getElementById("outcome-hero-label");
     var outcomeEl = document.getElementById("demo-review-outcome");
     if (diff > 0) {
-      outcomeEl.textContent = fmt(diff) + " still payable";
+      outcomeLabel.textContent = "You still owe";
+      outcomeEl.textContent = fmt(diff);
       outcomeEl.classList.add("is-payable");
       outcomeEl.classList.remove("is-refund");
+      outcomeHero.classList.add("is-payable");
     } else {
-      outcomeEl.textContent = fmt(Math.abs(diff)) + " refund due";
+      outcomeLabel.textContent = "You can claim";
+      outcomeEl.textContent = fmt(Math.abs(diff)) + " refund";
       outcomeEl.classList.add("is-refund");
       outcomeEl.classList.remove("is-payable");
+      outcomeHero.classList.remove("is-payable");
     }
     var capgainsLine = document.getElementById("demo-review-capgains");
     if (capgainsLine) {

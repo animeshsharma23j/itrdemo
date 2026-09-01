@@ -417,8 +417,9 @@
 
           <p class="detail-group-title">Income</p>
           <ul class="import-checklist">
-            <li class="import-item is-done" id="import-item-salary">
+            <li class="import-item" id="import-item-salary">
               <div class="import-item-row" role="button" tabindex="0" aria-expanded="false" aria-controls="import-detail-salary">
+                <span class="import-item-avatar is-avatar-1" aria-hidden="true">TC</span>
                 <div class="import-item-main"><span class="import-item-label">Salary</span><span class="import-item-source">TCS India Pvt. Ltd. — tap to edit each part</span></div>
                 <span class="import-item-value" data-value-for="salary">₹9,40,000</span>
                 <span class="import-dot"></span>
@@ -432,8 +433,9 @@
                 </dl>
               </div>
             </li>
-            <li class="import-item is-done" id="import-item-interest">
+            <li class="import-item" id="import-item-interest">
               <div class="import-item-row" role="button" tabindex="0" aria-expanded="false" aria-controls="import-detail-interest">
+                <span class="import-item-avatar is-avatar-2" aria-hidden="true">HD</span>
                 <div class="import-item-main"><span class="import-item-label">Bank interest</span><span class="import-item-source">HDFC Bank + SBI savings — tap to edit each part</span></div>
                 <span class="import-item-value" data-value-for="interest">₹8,400</span>
                 <span class="import-dot"></span>
@@ -446,7 +448,7 @@
                 </dl>
               </div>
             </li>
-            <li class="import-item is-done" id="import-item-tds">
+            <li class="import-item" id="import-item-tds">
               <div class="import-item-row" role="button" tabindex="0" aria-expanded="false" aria-controls="import-detail-tds">
                 <div class="import-item-main"><span class="import-item-label">Tax already deducted (TDS)</span><span class="import-item-source">From your employer &amp; bank — tap to edit each part</span></div>
                 <span class="import-item-value" data-value-for="tds">₹68,000</span>
@@ -462,8 +464,9 @@
                 </dl>
               </div>
             </li>
-            <li class="import-item is-done" id="import-item-capgains">
+            <li class="import-item" id="import-item-capgains">
               <div class="import-item-row" role="button" tabindex="0" aria-expanded="false" aria-controls="import-detail-capgains">
+                <span class="import-item-avatar is-avatar-3" aria-hidden="true">ZR</span>
                 <div class="import-item-main"><span class="import-item-label">Capital gains</span><span class="import-item-source">Zerodha Broking — equity, short-term</span></div>
                 <span class="import-item-value" data-value-for="capgains">₹1,20,000</span>
                 <button type="button" class="import-item-edit-btn" data-edit-field="capgains" aria-label="Edit capital gains amount">✎</button>
@@ -575,6 +578,12 @@
         <section class="demo-screen" id="review">
           <span class="demo-eyebrow">Review</span>
           <h2 class="demo-heading">Everything in one place before you file</h2>
+
+          <div class="outcome-hero" id="outcome-hero">
+            <span class="outcome-hero-label" id="outcome-hero-label">You can claim</span>
+            <strong class="outcome-hero-amount" id="demo-review-outcome">₹0</strong>
+          </div>
+
           <ul class="demo-checklist">
             <li class="is-done"><span class="demo-check-dot"></span>Salary &amp; TDS — matched</li>
             <li class="is-done"><span class="demo-check-dot"></span>Bank interest — matched</li>
@@ -583,10 +592,18 @@
           <div class="summary-box">
             <div class="summary-row"><span>Filing as</span><strong id="demo-review-form">ITR-2</strong></div>
             <div class="summary-row"><span>Regime</span><strong id="demo-review-regime">New regime</strong></div>
-            <div class="summary-row"><span>Total income</span><strong id="demo-review-income">₹0</strong></div>
-            <div class="summary-row"><span>Tax computed</span><strong id="demo-review-tax">₹0</strong></div>
-            <div class="summary-row"><span>Already paid (TDS)</span><strong id="demo-review-tds">₹0</strong></div>
-            <div class="summary-row is-outcome"><span>Outcome</span><strong id="demo-review-outcome">—</strong></div>
+            <div class="summary-row is-bar">
+              <div class="summary-bar-head"><span>Total income</span><strong id="demo-review-income">₹0</strong></div>
+              <div class="summary-bar-track"><span class="summary-bar-fill" id="bar-income"></span></div>
+            </div>
+            <div class="summary-row is-bar">
+              <div class="summary-bar-head"><span>Tax computed</span><strong id="demo-review-tax">₹0</strong></div>
+              <div class="summary-bar-track"><span class="summary-bar-fill is-danger" id="bar-tax"></span></div>
+            </div>
+            <div class="summary-row is-bar">
+              <div class="summary-bar-head"><span>Already paid (TDS)</span><strong id="demo-review-tds">₹0</strong></div>
+              <div class="summary-bar-track"><span class="summary-bar-fill is-success" id="bar-tds"></span></div>
+            </div>
           </div>
           <div class="demo-actions">
             <button type="button" class="demo-btn is-primary" id="demo-review-done">Continue</button>
@@ -635,9 +652,18 @@
         </section>
 
         <section class="demo-screen" id="done">
-          <span class="demo-eyebrow">Filed — demo only</span>
-          <h2 class="demo-heading">That's the concept, end to end</h2>
-          <p class="demo-body">Acknowledgement number <strong id="demo-ack-number">ITR-DEMO-000000</strong>. Nothing was actually submitted — this is where the real product would begin. If anything felt off, confusing, or genuinely better than what exists today, I'd like to know.</p>
+          <div class="done-intro">
+            <div class="done-badge" aria-hidden="true">
+              <span class="done-badge-ring"></span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"></path></svg>
+              <span class="done-badge-dot d1"></span>
+              <span class="done-badge-dot d2"></span>
+              <span class="done-badge-dot d3"></span>
+            </div>
+            <span class="demo-eyebrow">Filed — demo only</span>
+            <h2 class="demo-heading">That's the concept, end to end</h2>
+            <p class="demo-body">Acknowledgement number <strong id="demo-ack-number">ITR-DEMO-000000</strong>. Nothing was actually submitted — this is where the real product would begin. If anything felt off, confusing, or genuinely better than what exists today, I'd like to know.</p>
+          </div>
           <div class="demo-feedback">
             <p class="demo-feedback-label">How would you rate this concept?</p>
             <div class="feedback-stars" id="feedback-stars" role="radiogroup" aria-label="Rate this concept out of 5">
