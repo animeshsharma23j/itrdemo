@@ -144,6 +144,7 @@ a:focus-visible {
 .site-header-inner {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 28px;
   max-width: 1120px;
   margin: 0 auto;
@@ -288,7 +289,7 @@ a:focus-visible {
 .auth-side {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 18px;
   padding: 40px 32px;
   border-right: 1px solid var(--border);
@@ -350,7 +351,7 @@ a:focus-visible {
 .auth-form-panel {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   padding: 40px 36px;
 }
 
@@ -542,6 +543,7 @@ a:focus-visible {
   display: grid;
   gap: 10px;
   margin-top: 22px;
+  margin-bottom: 14px;
 }
 
 .demo-help {

@@ -161,6 +161,11 @@
       sendOtpBtn.disabled = panInput.value.length !== 10;
       hidePanError();
     });
+    panInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && !sendOtpBtn.disabled) {
+        sendOtpBtn.click();
+      }
+    });
     sendOtpBtn.addEventListener("click", function () {
       var value = panInput.value.trim();
       if (!PAN_PATTERN.test(value)) {
@@ -179,6 +184,13 @@
   function wireOtpBoxes(containerId, buttonEl, onComplete) {
     var boxes = Array.prototype.slice.call(document.querySelectorAll("#" + containerId + " .otp-box"));
     boxes.forEach(function (input, i) {
+      input.addEventListener("focus", function () {
+        var firstEmpty = boxes.findIndex(function (b) { return !b.value; });
+        var targetIndex = firstEmpty === -1 ? boxes.length - 1 : firstEmpty;
+        if (i !== targetIndex) {
+          boxes[targetIndex].focus();
+        }
+      });
       input.addEventListener("input", function () {
         input.value = input.value.replace(/[^0-9]/g, "").slice(0, 1);
         input.classList.toggle("is-filled", input.value.length === 1);
