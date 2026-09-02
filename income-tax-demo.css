@@ -1114,6 +1114,16 @@ a:focus-visible {
   display: none;
 }
 
+.import-item-confirm-standalone {
+  display: flex;
+  gap: 8px;
+  margin: 4px 0 18px;
+}
+
+.import-item-confirm-standalone[hidden] {
+  display: none;
+}
+
 .data-review-upload {
   margin: 4px 0 0;
   font-size: 0.84rem;

@@ -25,7 +25,7 @@
   var DED_80C = 150000;
   var DED_80D = 25000;
 
-  var progressOrder = ["data-review", "resolve", "compare", "review", "everify"];
+  var progressOrder = ["review-income", "review-savings", "review-tds", "review-capgains", "review-other", "resolve", "compare", "review", "everify"];
   var WIDE_SCREENS = ["home", "guide", "calculator", "case-studies", "tax-qna", "video-tutorials"];
   var SPLIT_SCREENS = ["signin", "signin-otp"];
   var demoShell = document.querySelector(".demo-shell");
@@ -256,28 +256,11 @@
         requestAnimationFrame(step);
       } else {
         setTimeout(function () {
-          showScreen("data-review");
-          revealDataReviewItems();
+          showScreen("review-income");
         }, 300);
       }
     }
     requestAnimationFrame(step);
-  }
-
-  // ---- Data review: reveal each fetched item one at a time, like a live pull ----
-  function revealDataReviewItems() {
-    var items = Array.prototype.slice.call(document.querySelectorAll("#data-review .import-item"));
-    items.forEach(function (item) {
-      item.classList.remove("is-done");
-    });
-    items.forEach(function (item, i) {
-      setTimeout(function () {
-        item.classList.add("is-done");
-        if (item.id === "import-item-capgains") {
-          setCapgainsState(answers.capgains);
-        }
-      }, 260 * (i + 1));
-    });
   }
 
   // ---- Data review: edit an auto-filled amount inline (capital gains — no sub-breakdown) ----
@@ -465,6 +448,7 @@
       }
     });
   }
+  setCapgainsState(answers.capgains);
 
   // ---- Verify: business / foreign toggles (no rupee amount — only affects form) ----
   var businessToggle = document.getElementById("demo-toggle-business");

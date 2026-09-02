@@ -42,7 +42,7 @@
 
     <main class="demo-shell">
       <div class="demo-card">
-        <div class="demo-progress" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="demo-progress" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
         <div class="demo-running-total" id="demo-running-total" hidden><span>Total income so far</span><strong id="demo-running-total-amount">₹0</strong></div>
 
         <section class="demo-screen is-active" id="signin">
@@ -410,14 +410,12 @@
           </div>
         </section>
 
-        <section class="demo-screen" id="data-review">
-          <span class="demo-eyebrow">Step 3 of 3 — All set</span>
-          <h1 class="demo-heading">Here's what we found — check it over</h1>
-          <p class="demo-body">Auto-filled from your tax records, grouped and in plain language. Edit anything that's off.</p>
-
-          <p class="detail-group-title">Income</p>
+        <section class="demo-screen" id="review-income">
+          <span class="demo-eyebrow">Step 3 of 7 — Income</span>
+          <h1 class="demo-heading">Let's start with your salary</h1>
+          <p class="demo-body">Pulled from Form 16. Tap to see the breakdown, or edit any part that's off.</p>
           <ul class="import-checklist">
-            <li class="import-item" id="import-item-salary">
+            <li class="import-item is-done" id="import-item-salary">
               <div class="import-item-row" role="button" tabindex="0" aria-expanded="false" aria-controls="import-detail-salary">
                 <span class="import-item-avatar is-avatar-1" aria-hidden="true">TC</span>
                 <div class="import-item-main"><span class="import-item-label">Salary</span><span class="import-item-source">TCS India Pvt. Ltd. — tap to edit each part</span></div>
@@ -433,7 +431,20 @@
                 </dl>
               </div>
             </li>
-            <li class="import-item" id="import-item-interest">
+          </ul>
+          <p class="data-review-upload"><a href="#" id="demo-upload-instead">Don't trust this data? Upload your own documents instead</a></p>
+          <p class="data-review-note" id="demo-upload-note" hidden>In the real product this would open a file upload for Form 16 / AIS — this demo sticks with the auto-filled numbers above.</p>
+          <div class="demo-actions">
+            <button type="button" class="demo-btn is-primary" data-goto="review-savings">Looks good — continue</button>
+          </div>
+        </section>
+
+        <section class="demo-screen" id="review-savings">
+          <span class="demo-eyebrow">Step 4 of 7 — Savings</span>
+          <h1 class="demo-heading">Now, interest from your savings accounts</h1>
+          <p class="demo-body">Pulled from Form 26AS. Tap to see each account, or edit any part that's off.</p>
+          <ul class="import-checklist">
+            <li class="import-item is-done" id="import-item-interest">
               <div class="import-item-row" role="button" tabindex="0" aria-expanded="false" aria-controls="import-detail-interest">
                 <span class="import-item-avatar is-avatar-2" aria-hidden="true">HD</span>
                 <div class="import-item-main"><span class="import-item-label">Bank interest</span><span class="import-item-source">HDFC Bank + SBI savings — tap to edit each part</span></div>
@@ -448,7 +459,18 @@
                 </dl>
               </div>
             </li>
-            <li class="import-item" id="import-item-tds">
+          </ul>
+          <div class="demo-actions">
+            <button type="button" class="demo-btn is-primary" data-goto="review-tds">Looks good — continue</button>
+          </div>
+        </section>
+
+        <section class="demo-screen" id="review-tds">
+          <span class="demo-eyebrow">Step 5 of 7 — TDS</span>
+          <h1 class="demo-heading">Tax already deducted on your behalf</h1>
+          <p class="demo-body">Pulled from Form 26AS — this reduces what you still owe when you file.</p>
+          <ul class="import-checklist">
+            <li class="import-item is-done" id="import-item-tds">
               <div class="import-item-row" role="button" tabindex="0" aria-expanded="false" aria-controls="import-detail-tds">
                 <div class="import-item-main"><span class="import-item-label">Tax already deducted (TDS)</span><span class="import-item-source">From your employer &amp; bank — tap to edit each part</span></div>
                 <span class="import-item-value" data-value-for="tds">₹68,000</span>
@@ -464,7 +486,18 @@
                 </dl>
               </div>
             </li>
-            <li class="import-item" id="import-item-capgains">
+          </ul>
+          <div class="demo-actions">
+            <button type="button" class="demo-btn is-primary" data-goto="review-capgains">Looks good — continue</button>
+          </div>
+        </section>
+
+        <section class="demo-screen" id="review-capgains">
+          <span class="demo-eyebrow">Step 6 of 7 — Capital gains</span>
+          <h1 class="demo-heading">One thing we found from your broker</h1>
+          <p class="demo-body">Confirm this is actually yours before it goes into your return.</p>
+          <ul class="import-checklist">
+            <li class="import-item is-done" id="import-item-capgains">
               <div class="import-item-row" role="button" tabindex="0" aria-expanded="false" aria-controls="import-detail-capgains">
                 <span class="import-item-avatar is-avatar-3" aria-hidden="true">ZR</span>
                 <div class="import-item-main"><span class="import-item-label">Capital gains</span><span class="import-item-source">Zerodha Broking — equity, short-term</span></div>
@@ -478,33 +511,33 @@
                   <div><dt>Broker</dt><dd>Zerodha Broking</dd></div>
                   <div><dt>Type</dt><dd>Equity — short-term</dd></div>
                 </dl>
-                <div class="import-item-confirm" id="verify-capgains-actions">
-                  <button type="button" class="demo-btn-sm" data-capgains="yes">Looks right</button>
-                  <button type="button" class="demo-btn-sm is-quiet" data-capgains="no">Not mine</button>
-                </div>
-                <p class="verify-capgains-status" id="verify-capgains-status" hidden></p>
               </div>
             </li>
           </ul>
+          <div class="import-item-confirm-standalone" id="verify-capgains-actions">
+            <button type="button" class="demo-btn-sm" data-capgains="yes">Looks right</button>
+            <button type="button" class="demo-btn-sm is-quiet" data-capgains="no">Not mine</button>
+          </div>
+          <p class="verify-capgains-status" id="verify-capgains-status" hidden></p>
+          <div class="demo-actions">
+            <button type="button" class="demo-btn is-primary" data-goto="review-other">Continue</button>
+          </div>
+        </section>
 
-          <details class="verify-more">
-            <summary>Have income we couldn't see? <span>Business income, foreign assets</span></summary>
-            <div class="demo-toggle-list">
-              <button type="button" class="demo-toggle" id="demo-toggle-business" aria-pressed="false">
-                <span class="demo-toggle-switch"></span>
-                <span><strong>Business or freelance income</strong><span>Consulting, freelancing, or running a business</span></span>
-              </button>
-              <button type="button" class="demo-toggle" id="demo-toggle-foreign" aria-pressed="false">
-                <span class="demo-toggle-switch"></span>
-                <span><strong>Foreign assets or income</strong><span>Foreign bank accounts, shares, or property</span></span>
-              </button>
-            </div>
-            <p class="demo-fine">These change which ITR form applies, not your total income — neither carries a rupee amount we can add here.</p>
-          </details>
-
-          <p class="data-review-upload"><a href="#" id="demo-upload-instead">Don't trust this data? Upload your own documents instead</a></p>
-          <p class="data-review-note" id="demo-upload-note" hidden>In the real product this would open a file upload for Form 16 / AIS — this demo sticks with the auto-filled numbers above.</p>
-
+        <section class="demo-screen" id="review-other">
+          <span class="demo-eyebrow">Step 7 of 7 — Anything else?</span>
+          <h1 class="demo-heading">Last thing — income we genuinely couldn't see</h1>
+          <p class="demo-body">These change which ITR form applies, not your total income — neither carries a rupee amount we can add here.</p>
+          <div class="demo-toggle-list">
+            <button type="button" class="demo-toggle" id="demo-toggle-business" aria-pressed="false">
+              <span class="demo-toggle-switch"></span>
+              <span><strong>Business or freelance income</strong><span>Consulting, freelancing, or running a business</span></span>
+            </button>
+            <button type="button" class="demo-toggle" id="demo-toggle-foreign" aria-pressed="false">
+              <span class="demo-toggle-switch"></span>
+              <span><strong>Foreign assets or income</strong><span>Foreign bank accounts, shares, or property</span></span>
+            </button>
+          </div>
           <div class="demo-actions">
             <button type="button" class="demo-btn is-primary" id="demo-verify-continue">Looks good — see my suggested form</button>
           </div>
