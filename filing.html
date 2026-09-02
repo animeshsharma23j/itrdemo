@@ -41,6 +41,7 @@
     </header>
 
     <main class="demo-shell">
+      <button type="button" id="demo-back-btn" class="demo-back-nav" hidden aria-label="Go back to the previous step">← Back</button>
       <div class="demo-card">
         <div class="demo-progress" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
         <div class="demo-running-total" id="demo-running-total" hidden><span>Total income so far</span><strong id="demo-running-total-amount">₹0</strong></div>
@@ -538,6 +539,7 @@
               <span><strong>Foreign assets or income</strong><span>Foreign bank accounts, shares, or property</span></span>
             </button>
           </div>
+          <p class="demo-help" id="business-foreign-note" hidden></p>
           <div class="demo-actions">
             <button type="button" class="demo-btn is-primary" id="demo-verify-continue">Looks good — see my suggested form</button>
           </div>

@@ -55,10 +55,19 @@
   }
 
   var currentScreenId = null;
+  var screenHistory = [];
+  var NO_HISTORY_SCREENS = ["fetching"];
+  var NO_BACK_SCREENS = ["signin", "fetching", "done"];
+  var backBtn = document.getElementById("demo-back-btn");
 
-  function showScreen(id) {
+  function showScreen(id, opts) {
+    opts = opts || {};
     stopTutorialPlay();
+    if (!opts.skipHistory && currentScreenId && currentScreenId !== id && NO_HISTORY_SCREENS.indexOf(currentScreenId) === -1) {
+      screenHistory.push(currentScreenId);
+    }
     currentScreenId = id;
+    if (backBtn) backBtn.hidden = NO_BACK_SCREENS.indexOf(id) > -1 || screenHistory.length === 0;
     if (id === "done") trackDemoComplete();
     screens.forEach(function (screen) {
       screen.classList.toggle("is-active", screen.id === id);
@@ -90,6 +99,16 @@
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
     setTimeout(adjustChatWidgetOffset, 50);
+  }
+
+  function goBack() {
+    if (!screenHistory.length) return;
+    var prev = screenHistory.pop();
+    showScreen(prev, { skipHistory: true });
+  }
+
+  if (backBtn) {
+    backBtn.addEventListener("click", goBack);
   }
 
   // ---- Keep the chat bubble above the footer instead of overlapping it ----
@@ -453,11 +472,28 @@
   // ---- Verify: business / foreign toggles (no rupee amount — only affects form) ----
   var businessToggle = document.getElementById("demo-toggle-business");
   var foreignToggle = document.getElementById("demo-toggle-foreign");
+  var businessForeignNote = document.getElementById("business-foreign-note");
+
+  function updateBusinessForeignNote() {
+    if (!businessForeignNote) return;
+    var msg;
+    if (answers.foreign) {
+      msg = "Foreign assets or income need Schedule FA, which only ITR-2 or ITR-3 support" + (answers.business ? " — and business income on top of that means ITR-3." : ".");
+    } else if (answers.business) {
+      msg = "Business or freelance income means you'll need ITR-3 instead of a simpler form.";
+    } else {
+      msg = "";
+    }
+    businessForeignNote.innerHTML = msg ? "<span>" + msg + "</span>" : "";
+    businessForeignNote.hidden = !msg;
+  }
+
   if (businessToggle) {
     businessToggle.addEventListener("click", function () {
       answers.business = !answers.business;
       businessToggle.classList.toggle("is-on", answers.business);
       businessToggle.setAttribute("aria-pressed", String(answers.business));
+      updateBusinessForeignNote();
     });
   }
   if (foreignToggle) {
@@ -465,6 +501,7 @@
       answers.foreign = !answers.foreign;
       foreignToggle.classList.toggle("is-on", answers.foreign);
       foreignToggle.setAttribute("aria-pressed", String(answers.foreign));
+      updateBusinessForeignNote();
     });
   }
 
@@ -1127,6 +1164,7 @@
         foreignToggle.classList.remove("is-on");
         foreignToggle.setAttribute("aria-pressed", "false");
       }
+      updateBusinessForeignNote();
       document.getElementById("demo-thanks").classList.remove("is-visible");
       document.getElementById("demo-feedback-text").value = "";
       resetFeedbackRating();
@@ -1141,6 +1179,7 @@
       if (signinVerifyBtn) signinVerifyBtn.disabled = true;
       if (tutorialPlayer) tutorialPlayer.hidden = true;
       if (tutorialList) tutorialList.hidden = false;
+      screenHistory = [];
       showScreen("signin");
     });
   });
