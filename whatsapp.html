@@ -101,6 +101,21 @@
         color:var(--muted);
         margin:0 0 28px;
       }
+      .wa-feedback-consent{
+        display:flex;
+        align-items:center;
+        gap:8px;
+        margin:0 0 22px;
+        font-size:0.86rem;
+        color:var(--muted);
+        cursor:pointer;
+      }
+      .wa-feedback-consent input{
+        width:16px;
+        height:16px;
+        accent-color:var(--primary);
+        cursor:pointer;
+      }
     </style>
   </head>
   <body>
@@ -1431,41 +1446,54 @@
         <p class="wa-feedback-body">This concept only gets better with real reactions. A few quick questions, then it goes straight to me.</p>
 
         <form class="demo-feedback" id="wa-feedback-form" action="https://formspree.io/f/mwlkbvbo" method="POST">
-          <p class="demo-feedback-label">How did this compare to filing for real?</p>
-          <div class="feedback-stars" id="wa-feedback-stars" role="radiogroup" aria-label="Rate this concept out of 5">
-            <button type="button" class="feedback-star" data-star="1" role="radio" aria-checked="false" aria-label="1 star"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.2 5.9-.8L12 3.5z"></path></svg></button>
-            <button type="button" class="feedback-star" data-star="2" role="radio" aria-checked="false" aria-label="2 stars"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.2 5.9-.8L12 3.5z"></path></svg></button>
-            <button type="button" class="feedback-star" data-star="3" role="radio" aria-checked="false" aria-label="3 stars"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.2 5.9-.8L12 3.5z"></path></svg></button>
-            <button type="button" class="feedback-star" data-star="4" role="radio" aria-checked="false" aria-label="4 stars"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.2 5.9-.8L12 3.5z"></path></svg></button>
-            <button type="button" class="feedback-star" data-star="5" role="radio" aria-checked="false" aria-label="5 stars"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9-4.3-4.2 5.9-.8L12 3.5z"></path></svg></button>
-            <span class="feedback-stars-label" id="wa-feedback-stars-label"></span>
+          <p class="demo-feedback-label">Which best describes you?</p>
+          <div class="feedback-tags" id="wa-feedback-persona" role="radiogroup" aria-label="Which best describes you">
+            <button type="button" class="feedback-tag" data-value="First-time filer">First-time filer</button>
+            <button type="button" class="feedback-tag" data-value="Filed before, want something easier">Filed before, want something easier</button>
+            <button type="button" class="feedback-tag" data-value="Filing for a senior relative">Filing for a senior relative</button>
+            <button type="button" class="feedback-tag" data-value="Just curious">Just curious</button>
           </div>
-          <input type="hidden" name="rating" id="wa-feedback-rating-input" value="" />
+          <input type="hidden" name="persona" id="wa-feedback-persona-input" value="" />
 
-          <p class="demo-feedback-label">What stood out? <span>(optional, pick any)</span></p>
-          <div class="feedback-tags" id="wa-feedback-tags">
-            <button type="button" class="feedback-tag" data-tag="Felt natural on WhatsApp">Felt natural on WhatsApp</button>
-            <button type="button" class="feedback-tag" data-tag="Preferred this over an app">Preferred this over an app</button>
-            <button type="button" class="feedback-tag" data-tag="Confusing somewhere">Confusing somewhere</button>
-            <button type="button" class="feedback-tag" data-tag="Wouldn't trust it on WhatsApp">Wouldn't trust it on WhatsApp</button>
-            <button type="button" class="feedback-tag" data-tag="Something broke">Something broke</button>
+          <p class="demo-feedback-label">How much would you trust a result like this?</p>
+          <div class="feedback-tags" id="wa-feedback-trust" role="radiogroup" aria-label="How much would you trust a result like this">
+            <button type="button" class="feedback-tag" data-value="Not at all">Not at all</button>
+            <button type="button" class="feedback-tag" data-value="A little">A little</button>
+            <button type="button" class="feedback-tag" data-value="Somewhat">Somewhat</button>
+            <button type="button" class="feedback-tag" data-value="Mostly">Mostly</button>
+            <button type="button" class="feedback-tag" data-value="Completely">Completely</button>
           </div>
-          <input type="hidden" name="highlights" id="wa-feedback-tags-input" value="" />
+          <input type="hidden" name="trust_rating" id="wa-feedback-trust-input" value="" />
+
+          <p class="demo-feedback-label">Which step felt hardest?</p>
+          <div class="feedback-tags" id="wa-feedback-hardest" role="radiogroup" aria-label="Which step felt hardest">
+            <button type="button" class="feedback-tag" data-value="Verifying my identity (OTP)">Verifying my identity (OTP)</button>
+            <button type="button" class="feedback-tag" data-value="Reviewing my income">Reviewing my income</button>
+            <button type="button" class="feedback-tag" data-value="Choosing a tax regime">Choosing a tax regime</button>
+            <button type="button" class="feedback-tag" data-value="Reviewing before filing">Reviewing before filing</button>
+            <button type="button" class="feedback-tag" data-value="Nothing felt hard">Nothing felt hard</button>
+          </div>
+          <input type="hidden" name="hardest_step" id="wa-feedback-hardest-input" value="" />
 
           <p class="demo-feedback-label">Would you actually use this to file, if it were real?</p>
           <div class="feedback-tags" id="wa-feedback-usewould" role="radiogroup" aria-label="Would you use this to file">
-            <button type="button" class="feedback-tag" data-choice="Yes">Yes</button>
-            <button type="button" class="feedback-tag" data-choice="No">No</button>
-            <button type="button" class="feedback-tag" data-choice="Not sure">Not sure</button>
+            <button type="button" class="feedback-tag" data-value="Yes">Yes</button>
+            <button type="button" class="feedback-tag" data-value="No">No</button>
+            <button type="button" class="feedback-tag" data-value="Not sure">Not sure</button>
           </div>
           <input type="hidden" name="would_use" id="wa-feedback-usewould-input" value="" />
 
-          <textarea name="message" id="wa-feedback-text" placeholder="What worked? What would stop you trusting a result like this?"></textarea>
+          <p class="demo-feedback-label">What's the one moment that would make or break this for you? <span>(optional)</span></p>
+          <textarea name="message" id="wa-feedback-text" placeholder="A specific screen, a specific number, a specific worry — whatever it actually was"></textarea>
 
           <div class="demo-input-row">
             <label for="wa-feedback-email">Email <span style="font-weight:400;color:var(--soft);">(optional, if you'd like a reply)</span></label>
             <input type="email" id="wa-feedback-email" name="email" placeholder="you@example.com" />
           </div>
+          <label class="wa-feedback-consent">
+            <input type="checkbox" name="followup_ok" id="wa-feedback-followup" value="Yes" />
+            <span>OK to follow up with a couple of questions?</span>
+          </label>
 
           <div class="feedback-actions">
             <button type="submit" class="demo-btn is-primary" id="wa-feedback-submit">Send feedback</button>
@@ -1478,47 +1506,26 @@
     <script>
       (function(){
         "use strict";
-        var stars = Array.prototype.slice.call(document.querySelectorAll('#wa-feedback-stars .feedback-star'));
-        var starsLabel = document.getElementById('wa-feedback-stars-label');
-        var ratingInput = document.getElementById('wa-feedback-rating-input');
-        var starLabels = ['', 'Poor', 'Okay', 'Good', 'Great', 'Excellent'];
-        var currentRating = 0;
 
-        stars.forEach(function(btn){
-          btn.addEventListener('click', function(){
-            currentRating = parseInt(btn.getAttribute('data-star'), 10);
-            ratingInput.value = String(currentRating);
-            stars.forEach(function(s){
-              var v = parseInt(s.getAttribute('data-star'), 10);
-              s.classList.toggle('is-filled', v <= currentRating);
-              s.setAttribute('aria-checked', v === currentRating ? 'true' : 'false');
+        var singleSelectGroups = [];
+
+        function bindSingleSelect(groupId, inputId){
+          var btns = Array.prototype.slice.call(document.querySelectorAll('#' + groupId + ' .feedback-tag'));
+          var input = document.getElementById(inputId);
+          btns.forEach(function(btn){
+            btn.addEventListener('click', function(){
+              btns.forEach(function(b){ b.classList.remove('is-active'); });
+              btn.classList.add('is-active');
+              input.value = btn.getAttribute('data-value');
             });
-            starsLabel.textContent = starLabels[currentRating];
           });
-        });
+          singleSelectGroups.push({ btns: btns, input: input });
+        }
 
-        var tagBtns = Array.prototype.slice.call(document.querySelectorAll('#wa-feedback-tags .feedback-tag'));
-        var tagsInput = document.getElementById('wa-feedback-tags-input');
-        var selectedTags = [];
-        tagBtns.forEach(function(btn){
-          btn.addEventListener('click', function(){
-            var tag = btn.getAttribute('data-tag');
-            var idx = selectedTags.indexOf(tag);
-            if (idx === -1) { selectedTags.push(tag); btn.classList.add('is-active'); }
-            else { selectedTags.splice(idx, 1); btn.classList.remove('is-active'); }
-            tagsInput.value = selectedTags.join(', ');
-          });
-        });
-
-        var useBtns = Array.prototype.slice.call(document.querySelectorAll('#wa-feedback-usewould .feedback-tag'));
-        var useInput = document.getElementById('wa-feedback-usewould-input');
-        useBtns.forEach(function(btn){
-          btn.addEventListener('click', function(){
-            useBtns.forEach(function(b){ b.classList.remove('is-active'); });
-            btn.classList.add('is-active');
-            useInput.value = btn.getAttribute('data-choice');
-          });
-        });
+        bindSingleSelect('wa-feedback-persona', 'wa-feedback-persona-input');
+        bindSingleSelect('wa-feedback-trust', 'wa-feedback-trust-input');
+        bindSingleSelect('wa-feedback-hardest', 'wa-feedback-hardest-input');
+        bindSingleSelect('wa-feedback-usewould', 'wa-feedback-usewould-input');
 
         var form = document.getElementById('wa-feedback-form');
         var thanks = document.getElementById('wa-feedback-thanks');
@@ -1526,14 +1533,10 @@
 
         function resetForm(){
           form.reset();
-          currentRating = 0;
-          stars.forEach(function(s){ s.classList.remove('is-filled'); s.setAttribute('aria-checked', 'false'); });
-          starsLabel.textContent = '';
-          tagBtns.forEach(function(b){ b.classList.remove('is-active'); });
-          useBtns.forEach(function(b){ b.classList.remove('is-active'); });
-          ratingInput.value = '';
-          tagsInput.value = '';
-          useInput.value = '';
+          singleSelectGroups.forEach(function(group){
+            group.btns.forEach(function(b){ b.classList.remove('is-active'); });
+            group.input.value = '';
+          });
         }
 
         form.addEventListener('submit', function(e){
