@@ -1,0 +1,894 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3SREKDHMC2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-3SREKDHMC2');
+    </script>
+
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/icon.png" type="image/png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Income Tax concept prototype — draft your ITR live from AIS and Form 26AS across four taxpayer profiles, not an official tax service." />
+    <title>Live-reconciliation ITR — concept demo</title>
+    <link rel="canonical" href="https://itrdemo.com/filing.html" />
+    <meta property="og:title" content="Live-reconciliation ITR — concept demo" />
+    <meta property="og:description" content="Income Tax concept prototype — draft your ITR live from AIS and Form 26AS across four taxpayer profiles, not an official tax service." />
+    <meta property="og:url" content="https://itrdemo.com/filing.html" />
+    <meta property="og:image" content="https://itrdemo.com/icon.png" />
+    <meta property="og:image:width" content="637" />
+    <meta property="og:image:height" content="637" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+    <style>
+:root{
+  --bg:#EDF1EE; --surface:#FFFFFF; --surface-2:#E1E7E2;
+  --ink:#14201B; --muted:#4E5A54; --soft:#7C8880;
+  --line:rgba(20,32,27,0.13); --line-strong:rgba(20,32,27,0.24);
+  --accent:#1F5C52; --accent-ink:#F1F7F4; --accent-soft:#DCEAE5;
+  --amber:#8A611A; --amber-soft:#F1E4C7;
+  --danger:#9C4531; --danger-soft:#F3DFD8;
+  --focus:#1F5C52;
+  --font-sans:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1210; --surface:#161C19; --surface-2:#1E2622;
+    --ink:#E9EEE9; --muted:#A9B3AC; --soft:#7C8880;
+    --line:rgba(233,238,233,0.10); --line-strong:rgba(233,238,233,0.18);
+    --accent:#57B79C; --accent-ink:#08120F; --accent-soft:rgba(87,183,156,0.14);
+    --amber:#DFAE58; --amber-soft:rgba(223,174,88,0.14);
+    --danger:#DD8A6D; --danger-soft:rgba(221,138,109,0.14);
+    --focus:#57B79C;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1210; --surface:#161C19; --surface-2:#1E2622;
+  --ink:#E9EEE9; --muted:#A9B3AC; --soft:#7C8880;
+  --line:rgba(233,238,233,0.10); --line-strong:rgba(233,238,233,0.18);
+  --accent:#57B79C; --accent-ink:#08120F; --accent-soft:rgba(87,183,156,0.14);
+  --amber:#DFAE58; --amber-soft:rgba(223,174,88,0.14);
+  --danger:#DD8A6D; --danger-soft:rgba(221,138,109,0.14);
+  --focus:#57B79C;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-sans);
+  background-image:repeating-linear-gradient(var(--line) 0 1px, transparent 1px 34px);
+}
+.wrap{max-width:640px;margin:0 auto;padding:2.5rem 1.25rem 4rem;}
+.eyebrow{font-family:var(--font-mono);font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 .6rem;}
+h1{font-size:clamp(1.6rem,4vw,2.15rem);font-weight:700;letter-spacing:-0.015em;line-height:1.15;margin:0 0 .75rem;text-wrap:balance;}
+.lede{font-size:.98rem;line-height:1.65;color:var(--muted);max-width:60ch;margin:0 0 1.1rem;}
+.caveats{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 1.75rem;padding:0;list-style:none;}
+.caveats li{font-size:.72rem;font-weight:500;padding:5px 10px;border:1px solid var(--line-strong);border-radius:999px;color:var(--soft);}
+.picker-label{font-size:.68rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);margin:0 0 8px;}
+.profile-picker{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 1.75rem;}
+.profile-btn{font-family:var(--font-sans);font-size:.82rem;font-weight:600;padding:9px 15px;border-radius:999px;border:1px solid var(--line-strong);background:var(--surface);color:var(--muted);cursor:pointer;}
+.profile-btn:hover{background:var(--surface-2);color:var(--ink);}
+.profile-btn.is-active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);}
+.frame{border:1px solid var(--line-strong);border-radius:14px;background:var(--surface);overflow:hidden;}
+.total-bar{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;background:var(--surface);border-bottom:1px solid var(--line);}
+.total-label{font-size:.68rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);margin:0 0 3px;}
+.total-value{font-family:var(--font-mono);font-size:1.5rem;font-weight:600;font-variant-numeric:tabular-nums;margin:0;}
+.total-value.is-refund{color:var(--accent);}
+.total-value.is-due{color:var(--danger);}
+.total-hint{font-family:var(--font-mono);font-size:.68rem;color:var(--soft);text-align:right;max-width:150px;line-height:1.4;}
+.stepper{display:flex;gap:1px;padding:0 10px;background:var(--surface);border-bottom:1px solid var(--line);overflow-x:auto;}
+.step-tab{flex:1;text-align:center;padding:11px 3px;font-size:.68rem;font-weight:600;letter-spacing:.01em;color:var(--soft);border-bottom:2px solid transparent;position:relative;top:1px;white-space:nowrap;}
+.step-tab.is-active{color:var(--ink);border-bottom-color:var(--accent);}
+.step-tab.is-complete{color:var(--accent);}
+.step{display:none;padding:24px 20px 26px;}
+.step.is-active{display:block;}
+.step h2{font-size:1.05rem;font-weight:600;margin:0 0 6px;letter-spacing:-0.01em;}
+.step > p.desc{font-size:.88rem;line-height:1.55;color:var(--muted);margin:0 0 20px;max-width:52ch;}
+.reason-card{background:var(--surface-2);border-radius:10px;padding:14px 16px;margin:0 0 20px;font-size:.85rem;line-height:1.55;color:var(--muted);}
+.reason-card strong{color:var(--ink);}
+.reason-card .static-row{padding:5px 0;font-size:.85rem;}
+.checklist{list-style:none;margin:0 0 4px;padding:0;display:flex;flex-direction:column;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+.check-row{background:var(--surface);padding:13px 14px;}
+.check-row .row-top{display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;}
+.row-left{display:flex;align-items:center;gap:10px;min-width:0;flex:1;}
+.row-right{display:flex;align-items:center;gap:8px;flex-shrink:0;}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;background:var(--soft);}
+.dot.matched{background:var(--accent);}
+.dot.draft{background:var(--amber);}
+.dot.reviewed{background:var(--accent);}
+.row-title{font-size:.88rem;font-weight:500;}
+.row-sub{font-size:.74rem;color:var(--soft);margin-top:1px;}
+.chip{font-size:.66rem;font-weight:600;letter-spacing:.03em;text-transform:uppercase;padding:4px 9px;border-radius:999px;white-space:nowrap;width:78px;text-align:center;}
+.chip.matched{background:var(--accent-soft);color:var(--accent);}
+.chip.draft{background:var(--amber-soft);color:var(--amber);}
+.chip.reviewed{background:var(--accent-soft);color:var(--accent);}
+.chevron{font-size:.7rem;color:var(--soft);transition:transform 160ms ease;flex-shrink:0;width:10px;text-align:center;}
+.chevron.is-open{transform:rotate(180deg);}
+.panel{max-height:0;overflow:hidden;transition:max-height 240ms ease;}
+.panel.is-open{max-height:1400px;}
+.panel-inner{padding:14px 0 4px;border-top:1px solid var(--line);margin-top:12px;}
+.txn{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px;padding:12px 0;border-bottom:1px solid var(--line);}
+.txn:last-of-type{border-bottom:none;}
+.txn-meta{grid-column:1 / -1;font-size:.76rem;color:var(--soft);margin-bottom:2px;display:flex;justify-content:space-between;gap:8px;align-items:center;}
+.field label{display:block;font-size:.66rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--soft);margin-bottom:5px;}
+.field input[type=number],.field input[type=text]{width:100%;font-family:var(--font-mono);font-size:.88rem;font-variant-numeric:tabular-nums;padding:8px 10px;border:1px solid var(--line-strong);border-radius:7px;background:var(--bg);color:var(--ink);}
+.field input:focus{outline:2px solid var(--focus);outline-offset:1px;}
+.gain-line{grid-column:1 / -1;display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);padding-top:2px;}
+.gain-line b{font-family:var(--font-mono);color:var(--ink);font-variant-numeric:tabular-nums;}
+.static-row{grid-column:1 / -1;display:flex;justify-content:space-between;gap:10px;font-size:.82rem;color:var(--ink);padding:2px 0 8px;}
+.static-row b{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-weight:500;text-align:right;}
+.note{display:flex;gap:9px;margin:14px 0 0;padding:10px 12px;background:var(--surface-2);border-left:2px solid var(--accent);border-radius:0 7px 7px 0;font-size:.78rem;line-height:1.5;color:var(--muted);}
+.note.warn{border-left-color:var(--amber);}
+.btn{font-family:var(--font-sans);font-size:.82rem;font-weight:600;padding:9px 16px;border-radius:8px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);cursor:pointer;}
+.btn:hover{background:var(--surface-2);}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);}
+.btn.primary:hover{filter:brightness(1.08);}
+.btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.btn-row{display:flex;justify-content:flex-end;gap:10px;margin-top:14px;}
+.step-actions{display:flex;justify-content:space-between;align-items:center;margin-top:22px;padding-top:18px;border-top:1px solid var(--line);}
+.err{font-size:.78rem;color:var(--danger);margin:8px 0 0;display:none;}
+.err.is-visible{display:block;}
+.confirm-box{display:flex;gap:10px;align-items:flex-start;background:var(--surface-2);border-radius:10px;padding:14px 16px;margin:4px 0 0;}
+.confirm-box input{margin-top:3px;width:16px;height:16px;accent-color:var(--accent);flex-shrink:0;}
+.confirm-box p{margin:0;font-size:.86rem;line-height:1.5;}
+.done-summary{display:flex;flex-direction:column;gap:8px;margin:16px 0 20px;}
+.done-row{display:flex;justify-content:space-between;gap:14px;font-size:.84rem;padding:8px 0;border-bottom:1px solid var(--line);}
+.done-row span:first-child{color:var(--muted);}
+.done-row span:last-child{font-family:var(--font-mono);font-variant-numeric:tabular-nums;text-align:right;}
+.foot{margin-top:1.75rem;font-size:.74rem;color:var(--soft);line-height:1.6;}
+.toggle-row{display:flex;align-items:flex-start;gap:9px;margin-top:4px;padding-top:12px;border-top:1px solid var(--line);}
+.toggle-row input{margin-top:3px;width:15px;height:15px;accent-color:var(--amber);flex-shrink:0;}
+.toggle-row p{margin:0;font-size:.8rem;line-height:1.5;color:var(--muted);}
+.toggle-row p strong{color:var(--ink);}
+.pending-badge{font-size:.62rem;font-weight:600;letter-spacing:.03em;text-transform:uppercase;padding:3px 7px;border-radius:999px;background:var(--danger-soft);color:var(--danger);}
+.gotcha-card{margin:18px 0 0;padding:14px 16px;border:1px solid var(--danger);border-radius:10px;background:var(--danger-soft);}
+.gotcha-card.is-linked{border-color:var(--accent);background:var(--accent-soft);}
+.gotcha-card .row-title{font-size:.86rem;font-weight:600;color:var(--ink);margin-bottom:4px;}
+.gotcha-card .row-sub{font-size:.78rem;color:var(--muted);line-height:1.5;margin:0 0 12px;}
+.info-block{margin-top:18px;}
+.info-block h4{font-size:.68rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--soft);margin:0 0 8px;}
+.info-row{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px solid var(--line);font-size:.79rem;color:var(--muted);}
+.info-row:last-child{border-bottom:none;}
+.info-row b{font-family:var(--font-mono);color:var(--ink);font-variant-numeric:tabular-nums;font-weight:500;}
+.empty-state{padding:22px 18px;text-align:center;border:1px dashed var(--line-strong);border-radius:10px;color:var(--soft);font-size:.85rem;line-height:1.55;}
+.subhead{font-size:.68rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--soft);margin:22px 0 10px;}
+.subhead:first-of-type{margin-top:0;}
+.badge-ok{display:inline-flex;align-items:center;gap:5px;font-size:.72rem;font-weight:600;color:var(--accent);}
+.total-line{display:flex;justify-content:space-between;padding:10px 0 0;margin-top:6px;border-top:1px solid var(--line-strong);font-size:.86rem;font-weight:600;}
+.total-line b{font-family:var(--font-mono);font-variant-numeric:tabular-nums;}
+    </style>
+  </head>
+  <body>
+
+<div class="wrap">
+  <p class="eyebrow">Concept demo</p>
+  <h1>A live-reconciliation concept for ITR filing</h1>
+  <p class="lede">This shows one idea: fill in numbers from your AIS and Form 26AS automatically, show your estimated refund updating live as you check each one, and walk through the full filing process — not just a single screen.</p>
+  <ul class="caveats">
+    <li>New regime, FY 2025-26 rates</li>
+    <li>Illustrative, not advice</li>
+    <li>Nothing leaves your browser</li>
+  </ul>
+
+  <p class="picker-label">Try a different taxpayer profile</p>
+  <div class="profile-picker" id="profile-picker">
+    <button class="profile-btn" data-profile="salaried">Salaried</button>
+    <button class="profile-btn" data-profile="salariedCG">Salaried + capital gains</button>
+    <button class="profile-btn" data-profile="freelancer">Freelancer</button>
+    <button class="profile-btn" data-profile="business">Business</button>
+  </div>
+
+  <div class="frame">
+    <div class="total-bar">
+      <div>
+        <p class="total-label" id="total-label">Estimated refund</p>
+        <p class="total-value is-refund" id="total-value">₹0</p>
+      </div>
+      <p class="total-hint">Recalculates as you edit any field below</p>
+    </div>
+    <div class="stepper">
+      <div class="step-tab is-active" data-tab="personal">1 · You</div>
+      <div class="step-tab" data-tab="resolve">2 · Form</div>
+      <div class="step-tab" data-tab="review">3 · Income</div>
+      <div class="step-tab" data-tab="deductions">4 · Deduct</div>
+      <div class="step-tab" data-tab="confirm">5 · Tax</div>
+      <div class="step-tab" data-tab="everify">6 · Verify</div>
+    </div>
+
+    <section class="step is-active" id="step-personal">
+      <h2>Your details, from your e-filing profile</h2>
+      <p class="desc">Pulled from your PAN-linked profile and pre-validated bank account — nothing to type here.</p>
+      <div class="reason-card" id="personal-card"></div>
+      <div class="btn-row">
+        <button class="btn primary" data-goto="resolve">Continue →</button>
+      </div>
+    </section>
+
+    <section class="step" id="step-resolve">
+      <h2 id="resolve-title">Based on your Form 16 and AIS, you'll likely file ITR-2</h2>
+      <p class="desc" id="resolve-desc">Salary and capital gains, with no business income — this combination usually needs ITR-2.</p>
+      <div class="reason-card" id="resolve-reason"><strong>Why this form:</strong> loading…</div>
+      <div class="step-actions">
+        <button class="btn" data-goto="personal">← Back</button>
+        <button class="btn primary" data-goto="review">Continue to income →</button>
+      </div>
+    </section>
+
+    <section class="step" id="step-review">
+      <h2 id="review-title">We've filled in what your AIS already shows</h2>
+      <p class="desc" id="review-desc">Rows in green are matched and read-only. Amber rows need a look.</p>
+      <ul class="checklist" id="checklist"></ul>
+      <div class="info-block" id="info-block" style="display:none;">
+        <h4>Also reported in your AIS — informational only</h4>
+        <div id="info-rows"></div>
+      </div>
+      <div class="step-actions">
+        <button class="btn" data-goto="resolve">← Back</button>
+        <button class="btn primary" data-goto="deductions">Continue to deductions →</button>
+      </div>
+    </section>
+
+    <section class="step" id="step-deductions">
+      <h2>Deductions</h2>
+      <p class="desc" id="deductions-desc">Loading…</p>
+      <div class="reason-card" id="deductions-card"></div>
+      <div class="step-actions">
+        <button class="btn" data-goto="review">← Back</button>
+        <button class="btn primary" data-goto="confirm">Continue to tax summary →</button>
+      </div>
+    </section>
+
+    <section class="step" id="step-confirm">
+      <h2>Tax summary &amp; verification</h2>
+      <p class="desc" id="confirm-desc">Tied to the specific schedule that was drafted, not a blanket agreement to the whole return.</p>
+
+      <p class="subhead">Tax computation</p>
+      <div id="tax-breakdown"></div>
+
+      <p class="subhead">Taxes already paid</p>
+      <div id="credit-lines"></div>
+
+      <p class="subhead">Refund credit</p>
+      <div class="reason-card" id="bank-refund-note" style="margin-bottom:0;"></div>
+
+      <div class="confirm-box" style="margin-top:20px;">
+        <input type="checkbox" id="confirm-check">
+        <p id="confirm-statement">I've checked the draft above against my own records, and it's correct.</p>
+      </div>
+      <p class="err" id="confirm-err">Check the box above to confirm you've reviewed the drafted figures first.</p>
+      <div class="step-actions">
+        <button class="btn" data-goto="deductions">← Back</button>
+        <button class="btn primary" id="confirm-submit">Continue to e-verify →</button>
+      </div>
+    </section>
+
+    <section class="step" id="step-everify">
+      <h2>Verify with Aadhaar OTP</h2>
+      <p class="desc">A concept mock — no OTP is actually sent, and nothing is really e-verified. Enter any 6 digits to continue.</p>
+      <div class="reason-card" id="everify-mobile"></div>
+      <div class="field" style="max-width:220px;">
+        <label for="everify-otp">6-digit OTP</label>
+        <input type="text" id="everify-otp" inputmode="numeric" maxlength="6" placeholder="000000">
+      </div>
+      <p class="err" id="everify-err">Enter a 6-digit OTP to continue — any 6 digits work in this demo.</p>
+      <div class="step-actions">
+        <button class="btn" data-goto="confirm">← Back</button>
+        <button class="btn primary" id="everify-submit">Verify &amp; submit →</button>
+      </div>
+    </section>
+
+    <section class="step" id="step-done">
+      <h2>This is a concept only — nothing has been filed</h2>
+      <p class="desc">In a real version, this is the point where the draft hands off to actual e-filing or a licensed preparer. Here, it just recaps what came from where.</p>
+      <div class="done-summary" id="done-summary"></div>
+      <div class="btn-row"><button class="btn" data-goto="personal" id="restart-btn">Restart demo</button></div>
+    </section>
+  </div>
+
+  <p class="foot">Extends a UX case study on India's ITR filing experience. The four profiles above mirror four sample AIS statements built to test the idea: a clean salaried case, multiple capital-gains rows plus an unconfirmed one, a freelancer with several TDS deductors, and a business case with an unlinked tax challan — the exact "paid but not reflected" gap the original research surfaced. Idea stage only.</p>
+  <p class="foot">Tax math: new regime, FY 2025-26 slabs, with the ₹75,000 salaried standard deduction, the section 87A rebate and marginal relief up to ₹12,00,000 in slab-rate income, equity STCG at 20%, equity LTCG at 12.5% above a pooled ₹1,25,000/year exemption, presumptive income at 50% of receipts (44ADA) or 6% of digital turnover (44AD) where relevant, and 4% health &amp; education cess. Surcharge applies above ₹50L total income — 10% (₹50L–1Cr), 15% (₹1Cr–2Cr), capped at 25% beyond that under the new regime — with equity capital-gains surcharge separately capped at 15%. Marginal relief is modeled at the ₹12L rebate cliff but not at the surcharge thresholds; old-regime deductions and other edge cases are left out. This demonstrates the mechanic, not a filing-grade calculator.</p>
+</div>
+
+<script>
+(function(){
+  var fmt=new Intl.NumberFormat('en-IN', {maximumFractionDigits:0});
+  function money(n){ return '₹'+fmt.format(Math.round(Math.max(0,n))); }
+  function moneySigned(n){ n=Math.round(n); return (n<0?'-₹':'₹')+fmt.format(Math.abs(n)); }
+  function num(id){ var el=document.getElementById(id); if(!el) return 0; var v=parseFloat(el.value); return isNaN(v)?0:v; }
+  function checkedEl(id){ var el=document.getElementById(id); return el ? el.checked : false; }
+  function setText(id, text){ var el=document.getElementById(id); if(el) el.textContent=text; }
+
+  var STD_DEDUCTION=75000, LTCG_EXEMPTION=125000, CESS_RATE=0.04;
+  var SLAB_BANDS=[
+    {upto:400000, rate:0},{upto:800000, rate:0.05},{upto:1200000, rate:0.10},
+    {upto:1600000, rate:0.15},{upto:2000000, rate:0.20},{upto:2400000, rate:0.25},{upto:Infinity, rate:0.30}
+  ];
+  function slabTaxOn(income){
+    var tax=0, prev=0;
+    for(var i=0;i<SLAB_BANDS.length;i++){
+      if(income<=prev) break;
+      var slice=Math.min(income, SLAB_BANDS[i].upto)-prev;
+      tax+=slice*SLAB_BANDS[i].rate;
+      prev=SLAB_BANDS[i].upto;
+    }
+    return tax;
+  }
+  function rebateSlabTax(slabIncome){
+    var raw=slabTaxOn(slabIncome);
+    if(slabIncome<=1200000) return 0;
+    return Math.min(raw, slabIncome-1200000);
+  }
+  var SURCHARGE_TIERS=[{above:20000000, rate:0.25},{above:10000000, rate:0.15},{above:5000000, rate:0.10},{above:0, rate:0}];
+  var CG_SURCHARGE_CAP=0.15;
+  function surchargeRateFor(totalIncome){
+    for(var i=0;i<SURCHARGE_TIERS.length;i++){ if(totalIncome>SURCHARGE_TIERS[i].above) return SURCHARGE_TIERS[i].rate; }
+    return 0;
+  }
+  function finalize(slabTax, stcgTax, ltcgTax, totalIncomeForSurcharge, creditLines){
+    var credit=creditLines.reduce(function(sum,c){ return sum+c.amount; },0);
+    var baseRate=surchargeRateFor(totalIncomeForSurcharge);
+    var cgRate=Math.min(baseRate, CG_SURCHARGE_CAP);
+    var surcharge=slabTax*baseRate + (stcgTax+ltcgTax)*cgRate;
+    var taxBeforeCess=slabTax+stcgTax+ltcgTax+surcharge;
+    var cess=taxBeforeCess*CESS_RATE;
+    var totalTax=taxBeforeCess+cess;
+    var result=credit-totalTax;
+    return {slabTax:slabTax,stcgTax:stcgTax,ltcgTax:ltcgTax,surcharge:surcharge,cess:cess,totalTax:totalTax,credit:credit,creditLines:creditLines,result:result};
+  }
+
+  var bizChallanLinked=false;
+  var groupReviewed=false;
+
+  var PERSONAL={
+    salaried:{name:'Priya Nair', pan:'ABCPN1234F', mobile:'+91 98XXX XX412', email:'priya.n***@gmail.com', bank:'Konkan Cooperative Bank', acct:'••••5521', ifsc:'KCCB0001122'},
+    salariedCG:{name:'Ananya Verma', pan:'AXVPM5678K', mobile:'+91 90XXX XX845', email:'ananya.v***@outlook.com', bank:'Silverline Bank', acct:'••••7734', ifsc:'SLBK0004410'},
+    freelancer:{name:'Rohan Mehta', pan:'RMFPK9012L', mobile:'+91 96XXX XX221', email:'rohan.m***@protonmail.com', bank:'Suvarna Bank', acct:'••••3390', ifsc:'SUVB0002207'},
+    business:{name:'Suresh Kapoor', pan:'SKBPK3456N', mobile:'+91 94XXX XX678', email:'suresh.k***@business.in', bank:'Gujral Commercial Bank', acct:'••••9042', ifsc:'GCBK0001590'}
+  };
+  var ACK_NUMBERS={
+    salaried:'748213905566123', salariedCG:'302847561190087', freelancer:'615930284471056', business:'904128736650298'
+  };
+
+  var PROFILES={
+    salaried:{
+      label:'Salaried',
+      resolveTitle:"Based on your Form 16 and AIS, you'll likely file ITR-1",
+      resolveDesc:'Salary and bank interest only — nothing here needs a schedule ITR-1 doesn’t carry.',
+      resolveReason:'<strong>Why this form:</strong> no capital gains, no business or professional income, no let-out property — a single employer and two bank accounts, both already reported to the department, fit entirely inside ITR-1. Nothing here is filed yet.',
+      reviewDesc:'Every figure below is already matched and confirmed by AIS. There’s nothing to draft on this profile — tap any row to see where it came from.',
+      hasDraft:false,
+      deductionsDesc:'Under the new tax regime — the default for AY 2026-27 — most Chapter VI-A deductions no longer apply.',
+      deductionsHtml:sourceRowsHtml([
+        ['Standard deduction (salary)','₹75,000 — already applied above'],
+        ['80C / 80D / HRA','Not available under the new regime'],
+        ['80CCD(2) — employer NPS','Not applicable — no employer NPS contribution reported in AIS']
+      ]),
+      confirmDesc:'There’s no draft to check here — every figure already came from confirmed AIS data.',
+      confirmStatement:'I’ve looked over the matched figures above.',
+      renderChecklist:function(){
+        return checklistHTML([
+          matchedRow('m-salary','Salary &amp; TDS','₹8,50,000 salary · ₹46,800 TDS deducted',[
+            ['Amount paid','₹8,50,000'],
+            ['Tax deducted','₹46,800'],
+            ['Reported by','Meridian Softworks Pvt Ltd'],
+            ['Deductor TAN','BLRM01234C'],
+            ['Section','192 — Salary'],
+            ['Status','Confirmed']
+          ],'Matches Form 16 (Part A &amp; B) and Form 26AS — nothing to reconcile here.'),
+          matchedRow('m-fd','Fixed deposit interest','₹42,000 interest · ₹4,200 TDS deducted',[
+            ['Amount paid','₹42,000'],
+            ['Tax deducted','₹4,200'],
+            ['Reported by','Konkan Cooperative Bank'],
+            ['Deductor TAN','MUMK05678D'],
+            ['Section','194A — Interest other than on securities'],
+            ['Status','Confirmed']
+          ],'TDS applies because FD interest crossed the ₹40,000 threshold for the year.'),
+          matchedRow('m-sv','Savings account interest','₹3,200 interest · no TDS, still taxable',[
+            ['Amount','₹3,200'],
+            ['Tax deducted','Not applicable'],
+            ['Reported by','Konkan Cooperative Bank'],
+            ['AIS category','Interest income'],
+            ['Status','Active']
+          ],'Savings account interest doesn’t attract TDS, but it’s still taxable — AIS reports it without a deduction.')
+        ]) + '<div class="empty-state">No drafts on this profile — every row above is already matched and confirmed.</div>';
+      },
+      infoRows:null,
+      compute:function(){
+        var salary=850000, fd=42000, sv=3200;
+        var slabIncome=Math.max(0,salary-STD_DEDUCTION)+fd+sv;
+        var slabTax=rebateSlabTax(slabIncome);
+        var creditLines=[
+          {label:'TDS — Meridian Softworks Pvt Ltd (192)', amount:46800},
+          {label:'TDS — Konkan Cooperative Bank (194A)', amount:4200}
+        ];
+        var r=finalize(slabTax,0,0,slabIncome,creditLines);
+        r.slabIncome=slabIncome;
+        r.doneRows=[
+          {label:'Salary &amp; TDS', value:'matched · no draft needed'},
+          {label:'Bank interest (FD + savings)', value:'matched · no draft needed'}
+        ];
+        return r;
+      }
+    },
+    salariedCG:{
+      label:'Salaried + capital gains',
+      resolveTitle:"Based on your Form 16 and AIS, you'll likely file ITR-2",
+      resolveDesc:'Salary, dividend, and capital gains from listed shares and mutual funds — this combination needs ITR-2.',
+      resolveReason:'<strong>Why this form:</strong> capital gains from selling shares or mutual funds require a schedule ITR-1 doesn’t carry. Nothing here is filed yet — this is a starting point to review, not a decision.',
+      reviewDesc:'Salary and dividend are matched and read-only — tap either to see the source. Capital gains is drafted from four AIS transactions, one still unconfirmed.',
+      hasDraft:true,
+      deductionsDesc:'Under the new tax regime — the default for AY 2026-27 — most Chapter VI-A deductions no longer apply.',
+      deductionsHtml:sourceRowsHtml([
+        ['Standard deduction (salary)','₹75,000 — already applied above'],
+        ['80C / 80D / HRA','Not available under the new regime'],
+        ['80CCD(2) — employer NPS','Not applicable — no employer NPS contribution reported in AIS']
+      ]),
+      confirmDesc:'Tied to the specific schedule that was drafted, not a blanket agreement to the whole return.',
+      confirmStatement:'I’ve checked the capital gains draft above against my own contract notes, and it’s correct.',
+      renderChecklist:function(){
+        var html=checklistHTML([
+          matchedRow('m-salary','Salary &amp; TDS','₹14,50,000 salary · ₹1,68,000 TDS deducted',[
+            ['Amount paid','₹14,50,000'],
+            ['Tax deducted','₹1,68,000'],
+            ['Reported by','Northline Logistics Ltd'],
+            ['Deductor TAN','DELN04455E'],
+            ['Section','192 — Salary'],
+            ['Status','Confirmed']
+          ],'Matches Form 16 (Part A &amp; B) and Form 26AS.'),
+          matchedRow('m-div','Dividend','₹18,500 dividend · ₹1,850 TDS deducted · taxed at your slab rate',[
+            ['Amount paid','₹18,500'],
+            ['Tax deducted','₹1,850'],
+            ['Reported by','Vantage Asset Management'],
+            ['Deductor TAN','MUMV07711G'],
+            ['Section','194 — Dividend'],
+            ['Status','Confirmed']
+          ],'TDS applies once payouts from one payer cross ₹5,000 in a year. Taxed as income from other sources, not at a special rate.')
+        ]);
+        html += '<li class="check-row">'
+          + '<div class="row-top" data-toggle="cg">'
+            + '<div class="row-left"><span class="dot draft" id="draft-dot"></span><div><div class="row-title">Capital gains</div><div class="row-sub">4 sale transactions found in AIS — 1 unconfirmed</div></div></div>'
+            + '<div class="row-right"><span class="chip draft" id="draft-chip">Draft</span><span class="chevron" id="cg-chevron">▾</span></div>'
+          + '</div>'
+          + '<div class="panel" id="cg-panel"><div class="panel-inner">'
+            + txnRow('cgA','40 shares, listed company A — sold 9 Jan · held 5 months (short-term)','SFT-018 · reported by Kite Securities Ltd',276000,198000,'STCG, flat 20%')
+            + txnRow('cgB','25 shares, listed company B — sold 2 Feb · held 3 months (short-term)','SFT-018 · reported by Kite Securities Ltd',91000,103000,'STCG, flat 20% — a loss offsets other gains first')
+            + txnRow('cgC','Mutual fund units — sold 19 Aug · held 17 months (long-term)','SFT-016 · reported by Vantage Asset Management',210000,142000,'LTCG, 12.5% above ₹1.25L/yr')
+            + '<div class="txn"><div class="txn-meta"><span>Mutual fund units — sold 27 Nov · held 14 months (long-term)</span><span class="pending-badge">Pending confirmation</span></div><div class="txn-meta" style="margin-top:-6px;"><span>SFT-016 · reported by Vantage Asset Management</span></div>'
+              + '<div class="static-row"><span>Sale ₹88,000 − cost ₹61,000</span><b>Draft gain ₹27,000</b></div>'
+              + '<div class="toggle-row"><input type="checkbox" id="cgD-include" class="js-recalc"><p><strong>Include this draft anyway.</strong> Vantage Asset Management hasn’t finalized this entry in AIS yet — the sale happened, but the report isn’t confirmed.</p></div>'
+            + '</div>'
+            + '<div class="note">This is a draft, not a filed number. Check every row against your own contract notes before continuing. The ₹1,25,000 LTCG exemption applies once per year across all long-term equity sales, not per transaction — and a short-term loss offsets other gains before either rate applies.</div>'
+            + '<div class="btn-row"><button class="btn" data-mark="group">Mark reviewed</button></div>'
+          + '</div></div>'
+        + '</li>';
+        return html;
+      },
+      infoRows:null,
+      compute:function(){
+        var salary=1450000, salaryTDS=168000, dividend=18500, dividendTDS=1850;
+        var slabIncome=Math.max(0,salary-STD_DEDUCTION)+dividend;
+        var slabTax=rebateSlabTax(slabIncome);
+        var gA=num('cgA-sale')-num('cgA-cost');
+        var gB=num('cgB-sale')-num('cgB-cost');
+        var gC=num('cgC-sale')-num('cgC-cost');
+        var includeD=checkedEl('cgD-include');
+        var gD=88000-61000;
+        setText('cgA-gain', moneySigned(gA));
+        setText('cgB-gain', moneySigned(gB));
+        setText('cgC-gain', moneySigned(gC));
+        var rawST=gA+gB;
+        var rawLT=gC+(includeD?gD:0);
+        var stcgTaxableGain, ltAfterOffset;
+        if(rawST<0){
+          var offset=Math.min(Math.max(rawLT,0), -rawST);
+          ltAfterOffset=rawLT-offset;
+          stcgTaxableGain=0;
+        } else {
+          stcgTaxableGain=rawST;
+          ltAfterOffset=rawLT;
+        }
+        if(ltAfterOffset<0) ltAfterOffset=0;
+        var ltcgTaxable=Math.max(0, ltAfterOffset-LTCG_EXEMPTION);
+        var stcgTax=stcgTaxableGain*0.20;
+        var ltcgTax=ltcgTaxable*0.125;
+        var totalIncomeForSurcharge=slabIncome+stcgTaxableGain+ltcgTaxable;
+        var creditLines=[
+          {label:'TDS — Northline Logistics Ltd (192)', amount:salaryTDS},
+          {label:'TDS — Vantage Asset Management (194)', amount:dividendTDS}
+        ];
+        var r=finalize(slabTax,stcgTax,ltcgTax,totalIncomeForSurcharge,creditLines);
+        r.slabIncome=slabIncome;
+        r.doneRows=[
+          {label:'Salary &amp; dividend', value:'matched · no draft needed'},
+          {label:'Capital gains', value:(groupReviewed?'reviewed':'not marked reviewed')+' · short-term '+moneySigned(rawST)+', long-term '+moneySigned(ltAfterOffset)+(includeD?' (incl. unconfirmed row)':'')}
+        ];
+        return r;
+      }
+    },
+    freelancer:{
+      label:'Freelancer',
+      resolveTitle:"Based on your 26AS and AIS, you'll likely file ITR-4",
+      resolveDesc:'Professional receipts under the presumptive scheme — this usually means ITR-4.',
+      resolveReason:'<strong>Why this form:</strong> freelance and professional receipts under section 44ADA can be filed on a presumptive basis as long as receipts stay under the limit and are mostly digital — that keeps this on ITR-4 instead of the fuller ITR-3.',
+      reviewDesc:'Three clients are matched and confirmed — tap any to see the source. One payment is still pending confirmation. Presumptive income is derived from whichever receipts you include.',
+      hasDraft:true,
+      deductionsDesc:'Presumptive taxation already accounts for expenses, so there’s nothing further to claim separately.',
+      deductionsHtml:sourceRowsHtml([
+        ['Standard deduction','Not applicable — presumptive professional income, not salary'],
+        ['80C / 80D','Not available under the new regime'],
+        ['Business expenses','Deemed included in the 50% presumptive rate under 44ADA']
+      ]),
+      confirmDesc:'Tied to the receipts and the presumptive income derived from them, not a blanket agreement to the whole return.',
+      confirmStatement:'I’ve checked the professional receipts and presumptive income draft above against my own invoices, and it’s correct.',
+      renderChecklist:function(){
+        var html=checklistHTML([
+          matchedRow('m-c1','Bramble Design Studio','₹4,20,000 fees · ₹42,000 TDS deducted',[
+            ['Amount paid','₹4,20,000'],['Tax deducted','₹42,000'],
+            ['Deductor TAN','BLRB08823H'],['Section','194J — Professional fees'],['Status','Confirmed']
+          ],'Matches Form 26AS and AIS.'),
+          matchedRow('m-c2','Orchard Fintech Pvt Ltd','₹6,10,000 fees · ₹61,000 TDS deducted',[
+            ['Amount paid','₹6,10,000'],['Tax deducted','₹61,000'],
+            ['Deductor TAN','HYDO02291J'],['Section','194J — Professional fees'],['Status','Confirmed']
+          ],'Matches Form 26AS and AIS.'),
+          matchedRow('m-c3','Coral Bay Consulting','₹1,65,000 fees · ₹16,500 TDS deducted',[
+            ['Amount paid','₹1,65,000'],['Tax deducted','₹16,500'],
+            ['Deductor TAN','CHEC09981M'],['Section','194J — Professional fees'],['Status','Confirmed']
+          ],'Matches Form 26AS and AIS.'),
+          matchedRow('m-sv','Savings account interest','₹5,400 interest · no TDS, still taxable',[
+            ['Amount','₹5,400'],['Tax deducted','Not applicable'],
+            ['Reported by','Suvarna Bank'],['AIS category','Interest income'],['Status','Active']
+          ],'Savings account interest doesn’t attract TDS, but it’s still taxable.')
+        ]);
+        html += '<li class="check-row">'
+          + '<div class="row-top" data-toggle="cg">'
+            + '<div class="row-left"><span class="dot draft" id="draft-dot"></span><div><div class="row-title">Presumptive income (44ADA)</div><div class="row-sub">Derived from receipts below — 50% of what’s included</div></div></div>'
+            + '<div class="row-right"><span class="chip draft" id="draft-chip">Draft</span><span class="chevron" id="cg-chevron">▾</span></div>'
+          + '</div>'
+          + '<div class="panel" id="cg-panel"><div class="panel-inner">'
+            + '<div class="txn"><div class="txn-meta"><span>Lumen Health Technologies — 4 invoices this year</span><span class="pending-badge">Pending confirmation</span></div>'
+              + '<div class="static-row"><span>Fees ₹2,75,000 · TDS ₹27,500 (194J)</span><b>Not yet finalized</b></div>'
+              + '<div class="toggle-row"><input type="checkbox" id="fl-pending-include" class="js-recalc"><p><strong>Include this client’s receipts anyway.</strong> The payment happened, but Lumen’s TDS return for this quarter hasn’t been processed — AIS hasn’t confirmed it yet.</p></div>'
+            + '</div>'
+            + '<div class="gain-line" style="margin-top:12px;"><span>Gross receipts included in the draft</span><b id="fl-gross-receipts">₹0</b></div>'
+            + '<div class="gain-line"><span>Presumptive income at 50% of receipts</span><b id="fl-presumptive-income">₹0</b></div>'
+            + '<div class="note">Advance tax of ₹60,000 paid on 14 Dec is already linked to this PAN and counted as a credit in the tax summary.</div>'
+            + '<div class="btn-row"><button class="btn" data-mark="group">Mark reviewed</button></div>'
+          + '</div></div>'
+        + '</li>';
+        return html;
+      },
+      infoRows:null,
+      compute:function(){
+        var interest=5400;
+        var includePending=checkedEl('fl-pending-include');
+        var grossReceipts=420000+610000+165000+(includePending?275000:0);
+        var presumptiveIncome=grossReceipts*0.5;
+        setText('fl-gross-receipts', money(grossReceipts));
+        setText('fl-presumptive-income', money(presumptiveIncome));
+        var slabIncome=presumptiveIncome+interest;
+        var slabTax=rebateSlabTax(slabIncome);
+        var creditLines=[
+          {label:'TDS — Bramble Design Studio (194J)', amount:42000},
+          {label:'TDS — Orchard Fintech Pvt Ltd (194J)', amount:61000},
+          {label:'TDS — Coral Bay Consulting (194J)', amount:16500},
+          {label:'Advance tax paid (14 Dec)', amount:60000}
+        ];
+        if(includePending) creditLines.push({label:'TDS — Lumen Health Technologies (194J, unconfirmed)', amount:27500});
+        var r=finalize(slabTax,0,0,slabIncome,creditLines);
+        r.slabIncome=slabIncome;
+        r.doneRows=[
+          {label:'Professional receipts', value:(groupReviewed?'reviewed':'not marked reviewed')+' · '+money(grossReceipts)+(includePending?' (incl. unconfirmed)':'')},
+          {label:'Presumptive income (44ADA)', value:money(presumptiveIncome)}
+        ];
+        return r;
+      }
+    },
+    business:{
+      label:'Business',
+      resolveTitle:"Based on your GST returns and AIS, you'll likely file ITR-4",
+      resolveDesc:'Business turnover under the presumptive threshold, reported through GST — this usually means ITR-4 under section 44AD.',
+      resolveReason:'<strong>Why this form:</strong> presumptive business income under section 44AD applies as long as turnover stays within ₹2 crore and receipts are mostly digital, which keeps this on ITR-4 instead of a books-based ITR-3.',
+      reviewDesc:'Presumptive income is derived from GST turnover — edit it if your books show something different. A tax payment below isn’t linked to this PAN yet — tap the matched rows to see where each figure came from.',
+      hasDraft:true,
+      deductionsDesc:'Presumptive taxation already accounts for expenses, so there’s nothing further to claim separately.',
+      deductionsHtml:sourceRowsHtml([
+        ['Standard deduction','Not applicable — business income, not salary'],
+        ['80C / 80D','Not available under the new regime'],
+        ['Business expenses','Deemed included in the 6% presumptive margin under 44AD']
+      ]),
+      confirmDesc:'Tied to the presumptive income calculation and the tax payments reconciled below.',
+      confirmStatement:'I’ve checked the presumptive income calculation and linked all tax already paid, and it’s correct.',
+      renderChecklist:function(){
+        var html=checklistHTML([
+          matchedRow('m-c1','Payment from Falcon Retail Distributors','₹8,90,000 · ₹17,800 TDS deducted',[
+            ['Amount paid','₹8,90,000'],['Tax deducted','₹17,800'],
+            ['Deductor TAN','AHMF03321P'],['Section','194C — Payment to contractor'],['Status','Confirmed']
+          ],'Matches Form 26AS and AIS.'),
+          matchedRow('m-tcs','TCS on vehicle purchase','₹14,20,000 purchase · ₹14,200 TCS collected',[
+            ['Purchase amount','₹14,20,000'],['Tax collected','₹14,200'],
+            ['Collected by','Crestline Motors'],['Collector TAN','AHMC01187Q'],['Section','206C(1F) — TCS on motor vehicle over ₹10L'],['Status','Confirmed']
+          ],'A personal purchase, not business turnover — the TCS collected on it is still a credit against your total tax.')
+        ]);
+        html += '<li class="check-row">'
+          + '<div class="row-top" data-toggle="cg">'
+            + '<div class="row-left"><span class="dot draft" id="draft-dot"></span><div><div class="row-title">Presumptive business income (44AD)</div><div class="row-sub">6% of digital GST turnover — edit if your books differ</div></div></div>'
+            + '<div class="row-right"><span class="chip draft" id="draft-chip">Draft</span><span class="chevron" id="cg-chevron">▾</span></div>'
+          + '</div>'
+          + '<div class="panel" id="cg-panel"><div class="panel-inner">'
+            + '<div class="txn"><div class="txn-meta">GST turnover, per GSTR-3B filings for the year</div>'
+              + '<div class="field"><label for="biz-turnover">Turnover</label><input type="number" id="biz-turnover" class="js-recalc" value="6200000" min="0" step="10000"></div>'
+              + '<div class="field"><label>Presumptive rate</label><input type="text" value="6% (digital receipts)" disabled></div>'
+              + '<div class="gain-line"><span>Presumptive taxable income</span><b id="biz-presumptive-income">₹0</b></div>'
+            + '</div>'
+            + '<div class="note">This is a draft, not a filed number. Presumptive income only holds up if your actual profit margin is close to 6% — check it against your own books.</div>'
+            + '<div class="btn-row"><button class="btn" data-mark="group">Mark reviewed</button></div>'
+          + '</div></div>'
+        + '</li>';
+        html += '<li><div class="gotcha-card" id="challan-card">'
+            + '<div class="row-title">Self-assessment tax paid — not yet linked to this PAN</div>'
+            + '<div class="row-sub">₹45,000 paid on 28 Jul (challan CIN-2025072800417) at the bank, but the payment was never validated against this PAN in OLTAS. This is the exact gap the original research flagged: tax genuinely paid, but the return doesn’t show it — until someone reconciles it, the drafted result understates what’s actually owed to you.</div>'
+            + '<button class="btn" id="challan-link-btn" type="button">Link this challan</button>'
+          + '</div></li>';
+        return html;
+      },
+      infoRows:[
+        {label:'Cash deposits, current account (SFT-004)', value:'₹18,50,000'},
+        {label:'Credit card payments (SFT-005)', value:'₹6,40,000'},
+        {label:'Purchase of immovable property (SFT-011)', value:'₹38,00,000'}
+      ],
+      compute:function(){
+        var turnover=num('biz-turnover');
+        var presumptiveIncome=turnover*0.06;
+        setText('biz-presumptive-income', money(presumptiveIncome));
+        var slabIncome=presumptiveIncome;
+        var slabTax=rebateSlabTax(slabIncome);
+        var creditLines=[
+          {label:'TDS — Falcon Retail Distributors (194C)', amount:17800},
+          {label:'TCS — Crestline Motors (206C)', amount:14200}
+        ];
+        if(bizChallanLinked) creditLines.push({label:'Self-assessment challan (linked)', amount:45000});
+        var r=finalize(slabTax,0,0,slabIncome,creditLines);
+        r.slabIncome=slabIncome; r.turnover=turnover; r.presumptiveIncome=presumptiveIncome;
+        r.doneRows=[
+          {label:'Presumptive income (44AD)', value:(groupReviewed?'reviewed':'not marked reviewed')+' · '+money(presumptiveIncome)+' from '+money(turnover)+' turnover'},
+          {label:'Self-assessment challan', value: bizChallanLinked ? '₹45,000 linked and counted' : '₹45,000 paid, not linked — excluded from result'}
+        ];
+        return r;
+      }
+    }
+  };
+
+  function sourceRows(fields){
+    return fields.map(function(f){ return '<div class="static-row"><span>'+f[0]+'</span><b>'+f[1]+'</b></div>'; }).join('');
+  }
+  function sourceRowsHtml(fields){ return sourceRows(fields); }
+  function matchedRow(id, title, sub, fields, noteText){
+    var detail=sourceRows(fields)+(noteText?'<div class="note">'+noteText+'</div>':'');
+    return '<li class="check-row">'
+      + '<div class="row-top" data-toggle="'+id+'">'
+        + '<div class="row-left"><span class="dot matched"></span><div><div class="row-title">'+title+'</div><div class="row-sub">'+sub+'</div></div></div>'
+        + '<div class="row-right"><span class="chip matched">Matched</span><span class="chevron" id="'+id+'-chevron">▾</span></div>'
+      + '</div>'
+      + '<div class="panel" id="'+id+'-panel"><div class="panel-inner">'+detail+'</div></div>'
+    + '</li>';
+  }
+  function checklistHTML(rows){ return rows.join(''); }
+  function txnRow(prefix, meta, source, sale, cost, rateLabel){
+    return '<div class="txn"><div class="txn-meta"><span>'+meta+'</span></div><div class="txn-meta" style="margin-top:-6px;"><span>'+source+'</span></div>'
+      + '<div class="field"><label for="'+prefix+'-sale">Sale value</label><input type="number" id="'+prefix+'-sale" class="js-recalc" value="'+sale+'" min="0" step="1000"></div>'
+      + '<div class="field"><label for="'+prefix+'-cost">Cost basis</label><input type="number" id="'+prefix+'-cost" class="js-recalc" value="'+cost+'" min="0" step="1000"></div>'
+      + '<div class="gain-line"><span>Draft gain — '+rateLabel+'</span><b id="'+prefix+'-gain">₹0</b></div>'
+      + '</div>';
+  }
+
+  var currentProfileId='salariedCG';
+  var everifiedAt=null;
+  var order=['personal','resolve','review','deductions','confirm','everify','done'];
+
+  function goto(name){
+    document.querySelectorAll('.step').forEach(function(s){s.classList.toggle('is-active', s.id==='step-'+name);});
+    document.querySelectorAll('.step-tab').forEach(function(t){
+      var tn=t.getAttribute('data-tab');
+      t.classList.toggle('is-active', tn===name);
+      t.classList.toggle('is-complete', order.indexOf(tn) < order.indexOf(name) && tn!=='');
+    });
+    if(name==='done'){ renderDone(); }
+    window.scrollTo({top:document.querySelector('.frame').offsetTop-12, behavior:'smooth'});
+  }
+
+  function toggle(key){
+    var panel=document.getElementById(key+'-panel');
+    var chev=document.getElementById(key+'-chevron');
+    if(!panel) return;
+    var open=panel.classList.toggle('is-open');
+    if(chev) chev.classList.toggle('is-open', open);
+  }
+
+  function markReviewed(){
+    groupReviewed=true;
+    var dot=document.getElementById('draft-dot');
+    var chip=document.getElementById('draft-chip');
+    if(dot){ dot.classList.remove('draft'); dot.classList.add('reviewed'); }
+    if(chip){ chip.classList.remove('draft'); chip.classList.add('reviewed'); chip.textContent='Reviewed'; }
+    toggle('cg');
+    recalc();
+  }
+
+  function renderPersonal(id){
+    var pd=PERSONAL[id];
+    document.getElementById('personal-card').innerHTML=sourceRows([
+      ['Name',pd.name],
+      ['PAN',pd.pan],
+      ['Assessment year','2026-27'],
+      ['Mobile (Aadhaar-linked)',pd.mobile],
+      ['Email',pd.email],
+      ['Refund account',pd.bank+' '+pd.acct+' · IFSC '+pd.ifsc]
+    ]) + '<div class="note">Pulled from your PAN-linked e-filing profile — nothing here was typed. <span class="badge-ok">✓ Bank pre-validated for refund credit</span></div>';
+    document.getElementById('everify-mobile').innerHTML='<div class="static-row"><span>OTP sent to</span><b>'+pd.mobile+'</b></div>';
+  }
+
+  function renderTaxAndCredits(r){
+    var rows=[];
+    rows.push(['Tax on income at slab rate', r.slabTax>0 ? money(r.slabTax) : money(0)+' — covered by section 87A rebate']);
+    if(r.stcgTax>0) rows.push(['Tax on short-term capital gains (20%)', money(r.stcgTax)]);
+    if(r.ltcgTax>0) rows.push(['Tax on long-term capital gains (12.5%)', money(r.ltcgTax)]);
+    if(r.surcharge>0) rows.push(['Surcharge', money(r.surcharge)]);
+    rows.push(['Health &amp; education cess (4%)', money(r.cess)]);
+    document.getElementById('tax-breakdown').innerHTML=sourceRows(rows)
+      + '<div class="total-line"><span>Total tax liability</span><b>'+money(r.totalTax)+'</b></div>';
+
+    var creditRows=r.creditLines.map(function(c){ return [c.label, money(c.amount)]; });
+    document.getElementById('credit-lines').innerHTML=sourceRows(creditRows)
+      + '<div class="total-line"><span>Total already paid</span><b>'+money(r.credit)+'</b></div>';
+
+    var pd=PERSONAL[currentProfileId];
+    document.getElementById('bank-refund-note').innerHTML = r.result>=0
+      ? sourceRows([['Refund of', money(r.result)], ['Credited to', pd.bank+' '+pd.acct+' · IFSC '+pd.ifsc]])
+      : sourceRows([['Amount due', money(Math.abs(r.result))], ['Pay via', 'Challan 280, then e-verify this return']]);
+  }
+
+  function loadProfile(id){
+    currentProfileId=id;
+    groupReviewed=false;
+    bizChallanLinked=false;
+    everifiedAt=null;
+    var p=PROFILES[id];
+
+    document.querySelectorAll('.profile-btn').forEach(function(b){
+      b.classList.toggle('is-active', b.getAttribute('data-profile')===id);
+    });
+
+    renderPersonal(id);
+    setText('resolve-title', p.resolveTitle);
+    document.getElementById('resolve-desc').textContent=p.resolveDesc;
+    document.getElementById('resolve-reason').innerHTML=p.resolveReason;
+    setText('review-desc', p.reviewDesc);
+    setText('deductions-desc', p.deductionsDesc);
+    document.getElementById('deductions-card').innerHTML=p.deductionsHtml;
+    setText('confirm-desc', p.confirmDesc);
+    setText('confirm-statement', p.confirmStatement);
+
+    var checklist=document.getElementById('checklist');
+    checklist.innerHTML=p.renderChecklist();
+
+    var infoBlock=document.getElementById('info-block');
+    var infoRowsEl=document.getElementById('info-rows');
+    if(p.infoRows && p.infoRows.length){
+      infoBlock.style.display='';
+      infoRowsEl.innerHTML=p.infoRows.map(function(r){
+        return '<div class="info-row"><span>'+r.label+'</span><b>'+r.value+'</b></div>';
+      }).join('');
+    } else {
+      infoBlock.style.display='none';
+      infoRowsEl.innerHTML='';
+    }
+
+    var challanBtn=document.getElementById('challan-link-btn');
+    if(challanBtn){
+      challanBtn.addEventListener('click', function(){
+        bizChallanLinked=!bizChallanLinked;
+        var card=document.getElementById('challan-card');
+        card.classList.toggle('is-linked', bizChallanLinked);
+        challanBtn.textContent = bizChallanLinked ? '✓ Linked — unlink' : 'Link this challan';
+        recalc();
+      });
+    }
+
+    document.getElementById('confirm-check').checked=false;
+    document.getElementById('confirm-err').classList.remove('is-visible');
+    document.getElementById('everify-otp').value='';
+    document.getElementById('everify-err').classList.remove('is-visible');
+
+    goto('personal');
+    recalc();
+  }
+
+  document.getElementById('profile-picker').addEventListener('click', function(e){
+    var btn=e.target.closest('[data-profile]');
+    if(btn) loadProfile(btn.getAttribute('data-profile'));
+  });
+
+  document.querySelectorAll('[data-goto]').forEach(function(b){
+    b.addEventListener('click', function(){ goto(b.getAttribute('data-goto')); });
+  });
+
+  document.getElementById('checklist').addEventListener('click', function(e){
+    var toggleRow=e.target.closest('[data-toggle]');
+    if(toggleRow){ toggle(toggleRow.getAttribute('data-toggle')); return; }
+    var markBtn=e.target.closest('[data-mark]');
+    if(markBtn){ e.stopPropagation(); markReviewed(); }
+  });
+  document.getElementById('checklist').addEventListener('input', function(e){
+    if(e.target.classList.contains('js-recalc')) recalc();
+  });
+  document.getElementById('checklist').addEventListener('change', function(e){
+    if(e.target.classList.contains('js-recalc')) recalc();
+  });
+
+  function recalc(){
+    var p=PROFILES[currentProfileId];
+    var r=p.compute();
+    var label=document.getElementById('total-label');
+    var value=document.getElementById('total-value');
+    if(r.result>=0){
+      label.textContent='Estimated refund';
+      value.textContent=money(r.result);
+      value.classList.remove('is-due'); value.classList.add('is-refund');
+    } else {
+      label.textContent='Estimated amount due';
+      value.textContent=money(Math.abs(r.result));
+      value.classList.remove('is-refund'); value.classList.add('is-due');
+    }
+    renderTaxAndCredits(r);
+    window._itrResult=r;
+  }
+
+  document.getElementById('confirm-submit').addEventListener('click', function(){
+    var err=document.getElementById('confirm-err');
+    if(!document.getElementById('confirm-check').checked){
+      err.classList.add('is-visible');
+      return;
+    }
+    err.classList.remove('is-visible');
+    goto('everify');
+  });
+  document.getElementById('confirm-check').addEventListener('change', function(){
+    document.getElementById('confirm-err').classList.remove('is-visible');
+  });
+
+  document.getElementById('everify-submit').addEventListener('click', function(){
+    var err=document.getElementById('everify-err');
+    var val=document.getElementById('everify-otp').value.trim();
+    if(!/^\d{6}$/.test(val)){
+      err.classList.add('is-visible');
+      return;
+    }
+    err.classList.remove('is-visible');
+    everifiedAt=new Date();
+    goto('done');
+  });
+  document.getElementById('everify-otp').addEventListener('input', function(){
+    document.getElementById('everify-err').classList.remove('is-visible');
+  });
+
+  function renderDone(){
+    var r=window._itrResult || {};
+    var rows=(r.doneRows||[]).map(function(row){
+      return '<div class="done-row"><span>'+row.label+'</span><span>'+row.value+'</span></div>';
+    }).join('');
+    rows += '<div class="done-row"><span>e-Verified</span><span>'+(everifiedAt?everifiedAt.toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'}):'—')+'</span></div>';
+    rows += '<div class="done-row"><span>Acknowledgement number</span><span>'+ACK_NUMBERS[currentProfileId]+'</span></div>';
+    rows += '<div class="done-row"><span><strong>Estimated result</strong></span><span>'
+      + (r.result>=0?'Refund of ':'Due ') + money(Math.abs(r.result||0))
+      + ' · tax ' + money(r.totalTax||0) + ' incl. cess &amp; surcharge vs. ' + money(r.credit||0) + ' credited'
+      + '</span></div>';
+    document.getElementById('done-summary').innerHTML=rows;
+  }
+
+  loadProfile('salariedCG');
+})();
+</script>
+  </body>
+</html>
