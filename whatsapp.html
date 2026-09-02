@@ -40,7 +40,7 @@
         align-items:center;
         padding:56px 24px 80px;
         box-sizing:border-box;
-        background:#030405;
+        background:var(--surface);
       }
       .wa-page-intro{
         max-width:520px;
@@ -53,7 +53,7 @@
         font-weight:600;
         letter-spacing:0.02em;
         text-transform:uppercase;
-        color:#AAA395;
+        color:var(--muted);
         margin-bottom:12px;
       }
       .wa-page-heading{
@@ -61,12 +61,12 @@
         line-height:1.2;
         font-weight:700;
         margin:0 0 12px;
-        color:#F3EEE2;
+        color:var(--text);
       }
       .wa-page-body{
         font-size:15.5px;
         line-height:1.6;
-        color:#AAA395;
+        color:var(--muted);
         margin:0 0 4px;
       }
       .wa-feedback-shell{
@@ -104,13 +104,6 @@
     </style>
   </head>
   <body>
-    <header class="site-header">
-      <div class="site-header-inner">
-        <span class="site-brand"><span class="site-brand-mark">₹</span>ITR Assist</span>
-        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to dark mode" aria-pressed="false">🌙</button>
-      </div>
-    </header>
-
     <main class="wa-page-shell">
       <div class="wa-page-intro">
         <span class="wa-page-eyebrow">A newer concept</span>
@@ -120,7 +113,7 @@
 
 <style>
   :root{
-    --bg:#030405;
+    --wa-bg:#030405;
     --wa-header:#075E54;
     --wa-wallpaper:#E4DDD3;
     --wa-bubble-in:#FFFFFF;
@@ -138,7 +131,7 @@
   *{ box-sizing:border-box; }
   html,body{ margin:0; padding:0; }
   .wa-demo-wrap{
-    background:var(--bg);
+    background:var(--wa-bg);
     min-height:640px;
     display:flex;
     align-items:center;
@@ -1565,33 +1558,6 @@
             submitBtn.disabled = false;
             submitBtn.textContent = 'Send feedback';
           });
-        });
-      })();
-    </script>
-
-    <script>
-      (function () {
-        var btn = document.getElementById("theme-toggle");
-        if (!btn) return;
-        function apply(theme) {
-          if (theme === "dark") {
-            document.documentElement.setAttribute("data-theme", "dark");
-            btn.textContent = "☀️";
-            btn.setAttribute("aria-pressed", "true");
-            btn.setAttribute("aria-label", "Switch to light mode");
-          } else {
-            document.documentElement.removeAttribute("data-theme");
-            btn.textContent = "🌙";
-            btn.setAttribute("aria-pressed", "false");
-            btn.setAttribute("aria-label", "Switch to dark mode");
-          }
-        }
-        apply(document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light");
-        btn.addEventListener("click", function () {
-          var isDark = document.documentElement.getAttribute("data-theme") === "dark";
-          var next = isDark ? "light" : "dark";
-          localStorage.setItem("itr-demo-theme", next);
-          apply(next);
         });
       })();
     </script>
