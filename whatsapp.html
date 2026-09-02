@@ -159,44 +159,32 @@
     *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
   }
 
-  .phone{
+  .wa-iphone{
     position:relative;
     width:364px;
-    background:#1B1D1F;
-    border-radius:48px;
-    padding:14px;
-    box-shadow:
-      0 0 0 1px rgba(255,255,255,0.07) inset,
-      0 0 0 1px rgba(0,0,0,0.4),
-      0 44px 90px -30px rgba(0,0,0,0.8);
+    aspect-ratio:900/1840;
+    filter:drop-shadow(0 44px 90px rgba(0,0,0,0.55));
+  }
+  .wa-iphone-frame{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:5;
+    pointer-events:none;
+    display:block;
   }
   .phone-screen{
-    position:relative;
-    border-radius:36px;
+    position:absolute;
+    left:5.4444%;
+    top:2.5543%;
+    right:5.5556%;
+    bottom:2.6087%;
+    border-radius:34px;
     overflow:hidden;
     display:flex;
     flex-direction:column;
-    height:760px;
     font-family:var(--wa-font);
-  }
-
-  .notch{
-    position:absolute;
-    top:9px; left:50%;
-    transform:translateX(-50%);
-    width:84px; height:20px;
-    background:#000;
-    border-radius:999px;
-    z-index:6;
-  }
-  .home-bar{
-    position:absolute;
-    bottom:7px; left:50%;
-    transform:translateX(-50%);
-    width:110px; height:4px;
-    background:rgba(0,0,0,0.32);
-    border-radius:3px;
-    z-index:6;
   }
 
   /* ---------- WhatsApp chrome ---------- */
@@ -652,8 +640,7 @@
 
 <div class="wa-demo-wrap">
 
-<div class="phone">
-  <span class="notch"></span>
+<div class="wa-iphone">
   <div class="phone-screen">
     <div class="wa-top">
       <div class="wa-statusrow">
@@ -701,7 +688,7 @@
       </button>
     </div>
   </div>
-  <span class="home-bar"></span>
+  <img class="wa-iphone-frame" src="iphone-frame.png" alt="" aria-hidden="true">
 </div>
 
 <script>
