@@ -379,21 +379,26 @@
           <h1 class="demo-heading">Let's confirm it's really you</h1>
           <p class="demo-body">Pulled straight from your PAN and Aadhaar records — nothing to type.</p>
 
-          <p class="detail-group-title">Your details</p>
-          <dl class="detail-list">
-            <div><dt>Name</dt><dd>Rohan Mehta <span class="detail-verified">Locked</span></dd></div>
-            <div><dt>PAN</dt><dd>ABCDE1234F <span class="detail-verified">Locked</span></dd></div>
-            <div><dt>Aadhaar</dt><dd>XXXX XXXX 8575 <span class="detail-verified">Locked</span></dd></div>
-            <div><dt>Mobile</dt><dd><span class="detail-value" data-personal="mobile">+91 XXXXX 43210</span><button type="button" class="import-item-edit-btn" data-personal-edit="mobile" aria-label="Edit mobile number">✎</button></dd></div>
-            <div><dt>Email</dt><dd><span class="detail-value" data-personal="email">rohan.m••••@gmail.com</span><button type="button" class="import-item-edit-btn" data-personal-edit="email" aria-label="Edit email address">✎</button></dd></div>
-          </dl>
-
-          <p class="detail-group-title">Bank account for refund</p>
-          <dl class="detail-list">
-            <div><dt>Bank</dt><dd><span class="detail-value" data-personal="bank">HDFC Bank</span><button type="button" class="import-item-edit-btn" data-personal-edit="bank" aria-label="Edit bank name">✎</button></dd></div>
-            <div><dt>Account no.</dt><dd><span class="detail-value" data-personal="account">XXXX XXXX 5678</span><button type="button" class="import-item-edit-btn" data-personal-edit="account" aria-label="Edit account number">✎</button></dd></div>
-            <div><dt>IFSC</dt><dd><span class="detail-value" data-personal="ifsc">HDFC0000123</span><button type="button" class="import-item-edit-btn" data-personal-edit="ifsc" aria-label="Edit IFSC code">✎</button></dd></div>
-          </dl>
+          <div class="detail-groups-grid">
+            <div class="detail-group">
+              <p class="detail-group-title">Your details</p>
+              <dl class="detail-list">
+                <div><dt>Name</dt><dd>Rohan Mehta <span class="detail-verified">Locked</span></dd></div>
+                <div><dt>PAN</dt><dd>ABCDE1234F <span class="detail-verified">Locked</span></dd></div>
+                <div><dt>Aadhaar</dt><dd>XXXX XXXX 8575 <span class="detail-verified">Locked</span></dd></div>
+                <div><dt>Mobile</dt><dd><span class="detail-value" data-personal="mobile">+91 XXXXX 43210</span><button type="button" class="import-item-edit-btn" data-personal-edit="mobile" aria-label="Edit mobile number">✎</button></dd></div>
+                <div><dt>Email</dt><dd><span class="detail-value" data-personal="email">rohan.m••••@gmail.com</span><button type="button" class="import-item-edit-btn" data-personal-edit="email" aria-label="Edit email address">✎</button></dd></div>
+              </dl>
+            </div>
+            <div class="detail-group">
+              <p class="detail-group-title">Bank account for refund</p>
+              <dl class="detail-list">
+                <div><dt>Bank</dt><dd><span class="detail-value" data-personal="bank">HDFC Bank</span><button type="button" class="import-item-edit-btn" data-personal-edit="bank" aria-label="Edit bank name">✎</button></dd></div>
+                <div><dt>Account no.</dt><dd><span class="detail-value" data-personal="account">XXXX XXXX 5678</span><button type="button" class="import-item-edit-btn" data-personal-edit="account" aria-label="Edit account number">✎</button></dd></div>
+                <div><dt>IFSC</dt><dd><span class="detail-value" data-personal="ifsc">HDFC0000123</span><button type="button" class="import-item-edit-btn" data-personal-edit="ifsc" aria-label="Edit IFSC code">✎</button></dd></div>
+              </dl>
+            </div>
+          </div>
 
           <p class="demo-fine">Name, PAN, and Aadhaar are locked to your KYC record — a mismatch there means correcting your KYC, not something to fix here. Your contact details and refund account are yours to update.</p>
 

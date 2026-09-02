@@ -266,8 +266,7 @@ a:focus-visible {
 
 .demo-card {
   position: relative;
-  height: 660px;
-  overflow-y: auto;
+  min-height: 500px;
   padding: 34px 28px 28px;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
@@ -277,7 +276,7 @@ a:focus-visible {
 
 .demo-card.is-split {
   padding: 0;
-  overflow-y: auto;
+  overflow: hidden;
 }
 
 .demo-card.is-split .demo-progress {
@@ -288,8 +287,7 @@ a:focus-visible {
 .auth-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  height: 100%;
-  min-height: 660px;
+  min-height: 500px;
 }
 
 .auth-side {
@@ -1175,6 +1173,11 @@ a:focus-visible {
   font-size: 0.82rem;
 }
 
+.detail-groups-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
 .detail-group-title {
   margin: 22px 0 8px;
   color: var(--muted);
@@ -1186,6 +1189,17 @@ a:focus-visible {
 
 .detail-group:first-of-type .detail-group-title {
   margin-top: 4px;
+}
+
+@media (min-width: 640px) {
+  .demo-shell.is-medium {
+    max-width: 720px;
+  }
+  .detail-groups-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0 24px;
+    align-items: start;
+  }
 }
 
 .detail-list {
