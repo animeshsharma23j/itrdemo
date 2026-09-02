@@ -28,7 +28,6 @@
   var progressOrder = ["review-income", "review-savings", "review-tds", "review-capgains", "review-other", "resolve", "compare", "review", "everify"];
   var WIDE_SCREENS = ["home", "guide", "calculator", "case-studies", "tax-qna", "video-tutorials"];
   var SPLIT_SCREENS = ["signin", "signin-otp"];
-  var MEDIUM_SCREENS = ["personal-details"];
   var demoShell = document.querySelector(".demo-shell");
   var demoCard = document.querySelector(".demo-card");
 
@@ -75,7 +74,6 @@
     });
     if (demoShell) {
       demoShell.classList.toggle("is-wide", WIDE_SCREENS.indexOf(id) > -1);
-      demoShell.classList.toggle("is-medium", MEDIUM_SCREENS.indexOf(id) > -1);
     }
     if (demoCard) {
       demoCard.classList.toggle("is-split", SPLIT_SCREENS.indexOf(id) > -1);
