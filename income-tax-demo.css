@@ -1764,7 +1764,6 @@ a:focus-visible {
   color: var(--text);
   font: inherit;
   font-size: 0.94rem;
-  text-align: center;
 }
 
 .demo-input-row input:focus-visible {
