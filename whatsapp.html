@@ -113,8 +113,42 @@
       .wa-feedback-consent input{
         width:16px;
         height:16px;
-        accent-color:var(--primary);
+        accent-color:#075E54;
         cursor:pointer;
+      }
+
+      /* Echo the WhatsApp teal used in the mockup above, instead of the site's default black accent */
+      .wa-feedback-eyebrow{ color:#0B8577; }
+      .wa-feedback-shell .demo-feedback{
+        border-color:rgba(7,94,84,0.16);
+        background:linear-gradient(180deg, rgba(7,94,84,0.05), rgba(7,94,84,0) 140px), var(--surface-2);
+      }
+      .wa-feedback-shell .feedback-tag:hover,
+      .wa-feedback-shell .feedback-tag:focus-visible{
+        border-color:#075E54;
+        color:var(--text);
+      }
+      .wa-feedback-shell .feedback-tag.is-active{
+        border-color:#075E54;
+        background:#075E54;
+        color:#fff;
+      }
+      .wa-feedback-shell .demo-feedback textarea:focus-visible,
+      .wa-feedback-shell .demo-input-row input:focus-visible{
+        border-color:#075E54;
+      }
+      .wa-feedback-shell .demo-btn.is-primary{
+        border-color:#075E54;
+        background:#075E54;
+      }
+      .wa-feedback-shell .demo-btn.is-primary:hover,
+      .wa-feedback-shell .demo-btn.is-primary:focus-visible{
+        border-color:#064E45;
+        background:#064E45;
+      }
+      .wa-feedback-shell .demo-thanks.is-visible{
+        border:1px solid rgba(7,94,84,0.25);
+        background:rgba(7,94,84,0.08);
       }
     </style>
   </head>
@@ -193,7 +227,7 @@
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:8px 22px 2px;
+    padding:8px 22px 20px;
     color:#fff;
   }
   .wa-statusrow .time{ font-size:0.7rem; font-variant-numeric:tabular-nums; }
