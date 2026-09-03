@@ -154,7 +154,33 @@
     </style>
   </head>
   <body>
-    <main class="wa-page-shell">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <div class="ambient-field" aria-hidden="true">
+      <span class="ambient-glow ambient-glow-a"></span>
+      <span class="ambient-glow ambient-glow-b"></span>
+    </div>
+
+    <header class="site-header">
+      <div class="site-header-inner">
+        <span class="site-brand"><span class="site-brand-mark">₹</span>ITR Assist</span>
+        <nav class="site-nav" aria-label="Primary">
+          <a class="site-nav-link" href="index.html">Home</a>
+          <a class="site-nav-link" href="case-study.html">Case study</a>
+          <a class="site-nav-link" href="filing.html">Filing concept</a>
+          <a class="site-nav-link is-active" href="whatsapp.html">WhatsApp concept</a>
+        </nav>
+        <span class="demo-ay-badge">AY 2026-27</span>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to dark mode" aria-pressed="false">
+          <span class="theme-toggle-track" aria-hidden="true">
+            <span class="theme-toggle-icon theme-toggle-icon-sun"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="8" cy="8" r="3"></circle><path d="M8 1.3v1.6M8 13.1v1.6M2.6 8H1M15 8h-1.6M3.5 3.5l1.2 1.2M11.3 11.3l1.2 1.2M3.5 12.5l1.2-1.2M11.3 4.7l1.2-1.2"></path></svg></span>
+            <span class="theme-toggle-icon theme-toggle-icon-moon"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.5 9.8A5.6 5.6 0 0 1 6.2 2.5a5.8 5.8 0 1 0 7.3 7.3Z"></path></svg></span>
+            <span class="theme-toggle-thumb"></span>
+          </span>
+        </button>
+      </div>
+    </header>
+
+    <main id="main-content" class="site-main wa-page-shell">
       <div class="wa-page-intro">
         <span class="wa-page-eyebrow">A newer concept</span>
         <h1 class="wa-page-heading">The same filing, as a WhatsApp chat</h1>
@@ -1586,5 +1612,11 @@
         });
       })();
     </script>
+
+    <footer class="site-footer">
+      <p class="site-footer-inner">A concept demo by Animesh Sharma</p>
+    </footer>
+
+    <script src="scripts/theme-toggle.js" defer></script>
   </body>
 </html>

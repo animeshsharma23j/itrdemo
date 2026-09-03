@@ -33,26 +33,17 @@
     </script>
     <style>
 :root{
-  /* filing.html's own signal color (kept distinct from the shared monochrome --primary)
-     plus short aliases onto the shared income-tax-demo.css neutral tokens, so the rest of
-     this file's CSS below is untouched. */
-  --accent:#1F5C52; --accent-ink:#F1F7F4; --accent-soft:#DCEAE5;
-  --amber:#8A611A; --amber-soft:#F1E4C7;
+  /* Short aliases onto the shared income-tax-demo.css tokens (--accent/--attn come from
+     there now), so the rest of this file's CSS below is untouched. */
+  --amber:var(--attn);
+  --amber-soft:var(--attn-soft);
   --focus:var(--accent);
   --ink:var(--text);
   --line:var(--border);
   --line-strong:var(--border-strong);
   --danger-soft:var(--danger-bg);
 }
-:root[data-theme="dark"]{
-  --accent:#57B79C; --accent-ink:#08120F; --accent-soft:rgba(87,183,156,0.14);
-  --amber:#DFAE58; --amber-soft:rgba(223,174,88,0.14);
-}
-*{box-sizing:border-box;}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-sans);
-  background-image:repeating-linear-gradient(var(--line) 0 1px, transparent 1px 34px);
-}
-.wrap{max-width:640px;margin:0 auto;padding:2.5rem 1.25rem 4rem;}
+.wrap{max-width:640px;margin:0 auto;padding:2.5rem 1.25rem 4rem;flex:1 0 auto;width:100%;box-sizing:border-box;}
 .eyebrow{font-family:var(--font-mono);font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 .6rem;}
 h1{font-size:clamp(1.6rem,4vw,2.15rem);font-weight:700;letter-spacing:-0.015em;line-height:1.15;margin:0 0 .75rem;text-wrap:balance;}
 .lede{font-size:.98rem;line-height:1.65;color:var(--muted);max-width:60ch;margin:0 0 1.1rem;}
@@ -64,7 +55,7 @@ h1{font-size:clamp(1.6rem,4vw,2.15rem);font-weight:700;letter-spacing:-0.015em;l
 .profile-btn:hover{background:var(--surface-2);color:var(--ink);}
 .profile-btn.is-active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);}
 .frame{border:1px solid var(--line-strong);border-radius:var(--radius-lg);background:var(--surface);overflow:hidden;}
-.total-bar{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;background:var(--surface);border-bottom:1px solid var(--line);}
+.total-bar{position:sticky;top:69px;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;background:var(--surface);border-bottom:1px solid var(--line);}
 .total-label{font-size:.68rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);margin:0 0 3px;}
 .total-value{font-family:var(--font-mono);font-size:1.5rem;font-weight:600;font-variant-numeric:tabular-nums;margin:0;}
 .total-value.is-refund{color:var(--accent);}
@@ -153,8 +144,33 @@ h1{font-size:clamp(1.6rem,4vw,2.15rem);font-weight:700;letter-spacing:-0.015em;l
     </style>
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <div class="ambient-field" aria-hidden="true">
+      <span class="ambient-glow ambient-glow-a"></span>
+      <span class="ambient-glow ambient-glow-b"></span>
+    </div>
 
-<div class="wrap">
+    <header class="site-header">
+      <div class="site-header-inner">
+        <span class="site-brand"><span class="site-brand-mark">₹</span>ITR Assist</span>
+        <nav class="site-nav" aria-label="Primary">
+          <a class="site-nav-link" href="index.html">Home</a>
+          <a class="site-nav-link" href="case-study.html">Case study</a>
+          <a class="site-nav-link is-active" href="filing.html">Filing concept</a>
+          <a class="site-nav-link" href="whatsapp.html">WhatsApp concept</a>
+        </nav>
+        <span class="demo-ay-badge">AY 2026-27</span>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to dark mode" aria-pressed="false">
+          <span class="theme-toggle-track" aria-hidden="true">
+            <span class="theme-toggle-icon theme-toggle-icon-sun"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="8" cy="8" r="3"></circle><path d="M8 1.3v1.6M8 13.1v1.6M2.6 8H1M15 8h-1.6M3.5 3.5l1.2 1.2M11.3 11.3l1.2 1.2M3.5 12.5l1.2-1.2M11.3 4.7l1.2-1.2"></path></svg></span>
+            <span class="theme-toggle-icon theme-toggle-icon-moon"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.5 9.8A5.6 5.6 0 0 1 6.2 2.5a5.8 5.8 0 1 0 7.3 7.3Z"></path></svg></span>
+            <span class="theme-toggle-thumb"></span>
+          </span>
+        </button>
+      </div>
+    </header>
+
+<main id="main-content" class="site-main wrap">
   <p class="eyebrow">Concept demo</p>
   <h1>A live-reconciliation concept for ITR filing</h1>
   <p class="lede">This shows one idea: fill in numbers from your AIS and Form 26AS automatically, show your estimated refund updating live as you check each one, and walk through the full filing process — not just a single screen.</p>
@@ -281,7 +297,13 @@ h1{font-size:clamp(1.6rem,4vw,2.15rem);font-weight:700;letter-spacing:-0.015em;l
 
   <p class="foot">Extends a UX case study on India's ITR filing experience. The four profiles above mirror four sample AIS statements built to test the idea: a clean salaried case, multiple capital-gains rows plus an unconfirmed one, a freelancer with several TDS deductors, and a business case with an unlinked tax challan — the exact "paid but not reflected" gap the original research surfaced. Idea stage only.</p>
   <p class="foot">Tax math: new regime, FY 2025-26 slabs, with the ₹75,000 salaried standard deduction, the section 87A rebate and marginal relief up to ₹12,00,000 in slab-rate income, equity STCG at 20%, equity LTCG at 12.5% above a pooled ₹1,25,000/year exemption, presumptive income at 50% of receipts (44ADA) or 6% of digital turnover (44AD) where relevant, and 4% health &amp; education cess. Surcharge applies above ₹50L total income — 10% (₹50L–1Cr), 15% (₹1Cr–2Cr), capped at 25% beyond that under the new regime — with equity capital-gains surcharge separately capped at 15%. Marginal relief is modeled at the ₹12L rebate cliff but not at the surcharge thresholds; old-regime deductions and other edge cases are left out. This demonstrates the mechanic, not a filing-grade calculator.</p>
-</div>
+</main>
+
+    <footer class="site-footer">
+      <p class="site-footer-inner">A concept demo by Animesh Sharma</p>
+    </footer>
+
+    <script src="scripts/theme-toggle.js" defer></script>
 
 <script>
 (function(){

@@ -31,29 +31,6 @@
       })();
     </script>
     <style>
-:root{
-  /* Same signal color as filing.html, so the case study and the product read as one thing */
-  --accent:#1F5C52; --accent-ink:#F1F7F4; --accent-soft:#DCEAE5;
-  --attn:#8A611A; --attn-soft:#F1E4C7;
-}
-:root[data-theme="dark"]{
-  --accent:#57B79C; --accent-ink:#08120F; --accent-soft:rgba(87,183,156,0.14);
-  --attn:#DFAE58; --attn-soft:rgba(223,174,88,0.14);
-}
-
-.skip-link{position:absolute;left:-9999px;top:0;z-index:100;padding:10px 16px;border-radius:0 0 var(--radius-md) 0;background:var(--primary);color:var(--on-primary);font-size:.85rem;font-weight:600;text-decoration:none;}
-.skip-link:focus{left:0;}
-
-/* Ambient background — a quiet, restyled stand-in for the personal portfolio's tesseract,
-   in the product's own monochrome + teal palette. Two soft drifting fields, nothing sharp. */
-.ambient-field{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;}
-.ambient-glow{position:absolute;border-radius:50%;filter:blur(60px);opacity:.5;}
-.ambient-glow-a{width:52vw;height:52vw;left:-14vw;top:-18vw;background:radial-gradient(circle, var(--accent-soft) 0%, transparent 70%);animation:ambient-drift-a 34s ease-in-out infinite;}
-.ambient-glow-b{width:44vw;height:44vw;right:-12vw;top:24vh;background:radial-gradient(circle, var(--surface-2) 0%, transparent 70%);animation:ambient-drift-b 40s ease-in-out infinite;}
-@keyframes ambient-drift-a{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(3vw,4vw) scale(1.08);}}
-@keyframes ambient-drift-b{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-3vw,-3vw) scale(1.05);}}
-@media (prefers-reduced-motion: reduce){.ambient-glow{animation:none;}}
-
 .case-study-shell{width:min(1040px, calc(100% - 40px));margin:0 auto;padding:88px 0 140px;}
 .case-study-shell h1{margin:0 0 18px;font-size:clamp(2.6rem,5.5vw,4.2rem);font-weight:800;line-height:0.98;letter-spacing:-0.03em;}
 .case-study-shell h1 span{display:block;margin-top:.28em;color:var(--muted);font-size:.4em;font-weight:600;line-height:1.2;letter-spacing:-0.01em;}
@@ -94,7 +71,8 @@
 .mockup-checklist li.is-attention{color:var(--text);border-color:var(--attn);background:var(--attn-soft);}
 .mockup-checklist li.is-attention .mockup-dot{background:var(--attn);}
 .mockup-gallery{display:grid;grid-template-columns:repeat(3, 1fr);gap:20px;margin:32px 0 0;}
-.mockup-gallery figure{margin:0;}
+.mockup-gallery figure{display:flex;flex-direction:column;margin:0;}
+.mockup-gallery figure .mockup-window{flex:1;}
 .mockup-gallery figcaption{margin-top:10px;color:var(--soft);font-size:.76rem;font-weight:600;text-align:center;}
 
 .case-detail-grid{display:grid;grid-template-columns:160px 1fr;gap:36px;padding:56px 0;border-top:1px solid var(--border);}
@@ -124,9 +102,9 @@
 
 .theme-grid{display:grid;grid-template-columns:repeat(2, 1fr);gap:14px;margin:24px 0 0;}
 .case-proof-grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:16px;margin:24px 0 0;}
-.case-proof-card{padding:18px 20px;border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--surface);}
+.case-proof-card{display:flex;flex-direction:column;padding:18px 20px;border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--surface);}
 .case-proof-card p:first-of-type{margin:0 0 10px;color:var(--text);font-weight:700;font-size:.94rem;}
-.case-proof-card p:last-of-type{margin:0;color:var(--muted);font-size:.86rem;line-height:1.55;}
+.case-proof-card p:last-of-type{margin-top:auto;color:var(--muted);font-size:.86rem;line-height:1.55;}
 .case-proof-card>span{display:block;margin-bottom:8px;color:var(--soft);font-size:.7rem;font-weight:600;letter-spacing:.03em;text-transform:uppercase;}
 .case-proof-card h3{margin:0 0 8px;font-size:1.02rem;font-weight:700;letter-spacing:-0.01em;}
 
@@ -146,7 +124,7 @@
 .wireframe-pill{display:inline-block;width:44%;height:16px;margin-top:2px;border-radius:var(--radius-pill);background:var(--border-strong);}
 .wireframe-dots{display:flex;flex-direction:column;gap:4px;margin-top:2px;}
 .wireframe-dots span{padding:4px 8px;border-radius:var(--radius-pill);background:var(--border-strong);color:var(--soft);font-size:.62rem;font-weight:600;width:fit-content;}
-.wireframe-caption{margin:8px 0 0;color:var(--muted);font-size:.76rem;line-height:1.5;}
+.wireframe-caption{margin:auto 0 0;padding-top:8px;color:var(--muted);font-size:.76rem;line-height:1.5;}
 .wireframe-caption strong{display:block;margin-bottom:3px;color:var(--text);font-size:.8rem;}
 
 .case-callout{margin-top:24px;padding:16px 18px;border-left:2px solid var(--accent);background:var(--accent-soft);color:var(--text);font-size:.84rem;line-height:1.55;}
@@ -170,7 +148,27 @@
       <span class="ambient-glow ambient-glow-b"></span>
     </div>
 
-    <main id="main-content" class="case-study-shell">
+    <header class="site-header">
+      <div class="site-header-inner">
+        <span class="site-brand"><span class="site-brand-mark">₹</span>ITR Assist</span>
+        <nav class="site-nav" aria-label="Primary">
+          <a class="site-nav-link" href="index.html">Home</a>
+          <a class="site-nav-link is-active" href="case-study.html">Case study</a>
+          <a class="site-nav-link" href="filing.html">Filing concept</a>
+          <a class="site-nav-link" href="whatsapp.html">WhatsApp concept</a>
+        </nav>
+        <span class="demo-ay-badge">AY 2026-27</span>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to dark mode" aria-pressed="false">
+          <span class="theme-toggle-track" aria-hidden="true">
+            <span class="theme-toggle-icon theme-toggle-icon-sun"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="8" cy="8" r="3"></circle><path d="M8 1.3v1.6M8 13.1v1.6M2.6 8H1M15 8h-1.6M3.5 3.5l1.2 1.2M11.3 11.3l1.2 1.2M3.5 12.5l1.2-1.2M11.3 4.7l1.2-1.2"></path></svg></span>
+            <span class="theme-toggle-icon theme-toggle-icon-moon"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M13.5 9.8A5.6 5.6 0 0 1 6.2 2.5a5.8 5.8 0 1 0 7.3 7.3Z"></path></svg></span>
+            <span class="theme-toggle-thumb"></span>
+          </span>
+        </button>
+      </div>
+    </header>
+
+    <main id="main-content" class="site-main case-study-shell">
       <h1>Income Tax<br /><span>Helping first-time taxpayers &amp; senior citizens</span></h1>
       <p class="case-intro">Making a high-stakes filing journey easier to understand, one decision at a time.</p>
       <a class="case-next case-next-hero" href="filing.html" style="margin: 28px auto 0;">Try the concept <span aria-hidden="true">→</span></a>
@@ -179,36 +177,41 @@
         <div class="mockup-window">
           <div class="mockup-chrome"><span></span><span></span><span></span><span class="mockup-chrome-brand">ITR Assist</span></div>
           <div class="mockup-body">
-            <span class="mockup-eyebrow">Sign in</span>
-            <h3 class="mockup-heading">Enter your PAN to continue</h3>
-            <p>We'll send an OTP to verify it's you — no separate account or password to remember.</p>
-            <div class="mockup-input"><span>PAN</span><strong>ABCDE1234F</strong></div>
-            <div class="mockup-actions"><span class="mockup-btn is-primary">Send OTP</span></div>
-            <p class="mockup-fine">Verified in seconds · Used only to confirm it's you</p>
+            <div class="mockup-steps"><span class="is-done"></span><span></span><span></span><span></span><span></span><span></span></div>
+            <span class="mockup-eyebrow">1 · You</span>
+            <h3 class="mockup-heading">Your details, from your e-filing profile</h3>
+            <p>Pulled from your PAN-linked profile and pre-validated bank account — nothing to type here.</p>
+            <div class="mockup-input"><span>Refund account</span><strong>••••7734</strong></div>
+            <div class="mockup-actions"><span class="mockup-btn is-primary">Continue →</span></div>
+            <p class="mockup-fine">✓ Bank pre-validated for refund credit</p>
           </div>
         </div>
         <div class="mockup-window">
           <div class="mockup-chrome"><span></span><span></span><span></span><span class="mockup-chrome-brand">ITR Assist</span></div>
           <div class="mockup-body">
-            <span class="mockup-eyebrow">Getting started</span>
-            <h3 class="mockup-heading">Let's figure out which ITR applies to you</h3>
-            <p>Answer a few plain questions about your income — you won't need to already know the difference between ITR-1 and ITR-4.</p>
-            <div class="mockup-actions"><span class="mockup-btn is-primary">Start</span><span class="mockup-btn">I already know my form</span></div>
-            <p class="mockup-fine">Takes about 2 minutes · Nothing is filed yet</p>
+            <div class="mockup-steps"><span class="is-done"></span><span class="is-done"></span><span></span><span></span><span></span><span></span></div>
+            <span class="mockup-eyebrow">2 · Form</span>
+            <h3 class="mockup-heading">Based on your Form 16 and AIS, you'll likely file ITR-2</h3>
+            <p>Salary, dividend, and capital gains from listed shares and mutual funds — this combination needs ITR-2.</p>
+            <div class="mockup-actions"><span class="mockup-btn is-primary">Continue to income →</span></div>
+            <p class="mockup-fine">Nothing here is filed yet — a starting point to review, not a decision</p>
           </div>
         </div>
         <div class="mockup-window">
           <div class="mockup-chrome"><span></span><span></span><span></span><span class="mockup-chrome-brand">ITR Assist</span></div>
           <div class="mockup-body">
-            <div class="mockup-steps"><span class="is-done"></span><span class="is-done"></span><span></span><span></span><span></span></div>
-            <span class="mockup-eyebrow">Step 2 of 5 — Capital gains</span>
-            <h3 class="mockup-heading">Did you sell any stocks, mutual funds, or property this year?</h3>
-            <div class="mockup-actions"><span class="mockup-btn">Yes</span><span class="mockup-btn">No</span></div>
-            <p class="mockup-help">New term? "Capital gains" just means profit from selling an investment — we'll only ask for the detail if you say yes.</p>
+            <div class="mockup-steps"><span class="is-done"></span><span class="is-done"></span><span class="is-done"></span><span></span><span></span><span></span></div>
+            <span class="mockup-eyebrow">3 · Income</span>
+            <h3 class="mockup-heading">We've filled in what your AIS already shows</h3>
+            <ul class="mockup-checklist">
+              <li class="is-done"><span class="mockup-dot"></span>Salary &amp; TDS — matched</li>
+              <li class="is-done"><span class="mockup-dot"></span>Dividend — matched</li>
+              <li class="is-attention"><span class="mockup-dot"></span>Capital gains — 1 of 4 sales unconfirmed</li>
+            </ul>
           </div>
         </div>
       </figure>
-      <figcaption class="case-hero-caption">Illustrative concept screens made for this case study — not screenshots of any live filing portal.</figcaption>
+      <figcaption class="case-hero-caption">Illustrative concept screens made for this case study, mirroring the live demo at <a href="filing.html">filing.html</a> — not screenshots of any government filing portal.</figcaption>
 
       <section class="case-detail-grid">
         <p class="detail-label">Context</p>
@@ -219,7 +222,7 @@
         <p class="detail-label">Research</p>
         <div>
           <h2>Before touching a screen, find out where confidence actually breaks down.</h2>
-          <p>Rather than assume the interface was the problem, research combined four methods: secondary research across Reddit and X, attitudinal interviews, behavioural usability testing, and a competitive scan of what people said already worked elsewhere. It started with a direct outreach post to public tax communities, followed by five moderated conversations with first-time filers and senior citizens — the audience that self-filing crowd on those platforms tends to under-represent.</p>
+          <p>Rather than assume the interface was the problem, research combined four methods: secondary research across Reddit and X, attitudinal interviews, informal usability walkthroughs, and a competitive scan of what people said already worked elsewhere. None of this was run as formal, professional research — no consent forms, no session recordings, no moderator script — it started with a direct outreach post to public tax communities, followed by five informal conversations with first-time filers and senior citizens — the audience that self-filing crowd on those platforms tends to under-represent.</p>
 
           <h3 class="mockup-heading research-subhead">Secondary research — asking the community directly</h3>
           <p>Instead of only reading old threads, this started with a new outreach post across Reddit and X asking people who file their own returns what breaks down first: what's hardest to understand, how they figured out which form to use, and what they Googled mid-filing. Dozens of replies came in within hours, from first-time filers, seasoned traders, NRIs, and at least one practising CA.</p>
@@ -245,8 +248,17 @@
           </div>
           <p class="research-note">This isn't a teardown of those products — it's secondhand, from replies, not a hands-on audit. The point is narrower: nothing here is a novel idea. The government portal is the one place people are required to use that doesn't yet do it.</p>
 
+          <h3 class="mockup-heading research-subhead">International benchmarks — what a live-reconciliation flow could still add</h3>
+          <p>A side conversation asked a simpler question: which country has the easiest filing process, and is it worth reading how they actually do it? Two systems came back with concrete, checkable detail — Estonia's e-MTA and Sweden's Skatteverket — and Skatteverket in particular had mechanics that went further than anything in the mockups above.</p>
+          <ul class="case-facts">
+            <li><strong>Live preliminary calculation</strong> Skatteverket's dashboard recalculates tax owed or refunded in real time as any section is edited — the number is always visible, not just revealed at the end.</li>
+            <li><strong>A dedicated "Check" step</strong> Reviewing pre-filled data is its own named screen with its own state, not something implicit in scrolling past a field.</li>
+            <li><strong>Auto-generated schedule annexes</strong> Forms like K4 (securities sales) and K5/K6 (property) are built from data the tax authority already has — the filer can accept as-is, edit line-by-line, or ignore and build manually.</li>
+          </ul>
+          <p class="research-note">None of this is a new principle — the "reuse what the system already knows" theme above already named the problem. What Sweden adds is a specific mechanism for it, mapped onto the exact schedule structure India's own portal uses. It's a bounded borrow, not a claim that AIS is clean enough to auto-file anything: broker and RTA reporting to AIS has known lag and mismatch issues today, nowhere near the near-complete employer and bank reporting Skatteverket's pre-fill depends on. The <a href="filing.html">live-reconciliation concept</a> takes the first two mechanics — a running total that updates as you review, and a draft schedule you can accept, edit, or flag — while treating "is AIS reliable enough to draft from" as the open question it still is, not an assumption this note gets to make.</p>
+
           <h3 class="mockup-heading research-subhead">Attitudinal interviews — five conversations with the harder-to-reach audience</h3>
-          <p>The Reddit and X replies skewed toward confident, self-directed filers — traders, freelancers, people fluent in tax vocabulary. Five moderated conversations followed to cover who those replies mostly missed: three first-time filers and two senior citizens, filing without an accountant's help. Quotes below are paraphrased and composited to protect participant identity.</p>
+          <p>The Reddit and X replies skewed toward confident, self-directed filers — traders, freelancers, people fluent in tax vocabulary. Five informal conversations followed to cover who those replies mostly missed: three first-time filers and two senior citizens, filing without an accountant's help. These were candid conversations, not formal research sessions — quotes below are paraphrased and composited to protect participant identity.</p>
           <div class="interview-grid">
             <article class="interview-card"><span>P1 — First-time filer, 23</span><p class="interview-quote">"I didn't even know if I had to file this year. I just knew people were talking about a deadline."</p><p class="interview-note">Reveals: for a true first-timer, eligibility is the confusing part — before any form question begins.</p></article>
             <article class="interview-card"><span>P2 — First-time filer, 26</span><p class="interview-quote">"I had two Form 16s from two jobs. Nobody told me if I add them together or pick one."</p><p class="interview-note">Reveals: the "which form" confusion raised on Reddit and X gets sharper the moment income has more than one source.</p></article>
@@ -340,7 +352,7 @@
         <p class="detail-label">Testing</p>
         <div>
           <h2>Test the calmness of the journey, not just task completion.</h2>
-          <p>Wireframes went back in front of four of the five original interview participants in a second moderated round. Sessions watched for hesitation — where someone paused, re-read a line, or asked "wait, is this normal?" out loud — rather than only timing task completion. The original outreach posts also stayed open through this period, so some of what changed here came from replies arriving there, not only from the moderated sessions.</p>
+          <p>Wireframes went back in front of four of the five original conversation partners in a second informal round. There was no formal script — watching for hesitation meant noticing where someone paused, re-read a line, or asked "wait, is this normal?" out loud, rather than timing task completion. The original outreach posts also stayed open through this period, so some of what changed here came from replies arriving there, not only from those conversations.</p>
           <div class="case-proof-grid">
             <article class="case-proof-card"><span>Form picker → guided eligibility</span><h3>Fewer frozen moments</h3><p>Participants who stalled on choosing ITR-1 through ITR-4 didn't stall the same way once the same question was asked as plain eligibility criteria.</p></article>
             <article class="case-proof-card"><span>Section numbers → inline meaning</span><h3>Fewer lost tabs</h3><p>An explanation anchored to the exact term kept people in the flow, instead of tabbing away to search and losing their place.</p></article>
@@ -354,88 +366,87 @@
         <p class="detail-label">Mockups</p>
         <div>
           <h2>Show the reasoning without exposing the service.</h2>
-          <p>These are anonymised, illustrative interface concepts built to demonstrate the reasoning above — not screenshots of a live filing portal, and not tax guidance.</p>
+          <p>These mirror the six steps of the live demo at <a href="filing.html">filing.html</a>, using its default "Salaried + capital gains" profile — anonymised, illustrative, and not tax guidance.</p>
           <div class="mockup-gallery">
             <figure>
               <div class="mockup-window">
                 <div class="mockup-chrome"><span></span><span></span><span></span><span class="mockup-chrome-brand">ITR Assist</span></div>
                 <div class="mockup-body">
-                  <span class="mockup-eyebrow">Sign in</span>
-                  <h3 class="mockup-heading">Enter your PAN to continue</h3>
-                  <div class="mockup-input"><span>PAN</span><strong>ABCDE1234F</strong></div>
-                  <div class="mockup-actions"><span class="mockup-btn is-primary">Send OTP</span></div>
+                  <span class="mockup-eyebrow">1 · You</span>
+                  <h3 class="mockup-heading">Your details, from your e-filing profile</h3>
+                  <div class="mockup-input"><span>PAN</span><strong>AXVPM5678K</strong></div>
+                  <div class="mockup-input"><span>Refund account</span><strong>••••7734</strong></div>
+                  <div class="mockup-actions"><span class="mockup-btn is-primary">Continue →</span></div>
+                  <p class="mockup-fine">Nothing here was typed — pulled from your PAN-linked profile</p>
                 </div>
               </div>
-              <figcaption>Sign in</figcaption>
+              <figcaption>You</figcaption>
             </figure>
             <figure>
               <div class="mockup-window">
                 <div class="mockup-chrome"><span></span><span></span><span></span><span class="mockup-chrome-brand">ITR Assist</span></div>
                 <div class="mockup-body">
-                  <span class="mockup-eyebrow">Getting started</span>
-                  <h3 class="mockup-heading">Let's figure out which ITR applies to you</h3>
-                  <p>A few plain questions, not a legal list.</p>
-                  <div class="mockup-actions"><span class="mockup-btn is-primary">Start</span></div>
+                  <span class="mockup-eyebrow">2 · Form</span>
+                  <h3 class="mockup-heading">Based on your Form 16 and AIS, you'll likely file ITR-2</h3>
+                  <p>Salary, dividend, and capital gains from listed shares and mutual funds — this combination needs ITR-2.</p>
+                  <div class="mockup-actions is-bottom"><span class="mockup-btn is-primary">Continue to income →</span></div>
                 </div>
               </div>
-              <figcaption>Orient</figcaption>
+              <figcaption>Form</figcaption>
             </figure>
             <figure>
               <div class="mockup-window">
                 <div class="mockup-chrome"><span></span><span></span><span></span><span class="mockup-chrome-brand">ITR Assist</span></div>
                 <div class="mockup-body">
-                  <div class="mockup-steps"><span class="is-done"></span><span class="is-done"></span><span></span><span></span><span></span></div>
-                  <span class="mockup-eyebrow">Step 2 of 5</span>
-                  <h3 class="mockup-heading">Did you sell any stocks, mutual funds, or property?</h3>
-                  <div class="mockup-actions"><span class="mockup-btn">Yes</span><span class="mockup-btn">No</span></div>
-                  <p class="mockup-help">"Capital gains" means profit from selling an investment.</p>
-                </div>
-              </div>
-              <figcaption>Ask</figcaption>
-            </figure>
-            <figure>
-              <div class="mockup-window">
-                <div class="mockup-chrome"><span></span><span></span><span></span><span class="mockup-chrome-brand">ITR Assist</span></div>
-                <div class="mockup-body">
-                  <span class="mockup-eyebrow">Result</span>
-                  <h3 class="mockup-heading">Based on what you told us, you'll likely file ITR-2</h3>
-                  <p>Salary and capital gains income, no business income — this combination usually needs ITR-2.</p>
-                  <div class="mockup-actions is-bottom"><span class="mockup-btn is-primary">Continue to review</span><span class="mockup-btn">That doesn't sound right</span></div>
-                </div>
-              </div>
-              <figcaption>Resolve</figcaption>
-            </figure>
-            <figure>
-              <div class="mockup-window">
-                <div class="mockup-chrome"><span></span><span></span><span></span><span class="mockup-chrome-brand">ITR Assist</span></div>
-                <div class="mockup-body">
-                  <span class="mockup-eyebrow">Review</span>
+                  <span class="mockup-eyebrow">3 · Income</span>
                   <h3 class="mockup-heading">We've filled in what your AIS already shows</h3>
                   <ul class="mockup-checklist">
-                    <li class="is-done"><span class="mockup-dot"></span>Salary &amp; TDS — matched</li>
-                    <li class="is-done"><span class="mockup-dot"></span>Bank interest — matched</li>
-                    <li class="is-attention"><span class="mockup-dot"></span>Capital gains — needs a quick look</li>
+                    <li class="is-done"><span class="mockup-dot"></span>Salary &amp; dividend — matched</li>
+                    <li class="is-attention"><span class="mockup-dot"></span>Capital gains — 4 sales found, 1 unconfirmed</li>
                   </ul>
-                  <div class="mockup-actions is-bottom"><span class="mockup-btn is-primary">Review capital gains</span></div>
+                  <div class="mockup-actions is-bottom"><span class="mockup-btn is-primary">Continue to deductions →</span></div>
                 </div>
               </div>
-              <figcaption>Recover</figcaption>
+              <figcaption>Income</figcaption>
             </figure>
             <figure>
               <div class="mockup-window">
                 <div class="mockup-chrome"><span></span><span></span><span></span><span class="mockup-chrome-brand">ITR Assist</span></div>
                 <div class="mockup-body">
-                  <span class="mockup-eyebrow">Tax QnA</span>
-                  <h3 class="mockup-heading">Plain-language answers, no section numbers</h3>
-                  <div class="mockup-input"><span>Search</span><strong>80C</strong></div>
-                  <ul class="mockup-checklist">
-                    <li>What's the difference between AY and FY?</li>
-                    <li class="is-attention">I paid tax through a challan — do I still need to enter it?</li>
-                  </ul>
-                  <p class="mockup-help">Every question here came from something people actually asked, not a made-up FAQ.</p>
+                  <span class="mockup-eyebrow">4 · Deduct</span>
+                  <h3 class="mockup-heading">Deductions</h3>
+                  <p>Under the new tax regime — the default for AY 2026-27 — most Chapter VI-A deductions no longer apply.</p>
+                  <div class="mockup-input"><span>Standard deduction</span><strong>₹75,000</strong></div>
+                  <div class="mockup-actions is-bottom"><span class="mockup-btn is-primary">Continue to tax summary →</span></div>
                 </div>
               </div>
-              <figcaption>QnA</figcaption>
+              <figcaption>Deduct</figcaption>
+            </figure>
+            <figure>
+              <div class="mockup-window">
+                <div class="mockup-chrome"><span></span><span></span><span></span><span class="mockup-chrome-brand">ITR Assist</span></div>
+                <div class="mockup-body">
+                  <span class="mockup-eyebrow">5 · Tax</span>
+                  <h3 class="mockup-heading">Tax summary &amp; verification</h3>
+                  <div class="mockup-input"><span>Estimated refund</span><strong>₹63,536</strong></div>
+                  <p class="mockup-help">"I've checked the capital gains draft above against my own contract notes, and it's correct." — tied to the specific schedule that was drafted, not a blanket agreement.</p>
+                  <div class="mockup-actions is-bottom"><span class="mockup-btn is-primary">Continue to e-verify →</span></div>
+                </div>
+              </div>
+              <figcaption>Tax</figcaption>
+            </figure>
+            <figure>
+              <div class="mockup-window">
+                <div class="mockup-chrome"><span></span><span></span><span></span><span class="mockup-chrome-brand">ITR Assist</span></div>
+                <div class="mockup-body">
+                  <span class="mockup-eyebrow">6 · Verify</span>
+                  <h3 class="mockup-heading">Verify with Aadhaar OTP</h3>
+                  <div class="mockup-input"><span>OTP sent to</span><strong>+91 90XXX XX845</strong></div>
+                  <div class="mockup-actions is-bottom"><span class="mockup-btn is-primary">Verify &amp; submit →</span></div>
+                  <p class="mockup-fine">Concept mock — no OTP is actually sent</p>
+                </div>
+              </div>
+              <figcaption>Verify</figcaption>
             </figure>
           </div>
           <p class="case-callout">This is a portfolio case study, not an official tax service or source of filing advice. Reddit and X replies referenced here are paraphrased from public comments on the author's own outreach posts and are not attributed to individual usernames.</p>
@@ -448,7 +459,12 @@
       </section>
 
     </main>
-    <script src="scripts/site.js" defer></script>
 
+    <footer class="site-footer">
+      <p class="site-footer-inner">A concept demo by Animesh Sharma</p>
+    </footer>
+
+    <script src="scripts/site.js" defer></script>
+    <script src="scripts/theme-toggle.js" defer></script>
   </body>
 </html>
