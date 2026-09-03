@@ -190,7 +190,11 @@
 
 <style>
   :root{
-    --wa-bg:#030405;
+    /* The stage behind the phone is site chrome, not WhatsApp UI, so it follows
+       the site theme. Everything below it — header green, wallpaper, bubbles —
+       is WhatsApp's own palette and stays fixed in both themes. */
+    --wa-bg:var(--surface-2);
+    --wa-phone-shadow:0 30px 60px rgba(0,0,0,0.22);
     --wa-header:#075E54;
     --wa-wallpaper:#E4DDD3;
     --wa-bubble-in:#FFFFFF;
@@ -203,6 +207,12 @@
     --wa-sys-bg:#FCF3C6;
     --wa-sys-ink:#7A6A1F;
     --wa-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
+  :root[data-theme="dark"]{
+    /* Deeper than --surface-2 so the frame still reads against a dark page. */
+    --wa-bg:#030405;
+    --wa-phone-shadow:0 44px 90px rgba(0,0,0,0.55);
   }
 
   *{ box-sizing:border-box; }
@@ -231,7 +241,7 @@
     --phone-scale:1;
     width:var(--phone-w);
     aspect-ratio:900/1840;
-    filter:drop-shadow(0 44px 90px rgba(0,0,0,0.55));
+    filter:drop-shadow(var(--wa-phone-shadow));
     /* Never let flex shrink the frame: the screen would narrow while its
        contents kept their intrinsic width, clipping the composer and
        truncating the chat header. The whole mockup is scaled as a unit
