@@ -122,7 +122,9 @@ h1{font-size:clamp(1.6rem,4vw,2.15rem);font-weight:700;letter-spacing:-0.015em;l
 .done-summary{display:flex;flex-direction:column;gap:8px;margin:16px 0 20px;}
 .done-row{display:flex;justify-content:space-between;gap:14px;font-size:.84rem;padding:8px 0;border-bottom:1px solid var(--line);}
 .done-row span:first-child{color:var(--muted);}
-.done-row span:last-child{font-family:var(--font-mono);font-variant-numeric:tabular-nums;text-align:right;}
+/* overflow-wrap:anywhere — the 15-digit acknowledgement number has no break
+   opportunity and overran its row below ~340px. */
+.done-row span:last-child{font-family:var(--font-mono);font-variant-numeric:tabular-nums;text-align:right;overflow-wrap:anywhere;}
 
 /* Acknowledgement receipt, generated on the done step */
 .ack-doc{margin-top:20px;padding:20px 20px 16px;border:1px solid var(--line-strong);border-radius:var(--radius-md);background:var(--surface);}
