@@ -6,7 +6,10 @@
   --surface-3: #f3f3f3;
   --text: #000000;
   --muted: #5e5e5e;
-  --soft: #afafaf;
+  /* Secondary label text. Was #afafaf, which read at 1.9-2.2:1 on --surface
+     and --surface-2 — under half of WCAG AA. #6b6b6b clears AA on both
+     (4.6:1 and 5.4:1), matching what dark mode's --soft already did. */
+  --soft: #6b6b6b;
   --border: #e2e2e2;
   --border-strong: #cfcfcf;
   --primary: #000000;
