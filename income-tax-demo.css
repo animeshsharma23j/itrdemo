@@ -319,6 +319,38 @@ a:focus-visible {
   color: var(--on-primary);
 }
 
+/* Site header — responsive: collapse to fit narrow viewports so nothing
+   (the toggle, Contact) gets pushed off-screen. Lost in an earlier cleanup
+   pass and restored here. */
+@media (max-width: 700px) {
+  .site-nav-link:not(.is-active) {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header-inner {
+    gap: 10px;
+    padding: 12px 14px;
+  }
+  .site-nav {
+    display: none;
+  }
+  .demo-ay-badge {
+    padding: 4px 8px;
+    font-size: 0.62rem;
+  }
+  .theme-toggle {
+    --toggle-w: 44px;
+    --toggle-h: 24px;
+    --thumb: 18px;
+  }
+  .theme-toggle-icon svg {
+    width: 10px;
+    height: 10px;
+  }
+}
+
 /* Site footer */
 .site-footer {
   border-top: 1px solid var(--border);
