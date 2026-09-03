@@ -22,7 +22,7 @@
     <meta property="og:url" content="https://itrdemo.com/case-study.html" /><meta property="og:image" content="https://itrdemo.com/icon.png" /><meta property="og:image:width" content="637" /><meta property="og:image:height" content="637" />
     <meta name="twitter:card" content="summary" />
 
-    <link rel="stylesheet" href="income-tax-demo.css?v=29" />
+    <link rel="stylesheet" href="income-tax-demo.css?v=30" />
     <script>
       (function () {
         var saved = localStorage.getItem("itr-demo-theme");
@@ -36,8 +36,8 @@
 .case-study-shell h1 span{display:block;margin-top:.28em;color:var(--muted);font-size:.4em;font-weight:600;line-height:1.2;letter-spacing:-0.01em;}
 .case-intro{max-width:58ch;margin:0 0 28px;color:var(--muted);font-size:clamp(1.05rem,1.6vw,1.3rem);line-height:1.5;}
 
-.case-next{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 22px;border:1.5px solid var(--accent);border-radius:var(--radius-lg);background:var(--accent);color:var(--accent-ink);font-size:.88rem;font-weight:700;text-decoration:none;transition:filter 140ms ease, transform 140ms ease;}
-.case-next:hover,.case-next:focus-visible{filter:brightness(1.08);transform:translateY(-1px);text-decoration:none;}
+.case-next{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 22px;border:1.5px solid var(--accent);border-radius:0;background:transparent;color:var(--accent);font-size:.88rem;font-weight:700;text-decoration:none;transition:background 140ms ease, color 140ms ease, transform 140ms ease;}
+.case-next:hover,.case-next:focus-visible{background:var(--accent);color:var(--accent-ink);transform:translateY(-1px);text-decoration:none;}
 .case-next-hero{display:flex;width:fit-content;}
 
 .case-hero-visual{display:flex;gap:16px;margin:56px 0 0;padding:0;list-style:none;overflow-x:auto;}
