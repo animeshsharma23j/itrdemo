@@ -101,7 +101,10 @@ h1{font-size:clamp(1.6rem,4vw,2.15rem);font-weight:700;letter-spacing:-0.015em;l
 .gain-line{grid-column:1 / -1;display:flex;justify-content:space-between;font-size:.78rem;color:var(--muted);padding-top:2px;}
 .gain-line b{font-family:var(--font-mono);color:var(--ink);font-variant-numeric:tabular-nums;}
 .static-row{grid-column:1 / -1;display:flex;justify-content:space-between;gap:10px;font-size:.82rem;color:var(--ink);padding:2px 0 8px;}
-.static-row b{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-weight:500;text-align:right;}
+/* overflow-wrap:anywhere — a value like an email address has no break
+   opportunity, so as a flex item it could not shrink below its min-content
+   width and ran past the card's padding on narrow screens. */
+.static-row b{font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-weight:500;text-align:right;overflow-wrap:anywhere;}
 .note{display:flex;gap:9px;margin:14px 0 0;padding:10px 12px;background:var(--surface-2);border-left:2px solid var(--accent);border-radius:0 var(--radius-md) var(--radius-md) 0;font-size:.78rem;line-height:1.5;color:var(--muted);}
 .note.warn{border-left-color:var(--amber);}
 .btn{font-family:var(--font-sans);font-size:.82rem;font-weight:600;padding:9px 16px;border-radius:var(--radius-md);border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);cursor:pointer;}
