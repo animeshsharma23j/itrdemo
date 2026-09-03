@@ -226,7 +226,20 @@
     width:364px;
     aspect-ratio:900/1840;
     filter:drop-shadow(0 44px 90px rgba(0,0,0,0.55));
+    /* Never let flex shrink the frame: the screen would narrow while its
+       contents kept their intrinsic width, clipping the composer and
+       truncating the chat header. Below 460px the whole mockup is scaled
+       down as a unit instead, so its internal layout stays at 364px. */
+    flex-shrink:0;
   }
+
+  /* Available width inside .wa-demo-wrap is the viewport minus 96px of
+     padding; each step keeps 364px x zoom under that at the band's
+     narrowest viewport. */
+  @media (max-width:459px){ .wa-iphone{ zoom:0.88; } }
+  @media (max-width:419px){ .wa-iphone{ zoom:0.78; } }
+  @media (max-width:379px){ .wa-iphone{ zoom:0.67; } }
+  @media (max-width:339px){ .wa-iphone{ zoom:0.56; } }
   .wa-iphone-frame{
     position:absolute;
     inset:0;
