@@ -346,8 +346,12 @@ h1{font-size:clamp(1.6rem,4vw,2.15rem);font-weight:700;letter-spacing:-0.015em;l
         <h2 class="filing-feedback-heading">What did you think?</h2>
         <p class="filing-feedback-body">This concept only gets better with real reactions. A few quick questions, then it goes straight to me.</p>
 
-        <form class="demo-feedback" id="filing-feedback-form" action="https://formspree.io/f/mwlkbvbo" method="POST">
+        <form class="demo-feedback" id="filing-feedback-form" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="dbafc6f2-4e14-4477-b5e9-25830f796f6a" />
+          <input type="hidden" name="subject" value="ITR demo feedback — live-reconciliation filing" />
           <input type="hidden" name="source" value="Live-reconciliation ITR demo" />
+          <!-- Honeypot. Bots fill in every field they find; nobody else can see this one. -->
+          <input type="checkbox" name="botcheck" tabindex="-1" aria-hidden="true" style="display: none" />
 
           <p class="demo-feedback-label">Which best describes you?</p>
           <div class="feedback-tags" id="filing-feedback-persona" role="radiogroup" aria-label="Which best describes you">
@@ -464,12 +468,15 @@ h1{font-size:clamp(1.6rem,4vw,2.15rem);font-weight:700;letter-spacing:-0.015em;l
             body: data,
             headers: { 'Accept': 'application/json' }
           }).then(function(res){
-            if (!res.ok) { throw new Error('Submit failed'); }
+            if (!res.ok) { throw new Error('Submit failed: ' + res.status); }
             thanks.textContent = "Thanks, that's genuinely useful.";
             thanks.classList.add('is-visible');
             resetForm();
-          }).catch(function(){
-            thanks.textContent = 'Something went wrong sending that. Try again in a moment.';
+          }).catch(function(err){
+            if (window.console) { console.warn(err); }
+            // Retrying won't help if the form backend is out of quota or misconfigured,
+            // so offer the address instead of asking for another attempt.
+            thanks.innerHTML = 'That didn\'t send. Mail it to <a href="mailto:animeshsharma23191@gmail.com">animeshsharma23191@gmail.com</a> and it still reaches me.';
             thanks.classList.add('is-visible');
           }).then(function(){
             submitBtn.disabled = false;
