@@ -123,6 +123,39 @@ h1{font-size:clamp(1.6rem,4vw,2.15rem);font-weight:700;letter-spacing:-0.015em;l
 .done-row{display:flex;justify-content:space-between;gap:14px;font-size:.84rem;padding:8px 0;border-bottom:1px solid var(--line);}
 .done-row span:first-child{color:var(--muted);}
 .done-row span:last-child{font-family:var(--font-mono);font-variant-numeric:tabular-nums;text-align:right;}
+
+/* Acknowledgement receipt, generated on the done step */
+.ack-doc{margin-top:20px;padding:20px 20px 16px;border:1px solid var(--line-strong);border-radius:var(--radius-md);background:var(--surface);}
+.ack-doc-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;padding-bottom:14px;border-bottom:1px solid var(--line);}
+.ack-doc-brand{font-size:.92rem;font-weight:700;color:var(--ink);}
+.ack-doc-brand span{display:block;margin-top:4px;font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--soft);}
+.ack-doc-stamp{flex-shrink:0;padding:5px 10px;border:1px solid var(--accent);border-radius:var(--radius-pill);color:var(--accent);font-size:.62rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;white-space:nowrap;}
+.ack-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px;margin:4px 0 0;}
+.ack-field{min-width:0;padding:10px 0;border-bottom:1px solid var(--line);}
+.ack-field dt{margin:0 0 3px;font-size:.64rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--soft);}
+.ack-field dd{margin:0;font-family:var(--font-mono);font-variant-numeric:tabular-nums;font-size:.84rem;line-height:1.45;color:var(--ink);overflow-wrap:anywhere;}
+.ack-field.is-result dd{color:var(--accent);font-weight:700;}
+.ack-doc-foot{margin:14px 0 0;font-size:.7rem;line-height:1.55;color:var(--muted);}
+.ack-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:14px;}
+@media (max-width:560px){.ack-grid{grid-template-columns:1fr;}}
+
+/* Printing the acknowledgement prints just the receipt, not the whole demo. */
+@media print{
+  body *{visibility:hidden;}
+  #ack-doc,#ack-doc *{visibility:visible;}
+  #ack-doc{position:absolute;left:0;top:0;width:100%;margin:0;padding:0;border:0;}
+  .ack-actions{display:none;}
+}
+
+/* Feedback section — same system as the WhatsApp demo, in this page's palette */
+.filing-feedback-shell{width:100%;display:flex;justify-content:center;padding:64px 24px 96px;box-sizing:border-box;background:var(--surface);border-top:1px solid var(--line);}
+.filing-feedback-inner{width:100%;max-width:640px;}
+.filing-feedback-eyebrow{display:block;margin-bottom:10px;font-size:13px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;color:var(--accent);}
+.filing-feedback-heading{margin:0 0 10px;font-size:clamp(22px,2.6vw,28px);line-height:1.2;font-weight:700;color:var(--ink);}
+.filing-feedback-body{margin:0 0 28px;font-size:15px;line-height:1.6;color:var(--muted);}
+.filing-feedback-consent{display:flex;align-items:center;gap:8px;margin:0 0 22px;font-size:.86rem;color:var(--muted);cursor:pointer;}
+.filing-feedback-consent input{width:16px;height:16px;accent-color:var(--accent);cursor:pointer;}
+@media print{.filing-feedback-shell{display:none;}}
 .foot{margin-top:1.75rem;font-size:.74rem;color:var(--soft);line-height:1.6;}
 .toggle-row{display:flex;align-items:flex-start;gap:9px;margin-top:4px;padding-top:12px;border-top:1px solid var(--line);}
 .toggle-row input{margin-top:3px;width:15px;height:15px;accent-color:var(--amber);flex-shrink:0;}
@@ -292,16 +325,159 @@ h1{font-size:clamp(1.6rem,4vw,2.15rem);font-weight:700;letter-spacing:-0.015em;l
     </section>
 
     <section class="step" id="step-done">
-      <h2>This is a concept only — nothing has been filed</h2>
-      <p class="desc">In a real version, this is the point where the draft hands off to actual e-filing or a licensed preparer. Here, it just recaps what came from where.</p>
+      <h2>Return submitted and e-verified</h2>
+      <p class="desc">Filed for AY 2026-27 and verified with the OTP sent to your Aadhaar-linked mobile. Here's the recap, and where each figure came from.</p>
       <div class="done-summary" id="done-summary"></div>
-      <div class="btn-row"><button class="btn" data-goto="personal" id="restart-btn">Restart demo</button></div>
+      <div class="btn-row">
+        <button class="btn" data-goto="personal" id="restart-btn">Restart demo</button>
+        <button class="btn primary" id="ack-btn" aria-expanded="false" aria-controls="ack-doc">Generate acknowledgement</button>
+      </div>
+      <div class="ack-doc" id="ack-doc" hidden></div>
     </section>
   </div>
 
   <p class="foot">Extends a UX case study on India's ITR filing experience. The four profiles above mirror four sample AIS statements built to test the idea: a clean salaried case, multiple capital-gains rows plus an unconfirmed one, a freelancer with several TDS deductors, and a business case with an unlinked tax challan — the exact "paid but not reflected" gap the original research surfaced. Idea stage only.</p>
   <p class="foot">Tax math: new regime, FY 2025-26 slabs, with the ₹75,000 salaried standard deduction, the section 87A rebate and marginal relief up to ₹12,00,000 in slab-rate income, equity STCG at 20%, equity LTCG at 12.5% above a pooled ₹1,25,000/year exemption, presumptive income at 50% of receipts (44ADA) or 6% of digital turnover (44AD) where relevant, and 4% health &amp; education cess. Surcharge applies above ₹50L total income — 10% (₹50L–1Cr), 15% (₹1Cr–2Cr), capped at 25% beyond that under the new regime — with equity capital-gains surcharge separately capped at 15%. Marginal relief is modeled at the ₹12L rebate cliff but not at the surcharge thresholds; old-regime deductions and other edge cases are left out. This demonstrates the mechanic, not a filing-grade calculator.</p>
 </main>
+
+    <section class="filing-feedback-shell">
+      <div class="filing-feedback-inner">
+        <span class="filing-feedback-eyebrow">Tried it? Tell me</span>
+        <h2 class="filing-feedback-heading">What did you think?</h2>
+        <p class="filing-feedback-body">This concept only gets better with real reactions. A few quick questions, then it goes straight to me.</p>
+
+        <form class="demo-feedback" id="filing-feedback-form" action="https://formspree.io/f/mwlkbvbo" method="POST">
+          <input type="hidden" name="source" value="Live-reconciliation ITR demo" />
+
+          <p class="demo-feedback-label">Which best describes you?</p>
+          <div class="feedback-tags" id="filing-feedback-persona" role="radiogroup" aria-label="Which best describes you">
+            <button type="button" class="feedback-tag" data-value="First-time filer">First-time filer</button>
+            <button type="button" class="feedback-tag" data-value="Filed before, want something easier">Filed before, want something easier</button>
+            <button type="button" class="feedback-tag" data-value="Filing for a senior relative">Filing for a senior relative</button>
+            <button type="button" class="feedback-tag" data-value="Just curious">Just curious</button>
+          </div>
+          <input type="hidden" name="persona" id="filing-feedback-persona-input" value="" />
+
+          <p class="demo-feedback-label">How much would you trust a result like this?</p>
+          <div class="feedback-tags" id="filing-feedback-trust" role="radiogroup" aria-label="How much would you trust a result like this">
+            <button type="button" class="feedback-tag" data-value="Not at all">Not at all</button>
+            <button type="button" class="feedback-tag" data-value="A little">A little</button>
+            <button type="button" class="feedback-tag" data-value="Somewhat">Somewhat</button>
+            <button type="button" class="feedback-tag" data-value="Mostly">Mostly</button>
+            <button type="button" class="feedback-tag" data-value="Completely">Completely</button>
+          </div>
+          <input type="hidden" name="trust_rating" id="filing-feedback-trust-input" value="" />
+
+          <p class="demo-feedback-label">Which step felt hardest?</p>
+          <div class="feedback-tags" id="filing-feedback-hardest" role="radiogroup" aria-label="Which step felt hardest">
+            <button type="button" class="feedback-tag" data-value="Confirming my details">Confirming my details</button>
+            <button type="button" class="feedback-tag" data-value="Picking the right ITR form">Picking the right ITR form</button>
+            <button type="button" class="feedback-tag" data-value="Reviewing my income">Reviewing my income</button>
+            <button type="button" class="feedback-tag" data-value="Reading the tax summary">Reading the tax summary</button>
+            <button type="button" class="feedback-tag" data-value="Reviewing before filing">Reviewing before filing</button>
+            <button type="button" class="feedback-tag" data-value="Nothing felt hard">Nothing felt hard</button>
+          </div>
+          <input type="hidden" name="hardest_step" id="filing-feedback-hardest-input" value="" />
+
+          <p class="demo-feedback-label">Did watching the refund update live make you trust it more, or less?</p>
+          <div class="feedback-tags" id="filing-feedback-live" role="radiogroup" aria-label="Did the live refund update change your trust">
+            <button type="button" class="feedback-tag" data-value="More">More</button>
+            <button type="button" class="feedback-tag" data-value="Less">Less</button>
+            <button type="button" class="feedback-tag" data-value="No difference">No difference</button>
+            <button type="button" class="feedback-tag" data-value="Didn't notice it">Didn't notice it</button>
+          </div>
+          <input type="hidden" name="live_recalc" id="filing-feedback-live-input" value="" />
+
+          <p class="demo-feedback-label">Would you actually use this to file, if it were real?</p>
+          <div class="feedback-tags" id="filing-feedback-usewould" role="radiogroup" aria-label="Would you use this to file">
+            <button type="button" class="feedback-tag" data-value="Yes">Yes</button>
+            <button type="button" class="feedback-tag" data-value="No">No</button>
+            <button type="button" class="feedback-tag" data-value="Not sure">Not sure</button>
+          </div>
+          <input type="hidden" name="would_use" id="filing-feedback-usewould-input" value="" />
+
+          <p class="demo-feedback-label">What's the one moment that would make or break this for you? <span>(optional)</span></p>
+          <textarea name="message" id="filing-feedback-text" placeholder="A specific screen, a specific number, a specific worry — whatever it actually was"></textarea>
+
+          <div class="demo-input-row">
+            <label for="filing-feedback-email">Email <span style="font-weight:400;color:var(--soft);">(optional, if you'd like a reply)</span></label>
+            <input type="email" id="filing-feedback-email" name="email" placeholder="you@example.com" />
+          </div>
+          <label class="filing-feedback-consent">
+            <input type="checkbox" name="followup_ok" id="filing-feedback-followup" value="Yes" />
+            <span>OK to follow up with a couple of questions?</span>
+          </label>
+
+          <div class="feedback-actions">
+            <button type="submit" class="demo-btn is-primary" id="filing-feedback-submit">Send feedback</button>
+          </div>
+          <p class="demo-thanks" id="filing-feedback-thanks"></p>
+        </form>
+      </div>
+    </section>
+
+    <script>
+      (function(){
+        "use strict";
+
+        var singleSelectGroups = [];
+
+        function bindSingleSelect(groupId, inputId){
+          var btns = Array.prototype.slice.call(document.querySelectorAll('#' + groupId + ' .feedback-tag'));
+          var input = document.getElementById(inputId);
+          btns.forEach(function(btn){
+            btn.addEventListener('click', function(){
+              btns.forEach(function(b){ b.classList.remove('is-active'); });
+              btn.classList.add('is-active');
+              input.value = btn.getAttribute('data-value');
+            });
+          });
+          singleSelectGroups.push({ btns: btns, input: input });
+        }
+
+        bindSingleSelect('filing-feedback-persona', 'filing-feedback-persona-input');
+        bindSingleSelect('filing-feedback-trust', 'filing-feedback-trust-input');
+        bindSingleSelect('filing-feedback-hardest', 'filing-feedback-hardest-input');
+        bindSingleSelect('filing-feedback-live', 'filing-feedback-live-input');
+        bindSingleSelect('filing-feedback-usewould', 'filing-feedback-usewould-input');
+
+        var form = document.getElementById('filing-feedback-form');
+        var thanks = document.getElementById('filing-feedback-thanks');
+        var submitBtn = document.getElementById('filing-feedback-submit');
+
+        function resetForm(){
+          form.reset();
+          singleSelectGroups.forEach(function(group){
+            group.btns.forEach(function(b){ b.classList.remove('is-active'); });
+            group.input.value = '';
+          });
+        }
+
+        form.addEventListener('submit', function(e){
+          e.preventDefault();
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Sending...';
+          thanks.classList.remove('is-visible');
+          var data = new FormData(form);
+          fetch(form.action, {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+          }).then(function(res){
+            if (!res.ok) { throw new Error('Submit failed'); }
+            thanks.textContent = "Thanks, that's genuinely useful.";
+            thanks.classList.add('is-visible');
+            resetForm();
+          }).catch(function(){
+            thanks.textContent = 'Something went wrong sending that. Try again in a moment.';
+            thanks.classList.add('is-visible');
+          }).then(function(){
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Send feedback';
+          });
+        });
+      })();
+    </script>
 
     <footer class="site-footer">
       <p class="site-footer-inner">A concept demo by Animesh Sharma</p>
@@ -903,7 +1079,72 @@ h1{font-size:clamp(1.6rem,4vw,2.15rem);font-weight:700;letter-spacing:-0.015em;l
       + ' · tax ' + money(r.totalTax||0) + ' incl. cess &amp; surcharge vs. ' + money(r.credit||0) + ' credited'
       + '</span></div>';
     document.getElementById('done-summary').innerHTML=rows;
+    resetAck();
   }
+
+  /* ---------- Acknowledgement ---------- */
+
+  function itrFormFor(pid){
+    var m=/ITR-\d/.exec((PROFILES[pid]&&PROFILES[pid].resolveTitle)||'');
+    return m?m[0]:'ITR';
+  }
+
+  function resetAck(){
+    var doc=document.getElementById('ack-doc');
+    var btn=document.getElementById('ack-btn');
+    if(!doc||!btn) return;
+    doc.hidden=true;
+    doc.innerHTML='';
+    btn.textContent='Generate acknowledgement';
+    btn.setAttribute('aria-expanded','false');
+  }
+
+  function ackField(label, value, isResult){
+    return '<div class="ack-field'+(isResult?' is-result':'')+'">'
+      + '<dt>'+label+'</dt><dd>'+value+'</dd></div>';
+  }
+
+  function renderAck(){
+    var p=PERSONAL[currentProfileId]||{};
+    var r=window._itrResult||{};
+    var when=everifiedAt||new Date();
+    var stamp=when.toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'});
+    var isRefund=(r.result||0)>=0;
+
+    var fields=''
+      + ackField('Acknowledgement number', ACK_NUMBERS[currentProfileId])
+      + ackField('PAN', p.pan||'—')
+      + ackField('Name', p.name||'—')
+      + ackField('Assessment year', '2026-27')
+      + ackField('Form filed', itrFormFor(currentProfileId))
+      + ackField('Filing type', 'Original return')
+      + ackField('Submitted on', stamp)
+      + ackField('e-Verified on', stamp)
+      + ackField('Total tax', money(r.totalTax||0)+' incl. cess &amp; surcharge')
+      + ackField('Tax already credited', money(r.credit||0))
+      + ackField(isRefund?'Refund due to you':'Balance payable', money(Math.abs(r.result||0)), true)
+      + ackField(isRefund?'Refund account':'Registered account', (p.bank||'—')+' '+(p.acct||''));
+
+    return '<div class="ack-doc-head">'
+      + '<div class="ack-doc-brand">ITR Assist<span>Acknowledgement of return filed</span></div>'
+      + '<div class="ack-doc-stamp">Concept demo</div>'
+      + '</div>'
+      + '<dl class="ack-grid">'+fields+'</dl>'
+      + '<p class="ack-doc-foot">Generated by ITR Assist, a concept demo. This is not a filing with the Income Tax Department and is not a substitute for an ITR-V.</p>'
+      + '<div class="ack-actions"><button type="button" class="btn" id="ack-print">Print / save as PDF</button></div>';
+  }
+
+  document.getElementById('ack-btn').addEventListener('click', function(){
+    var doc=document.getElementById('ack-doc');
+    var btn=this;
+    if(!doc.hidden){ resetAck(); return; }
+    doc.innerHTML=renderAck();
+    doc.hidden=false;
+    btn.textContent='Hide acknowledgement';
+    btn.setAttribute('aria-expanded','true');
+    document.getElementById('ack-print').addEventListener('click', function(){ window.print(); });
+    doc.scrollIntoView({behavior:'smooth', block:'nearest'});
+  });
 
   loadProfile('salariedCG');
 })();
