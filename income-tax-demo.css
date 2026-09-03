@@ -249,17 +249,25 @@ a:focus-visible {
 }
 
 .theme-toggle {
+  /* Geometry has ONE free pair of numbers: the outer width and height. The
+     thumb is derived from them, because the space it actually has to sit in is
+     the height minus the border and padding on both sides. Hardcoding --thumb
+     as a third independent number is what kept making it overhang the pill. */
   --toggle-w: 50px;
   --toggle-h: 28px;
-  --thumb: 22px;
+  --toggle-border: 1.5px;
+  --toggle-pad: 3px;
+  --toggle-inset: calc(var(--toggle-border) + var(--toggle-pad));
+  --track-w: calc(var(--toggle-w) - 2 * var(--toggle-inset));
+  --thumb: calc(var(--toggle-h) - 2 * var(--toggle-inset));
   display: flex;
   flex-shrink: 0;
   align-items: center;
   width: var(--toggle-w);
   height: var(--toggle-h);
-  padding: 3px;
+  padding: var(--toggle-pad);
   box-sizing: border-box;
-  border: 1.5px solid var(--border-strong);
+  border: var(--toggle-border) solid var(--border-strong);
   border-radius: var(--radius-pill);
   background: var(--surface-2);
   cursor: pointer;
@@ -310,8 +318,10 @@ a:focus-visible {
   transition: transform 180ms ease, background 140ms ease;
 }
 
+/* Travel is the track's own width minus the thumb, so the thumb lands flush
+   against the inside of the pill instead of past it. */
 .theme-toggle[aria-pressed="true"] .theme-toggle-thumb {
-  transform: translateX(calc(var(--toggle-w) - var(--thumb) - 6px));
+  transform: translateX(calc(var(--track-w) - var(--thumb)));
 }
 
 .theme-toggle[aria-pressed="false"] .theme-toggle-icon-sun,
@@ -343,7 +353,6 @@ a:focus-visible {
   .theme-toggle {
     --toggle-w: 44px;
     --toggle-h: 24px;
-    --thumb: 18px;
   }
   .theme-toggle-icon svg {
     width: 10px;
