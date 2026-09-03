@@ -126,7 +126,11 @@
 .wireframe-bar.is-narrow{width:38%;}
 .wireframe-pill{display:inline-block;width:44%;height:16px;margin-top:2px;border-radius:var(--radius-pill);background:var(--border-strong);}
 .wireframe-dots{display:flex;flex-direction:column;gap:4px;margin-top:2px;}
-.wireframe-dots span{padding:4px 8px;border-radius:var(--radius-pill);background:var(--border-strong);color:var(--soft);font-size:.62rem;font-weight:600;width:fit-content;}
+/* --soft on --border-strong put these chips at 3.4:1 in light and 1.03:1 in
+   dark (#7a7a7a text on #787878) — effectively invisible there. A --surface
+   pill with --muted text clears AA in both themes; the border keeps the pill
+   readable against the --surface-2 card it sits on. */
+.wireframe-dots span{padding:4px 8px;border:1px solid var(--border-strong);border-radius:var(--radius-pill);background:var(--surface);color:var(--muted);font-size:.62rem;font-weight:600;width:fit-content;}
 .wireframe-caption{margin:auto 0 0;padding-top:8px;color:var(--muted);font-size:.76rem;line-height:1.5;}
 .wireframe-caption strong{display:block;margin-bottom:3px;color:var(--text);font-size:.8rem;}
 
