@@ -23,7 +23,7 @@
     <meta property="og:image:width" content="637" />
     <meta property="og:image:height" content="637" />
 
-    <link rel="stylesheet" href="income-tax-demo.css?v=33" />
+    <link rel="stylesheet" href="income-tax-demo.css?v=34" />
     <script>
       (function () {
         var saved = localStorage.getItem("itr-demo-theme");
@@ -140,6 +140,9 @@
       .wa-feedback-shell .demo-btn.is-primary{
         border-color:#075E54;
         background:#075E54;
+        /* Pin the label white: the inherited --on-primary flips to black in dark
+           mode, which put black text on this teal at 2.74:1. */
+        color:#fff;
       }
       .wa-feedback-shell .demo-btn.is-primary:hover,
       .wa-feedback-shell .demo-btn.is-primary:focus-visible{

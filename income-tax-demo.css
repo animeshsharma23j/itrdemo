@@ -50,7 +50,9 @@
   --surface-3: #222222;
   --text: #ffffff;
   --muted: #afafaf;
-  --soft: #7a7a7a;
+  /* Was #7a7a7a, which read at 4.05:1 on --surface-2 — just under AA.
+     Dark mode needs --soft lighter, the mirror of light mode's fix. */
+  --soft: #8a8a8a;
   --border: #686868;
   --border-strong: #787878;
   --primary: #ffffff;
