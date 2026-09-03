@@ -36,7 +36,7 @@
 .case-study-shell h1 span{display:block;margin-top:.28em;color:var(--muted);font-size:.4em;font-weight:600;line-height:1.2;letter-spacing:-0.01em;}
 .case-intro{max-width:58ch;margin:0 0 28px;color:var(--muted);font-size:clamp(1.05rem,1.6vw,1.3rem);line-height:1.5;}
 
-.case-next{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 20px;border-radius:var(--radius-pill);background:var(--accent);color:var(--accent-ink);font-size:.88rem;font-weight:700;text-decoration:none;transition:filter 140ms ease, transform 140ms ease;}
+.case-next{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 22px;border:1.5px solid var(--accent);border-radius:var(--radius-lg);background:var(--accent);color:var(--accent-ink);font-size:.88rem;font-weight:700;text-decoration:none;transition:filter 140ms ease, transform 140ms ease;}
 .case-next:hover,.case-next:focus-visible{filter:brightness(1.08);transform:translateY(-1px);text-decoration:none;}
 .case-next-hero{display:flex;width:fit-content;}
 
@@ -45,8 +45,8 @@
 
 .mockup-window{flex:1;min-width:240px;border:1px solid var(--border-strong);border-radius:var(--radius-lg);background:var(--surface);overflow:hidden;box-shadow:var(--shadow-1);}
 .mockup-chrome{display:flex;align-items:center;gap:6px;padding:10px 12px;border-bottom:1px solid var(--border);background:var(--surface-2);}
-.mockup-chrome span{width:8px;height:8px;border-radius:50%;background:var(--border-strong);}
-.mockup-chrome-brand{margin-left:6px;color:var(--soft);font-size:.7rem;font-weight:600;letter-spacing:.02em;}
+.mockup-chrome span:not(.mockup-chrome-brand){width:8px;height:8px;flex-shrink:0;border-radius:50%;background:var(--border-strong);}
+.mockup-chrome-brand{flex-shrink:0;margin-left:6px;color:var(--soft);font-size:.7rem;font-weight:600;letter-spacing:.02em;white-space:nowrap;}
 .mockup-body{padding:20px;}
 .mockup-body>p{margin:0 0 14px;color:var(--muted);font-size:.84rem;line-height:1.55;}
 .mockup-eyebrow{display:block;margin:0 0 8px;color:var(--accent);font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
@@ -82,6 +82,9 @@
 .case-detail-grid>div>p{margin:0 0 16px;color:var(--muted);font-size:.97rem;line-height:1.65;max-width:72ch;}
 .research-subhead{margin-top:34px;}
 .research-note{padding:14px 16px;border-left:2px solid var(--border-strong);background:var(--surface-2);color:var(--muted);font-size:.86rem;line-height:1.6;max-width:72ch;}
+.case-proof-grid + .research-note,
+.theme-grid + .research-note,
+.mockup-gallery + .case-callout{margin-top:24px;}
 
 .case-facts{list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;}
 .case-facts li{padding:14px 0;border-top:1px solid var(--border);color:var(--muted);font-size:.88rem;line-height:1.55;}
@@ -156,6 +159,7 @@
           <a class="site-nav-link is-active" href="case-study.html">Case study</a>
           <a class="site-nav-link" href="filing.html">Filing concept</a>
           <a class="site-nav-link" href="whatsapp.html">WhatsApp concept</a>
+          <a class="site-nav-link" href="mailto:animeshsharma23191@gmail.com">Contact</a>
         </nav>
         <span class="demo-ay-badge">AY 2026-27</span>
         <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to dark mode" aria-pressed="false">
@@ -454,8 +458,32 @@
       </section>
 
       <section class="case-detail-grid">
-        <p class="detail-label">Reflection</p>
-        <div><h2>Trust is part of the interface.</h2><p>The first round of testing validated the direction: guided eligibility, in-place explanation, and calmer recovery states changed how people responded in session, not just what they completed. It also exposed a gap this round didn't close: three of five participants filed in English despite it not being their first language, and "explain the term" doesn't fully address that — it was out of scope here, but it's now the first thing the next round should test properly, with participants and content in more than one language. The next iteration should also widen past five participants and keep tracking where confidence dips, not only where someone abandons the form. The original Reddit and X threads stayed open through this whole process and kept surfacing input on their own — the plan is to keep it that way with a testable version of this concept, rather than treating this write-up as the final word.</p></div>
+        <p class="detail-label">Accessibility considerations</p>
+        <div>
+          <h2>Confidence breaks down differently for a senior citizen than a first-timer.</h2>
+          <p>The senior-citizen participants weren't struggling with the same thing the first-time filers were — jargon and a red error screen read as a personal failure to them in a way it didn't for a 24-year-old who could just Google the term. That difference shaped what actually shipped in the concept, and what's still just a flagged requirement.</p>
+          <ul class="case-facts">
+            <li><strong>Plain language at the point of confusion</strong> Explaining a term where it appears, instead of sending someone to search and lose their place — built into the concept, not an afterthought (see Design choices above).</li>
+            <li><strong>Calm, specific error states</strong> P4's reaction to a red warning — "I saw a red warning and just stopped. For two days I thought I'd broken something." — is why mismatches are named and given a next step instead of shown as generic red errors.</li>
+            <li><strong>Keyboard access</strong> A skip-to-content link is present on every page of this concept for keyboard and screen-reader users, ahead of the main navigation.</li>
+            <li><strong>Not yet solved</strong> Larger text, slower pacing, and high-contrast modes for senior users were named as requirements early on but aren't built into this concept — they're a gap, not a decision, and belong in the next round alongside the language gap below.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="case-detail-grid">
+        <p class="detail-label">Takeaways</p>
+        <div>
+          <h2>Trust is part of the interface.</h2>
+          <h3 class="mockup-heading research-subhead">Impact</h3>
+          <p>The first round of testing validated the direction: guided eligibility, in-place explanation, and calmer recovery states changed how people responded in session, not just what they completed.</p>
+          <h3 class="mockup-heading research-subhead">What I'd do next</h3>
+          <ul class="case-facts">
+            <li><strong>Language</strong> Three of five participants filed in English despite it not being their first language, and "explain the term" doesn't fully address that — it was out of scope here, but it's the first thing the next round should test properly, with participants and content in more than one language.</li>
+            <li><strong>Sample size</strong> Widen past five participants and keep tracking where confidence dips, not only where someone abandons the form.</li>
+            <li><strong>Keep the channel open</strong> The original Reddit and X threads stayed open through this whole process and kept surfacing input on their own — the plan is to keep it that way with a testable version of this concept, rather than treating this write-up as the final word.</li>
+          </ul>
+        </div>
       </section>
 
     </main>
