@@ -136,6 +136,9 @@
   .case-hero-visual{flex-direction:column;overflow:visible;}
   .mockup-gallery{grid-template-columns:repeat(2, 1fr);}
   .case-detail-grid{grid-template-columns:1fr;gap:14px;padding:44px 0;}
+  /* A 1fr track keeps min-width:auto, so it cannot shrink below the
+     content's min-content width and pushes the page sideways under ~353px. */
+  .case-detail-grid>*{min-width:0;}
   .interview-grid,.case-proof-grid,.theme-grid,.wireframe-row{grid-template-columns:1fr;}
   .comparison-table{font-size:.8rem;}
 }
