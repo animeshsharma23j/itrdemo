@@ -139,6 +139,20 @@
         font-size: 15px;
         color: var(--text);
       }
+      .landing-disclaimer {
+        max-width: 72ch;
+        margin: 44px 0 0;
+        padding: 16px 18px;
+        border-left: 2px solid var(--border-strong);
+        border-radius: 0 var(--radius-md) var(--radius-md) 0;
+        background: var(--surface-2);
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      .landing-disclaimer strong {
+        color: var(--text);
+      }
       @media (max-width: 940px) {
         .landing-grid {
           grid-template-columns: 1fr 1fr;
@@ -186,7 +200,7 @@
       <div class="landing-intro">
         <span class="landing-eyebrow">Income Tax concept</span>
         <h1 class="landing-heading">Making ITR filing easier to trust</h1>
-        <p class="landing-body">A confidence-first filing experience for first-time taxpayers and senior citizens — read how it was designed, or try it yourself.</p>
+        <p class="landing-body">A confidence-first filing experience for anyone filing alone — a first return, an older adult without help, or a repeat filer reconciling capital gains against AIS. Read how it was designed, or try it yourself.</p>
       </div>
 
       <div class="landing-grid">
@@ -227,6 +241,8 @@
           <span class="landing-card-cta">Try the concept <span aria-hidden="true">→</span></span>
         </a>
       </div>
+
+      <p class="landing-disclaimer"><strong>ITR Assist is an independent design concept.</strong> It is not affiliated with, endorsed by, or connected to the Income Tax Department or any government body. No real return is filed through it, no real data is submitted anywhere, and nothing here is tax advice.</p>
     </main>
 
     <footer class="site-footer">
